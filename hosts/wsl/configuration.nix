@@ -7,32 +7,32 @@
 
 { config, lib, pkgs, inputs, ... }:
 
-{ 
+{
   imports = [
     inputs.home-manager.nixosModules.default
-  ]; 
-  wsl.enable = true; 
-  wsl.defaultUser = "manuel"; 
+  ];
+  wsl.enable = true;
+  wsl.defaultUser = "manuel";
   wsl.startMenuLaunchers = true;
 
   users.users."manuel" = {
-    isNormalUser = true; 
-    description = "manuel"; 
-    extraGroups = ["wheel"]; 
-    initialPassword = "changeme"; 
-    packages = with pkgs; [neovim git gcc go-task];
+    isNormalUser = true;
+    description = "manuel";
+    extraGroups = [ "wheel" ];
+    initialPassword = "changeme";
+    packages = with pkgs; [ neovim git gcc go-task nixpkgs-fmt ];
   };
 
-  home-manager = { 
-   extraSpecialArgs = { inherit inputs; }; 
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
     users = {
-	  "manuel" = import ./home.nix;
+      "manuel" = import ./home.nix;
     };
   };
   nixpkgs.config.allowUnfree = true;
-  nix = { 
-    package = pkgs.nixUnstable; 
-    settings.experimental-features = ["nix-command" "flakes"];
+  nix = {
+    package = pkgs.nixUnstable;
+    settings.experimental-features = [ "nix-command" "flakes" ];
     settings.auto-optimise-store = true;
   };
   # This value determines the NixOS release from which the default settings for 
