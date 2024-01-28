@@ -20,7 +20,7 @@
     description = "manuel"; 
     extraGroups = ["wheel"]; 
     initialPassword = "changeme"; 
-    packages = with pkgs; [neovim git ];
+    packages = with pkgs; [neovim git gcc go-task];
   };
 
   home-manager = { 
