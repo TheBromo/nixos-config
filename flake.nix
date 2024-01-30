@@ -9,18 +9,25 @@
     };
 
     nixos-wsl.url = github:nix-community/nixos-wsl;
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, ... }@inputs:
+  outputs = inputs@{ self, nixpkgs, nixos-wsl, ... }:
+    let
+      root = builtins.toString ./.;
+
+      specialArgs = {
+        inherit inputs root;
+      };
+    in
     {
       nixosConfigurations = {
         wsl = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          inherit specialArgs;
           modules = [
-            ./hosts/wsl/configuration.nix
+            ./hosts/wsl
             nixos-wsl.nixosModules.wsl
-            inputs.home-manager.nixosModules.default
           ];
         };
       };

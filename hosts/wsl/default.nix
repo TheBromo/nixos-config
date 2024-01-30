@@ -5,36 +5,18 @@
 # NixOS-WSL specific options are documented on the NixOS-WSL repository: 
 # https://github.com/nix-community/NixOS-WSL
 
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, root, ... }:
 
 {
   imports = [
-    inputs.home-manager.nixosModules.default
+    (root + "/modules/nixos/base")
+    ./user/manuel
   ];
+
   wsl.enable = true;
   wsl.defaultUser = "manuel";
   wsl.startMenuLaunchers = true;
 
-  users.users."manuel" = {
-    isNormalUser = true;
-    description = "manuel";
-    extraGroups = [ "wheel" ];
-    initialPassword = "changeme";
-    packages = with pkgs; [ neovim git gcc go-task nixpkgs-fmt ];
-  };
-
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "manuel" = import ./home.nix;
-    };
-  };
-  nixpkgs.config.allowUnfree = true;
-  nix = {
-    package = pkgs.nixUnstable;
-    settings.experimental-features = [ "nix-command" "flakes" ];
-    settings.auto-optimise-store = true;
-  };
   # This value determines the NixOS release from which the default settings for 
   # stateful data, like file locations and database versions on your system were 
   # taken. It's perfectly fine and recommended to leave this value at the release 
@@ -42,5 +24,10 @@
   # documentation for this option (e.g. man configuration.nix or on 
   # https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
+  #programs.zsh.enable = true;
+  #environment = {
+  #  shells = [ pkgs.zsh ];
+  #};
 }
 
