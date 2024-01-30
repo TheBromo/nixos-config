@@ -9,18 +9,6 @@
     description = "manuel";
     extraGroups = [ "wheel" ];
     initialPassword = "changeme";
-
-    packages = with pkgs; [
-      neovim
-      git
-      gcc
-      go-task
-      nixpkgs-fmt
-
-      go
-      gopls
-      gotools
-    ];
   };
 
   home-manager = {
