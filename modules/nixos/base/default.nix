@@ -1,4 +1,4 @@
-{ pkgs, neovim-config, pkgs, ... }:
+{ pkgs, neovim-config, ... }:
 let
   neovim = neovim-config.makeDistribution pkgs;
 in
