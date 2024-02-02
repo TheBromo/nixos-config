@@ -4,12 +4,13 @@
     inputs.home-manager.nixosModules.default
   ];
 
-  users.users."manuel" = {
+  users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
     extraGroups = [ "wheel" ];
     initialPassword = "changeme";
-  };
+    shell = pkgs.zsh;    
+};
 
   home-manager = {
     useGlobalPkgs = true;

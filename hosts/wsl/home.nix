@@ -23,6 +23,10 @@ in
     go
     gopls
     gotools
+    zsh 
+    eza
+    fzf
+    starship
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -42,6 +46,53 @@ in
     userEmail = "manuel@strenge.ch";
   }; # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
+    autocd = true;
+    syntaxHighlighting = {
+      enable = true;
+    };
+    history = {
+      ignoreSpace = true;
+      save = 20000;
+    };
+    oh-my-zsh = {
+      enable = false;
+      # plugins = ["git" "copyfile" "jira"];
+    };
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "plugins/git"; tags = [ "from:oh-my-zsh" ]; }
+      ];
+    };
+    dirHashes = {
+      nix = "$HOME/.config/nix";
+      dev = "$HOME/dev";
+      vim = "$HOME/.config/nvim";
+    };
+  };
+
+  programs.eza = {
+    enable = true;
+    enableAliases = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+    ];
+    git = true;
+    icons = true;
+  };
+
+  programs.fzf = {
+    enable = true;
+  };
+
+  programs.starship.enable = true;
+  programs.fzf.enableZshIntegration = true;
+
   home.file = {
     ".config/nvim".source = "${neovimConfigRepo}/";
 
@@ -74,7 +125,6 @@ in
   home.sessionVariables = {
     EDITOR = "nvim";
   };
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
