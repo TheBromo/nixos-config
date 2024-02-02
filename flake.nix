@@ -7,17 +7,25 @@
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    
+    neovim-config = {
+      url = "github:thebromo/neovim-config";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
 
     nixos-wsl.url = github:nix-community/nixos-wsl;
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-wsl, ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-wsl, neovim-config, ... }:
     let
       root = builtins.toString ./.;
 
       specialArgs = {
-        inherit inputs root;
+        inherit inputs root neovim-config;
       };
     in
     {

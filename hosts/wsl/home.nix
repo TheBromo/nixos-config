@@ -75,7 +75,7 @@ in
 
 
   home.file = {
-    ".config/nvim".source = "${neovimConfigRepo}/";
+    #".config/nvim".source = "${neovimConfigRepo}/";
     #".screenrc".source = dotfiles/screenrc;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a

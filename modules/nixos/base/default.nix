@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, neovim-config, pkgs, ... }:
+let
+  neovim = neovim-config.makeDistribution pkgs;
+in
+{
   nix = {
     settings = {
       auto-optimise-store = true;
@@ -14,7 +18,7 @@
 
   environment = {
     variables = {
-      EDITOR = "nvim";
+	EDITOR = "${neovim}/bin/nvim";
     };
 
     systemPackages = with pkgs; [
