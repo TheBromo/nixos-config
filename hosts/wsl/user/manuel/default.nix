@@ -9,7 +9,7 @@
     description = "manuel";
     extraGroups = [ "wheel" ];
     initialPassword = "changeme";
-    shell = pkgs.zsh;    
+    shell = pkgs.bash;    
 };
 
   home-manager = {
