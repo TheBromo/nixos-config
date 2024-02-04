@@ -9,8 +9,8 @@
     description = "manuel";
     extraGroups = [ "wheel" ];
     initialPassword = "changeme";
-    shell = pkgs.bash;    
-};
+    shell = pkgs.bash;
+  };
 
   home-manager = {
     useGlobalPkgs = true;

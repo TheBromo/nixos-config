@@ -18,7 +18,7 @@ in
 
   environment = {
     variables = {
-	EDITOR = "${neovim}/bin/nvim";
+      EDITOR = "${neovim}/bin/nvim";
     };
 
     systemPackages = with pkgs; [

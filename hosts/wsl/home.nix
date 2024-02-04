@@ -19,6 +19,10 @@ in
     go-task
     nixpkgs-fmt
 
+    rustc
+    cargo
+    rustfmt
+    clippy
     go
     gopls
     gotools
@@ -26,7 +30,7 @@ in
     fzf
     starship
     bash
-# # It is sometimes useful to fine-tune packages, for example, by applying
+    # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
@@ -62,12 +66,12 @@ in
 
   programs.fzf.enableBashIntegration = true;
 
-  programs.bash ={
+  programs.bash = {
     enable = true;
     bashrcExtra = "";
     enableCompletion = true;
   };
-  programs.starship= {
+  programs.starship = {
     enable = true;
     enableBashIntegration = true;
   };
