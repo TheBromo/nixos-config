@@ -12,7 +12,6 @@
     (root + "/modules/nixos/base")
     ./user/manuel
   ];
-
   wsl.enable = true;
   wsl.defaultUser = "manuel";
   wsl.startMenuLaunchers = true;
