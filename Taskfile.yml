@@ -5,7 +5,7 @@ version: '3'
 tasks:
   default:
     cmds:
-      - sudo nixos-rebuild switch --flake .#wsl -v
+      - sudo nixos-rebuild switch --flake .#wsl 
   fmt:
     cmds: 
       - nixpkgs-fmt . 
