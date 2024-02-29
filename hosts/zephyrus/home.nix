@@ -1,17 +1,24 @@
-	{ config, pkgs, ... }:
-	{
-	  # Home Manager needs a bit of information about you and the paths it should
-	  # manage.
-	  home.username = "manuel";
-	  home.homeDirectory = "/home/manuel";
+{ config, pkgs, ... }:
+let
+  neovimConfigRepo = builtins.fetchGit {
+    url = "https://github.com/TheBromo/nvim-config.git";
+    rev = "c50d380b69ab0d8282e996785148098c6a1c72d0";
+  };
+in
+{
+  # Home Manager needs a bit of information about you and the paths it should
+  # manage.
+  home.username = "manuel";
+  home.homeDirectory = "/home/manuel";
 
-	  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "23.11"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
     git
     gcc
     go-task
     nixpkgs-fmt
+    firefox
 
     rustc
     cargo
@@ -28,7 +35,7 @@
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
     # # fonts?
-    #(pkgs.nerdfonts.override { fonts = [ "Geist Mono" ]; })
+    (nerdfonts.override { fonts = [ "GeistMono" ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -90,7 +97,7 @@
   # either
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
+	  #
   # or
   #
   #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh

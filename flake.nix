@@ -39,6 +39,13 @@
             nixos-wsl.nixosModules.wsl
           ];
         };
+	zephyrus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./hosts/zephyrus
+          ];
+        };
       };
     };
 }

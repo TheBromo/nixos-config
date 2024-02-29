@@ -12,3 +12,9 @@ tasks:
   fmt:
     cmds: 
       - nixpkgs-fmt . 
+  zephyrus:
+    alias: 
+      - z
+    cmds:
+      - sudo nixos-rebuild switch --flake .#zephyrus 
+ 
