@@ -24,6 +24,7 @@ in
     systemPackages = with pkgs; [
       coreutils
       htop
+      neovim
     ];
   };
 }

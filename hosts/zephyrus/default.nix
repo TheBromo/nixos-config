@@ -8,39 +8,35 @@
 { config, lib, pkgs, inputs, root, ... }:
 
 {
+  nixpkgs.config.allowUnfree = true;
   imports = [
-    ./hardware-configuration.nix
     (root + "/modules/nixos/base")
     ./user/manuel
+    ./hardware-configuration.nix
   ];
 
   # Bootloader.
-  boot.loader ={
-#    efi = {
-#    	canTouchEfiVariables = true;
-#    	efiSysMountPoint = "/boot/EFI"; # ← use the same mount point here.
-#     };
-     grub = {
-	enable = true;
-  	device = "nodev"; # for UEFI, set to the EFI system partition, e.g., "/dev/sda1"; for BIOS, set to "nodev"
-  	efiSupport = true; # set to false if not using UEFI
-	enableCryptodisk = true;# Add Fedora to the boot menu
-	fontSize = 50;
-#	useOSProber = true;
-	extraEntries = ''
-    	menuentry "Fedora" {
-      		set root=(hd0,1) 
-		chainloader /EFI/fedora/grubx64.efi
-    	}
-	menuentry "Windows" {
-		set root=(hd0,1)
-		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
-	}
-  	'';
-  };
+  boot.loader = {
+    grub = {
+      enable = true;
+      device = "nodev"; # for UEFI, set to the EFI system partition, e.g., "/dev/sda1"; for BIOS, set to "nodev"
+      efiSupport = true; # set to false if not using UEFI
+      enableCryptodisk = true; # Add Fedora to the boot menu
+      fontSize = 50;
+      extraEntries = ''
+            	menuentry "Fedora" {
+              		set root=(hd0,1) 
+        		chainloader /EFI/fedora/grubx64.efi
+            	}
+        	menuentry "Windows" {
+        		set root=(hd0,1)
+        		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+        	}
+          	'';
+    };
   };
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos-manuel"; # Define your hostname.
   # networking.wireless.enable = true;  # enables wireless support via wpa_supplicant.
 
   # configure network proxy if necessary
@@ -51,21 +47,26 @@
   networking.networkmanager.enable = true;
 
   # set your time zone.
-  time.timeZone = "Europe/Zurich";
+  time = {
+    timeZone = "Europe/Zurich";
+    hardwareClockInLocalTime = true;
+  };
 
-  # select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
+  i18n = {
+    supportedLocales = [ "en_US.UTF-8/UTF-8" "de_CH.UTF-8/UTF-8" ];
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_NUMERIC = "de_CH.UTF-8";
+      LC_TIME = "de_CH.UTF-8";
+      LC_MONETARY = "de_CH.UTF-8";
+      LC_MEASUREMENT = "de_CH.UTF-8";
+    };
+  };
 
-  # enable the x11 windowing system.
-  services.xserver.enable = true;
-
-  # enable the gnome desktop environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
- 
-  # configure keymap in x11
-  services.xserver = {
-    xkb.layout = "us";
+  documentation = {
+    enable = true;
+    dev.enable = true;
+    man.enable = true;
   };
 
   # enable cups to print documents.
@@ -91,7 +92,7 @@
   # enable touchpad support (enabled default in most desktopmanager).
   # services.xserver.libinput.enable = true;
 
-   # allow unfree packages
+  # allow unfree packages
   nixpkgs.config.allowunfree = true;
 
   # list packages installed in system profile. to search, run:
@@ -103,6 +104,11 @@
   # documentation for this option (e.g. man configuration.nix or on 
   # https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
+  hardware.opengl.enable = true;
 
   #environment = {
   #  shells = [ pkgs.zsh ];

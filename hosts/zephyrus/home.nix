@@ -1,10 +1,4 @@
 { config, pkgs, ... }:
-let
-  neovimConfigRepo = builtins.fetchGit {
-    url = "https://github.com/TheBromo/nvim-config.git";
-    rev = "c50d380b69ab0d8282e996785148098c6a1c72d0";
-  };
-in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -18,8 +12,12 @@ in
     gcc
     go-task
     nixpkgs-fmt
-    firefox
+    alacritty
 
+    wlroots
+    dunst
+
+    google-chrome
     rustc
     cargo
     rustfmt
@@ -31,24 +29,16 @@ in
     fzf
     starship
     bash
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
     (nerdfonts.override { fonts = [ "GeistMono" ]; })
 
-    # # You can also create simple shell scripts directly inside your
-    # # configuration. For example, this adds a command 'my-hello' to your
-    # # environment:
-    # (pkgs.writeShellScriptBin "my-hello" ''
-    #   echo "Hello, ${config.home.username}!"
-    # '')
   ];
+
   programs.git = {
     enable = true;
     userName = "thebromo";
     userEmail = "manuel@strenge.ch";
   }; # Home Manager is pretty good at managing dotfiles. The primary way to manage
+
   # plain files is through 'home.file
   programs.eza = {
     enable = true;
@@ -65,30 +55,51 @@ in
     enable = true;
   };
 
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window = {
+        decorations = "full";
+      };
+      font = {
+        size = 12.0;
+        normal.family = "GeistMono Nerd Font";
+        bold.family = "GeistMono Nerd Font";
+        italic.family = "GeistMono Nerd Font";
+      };
+    };
+  };
+
   programs.fzf.enableBashIntegration = true;
 
   programs.bash = {
     enable = true;
-    bashrcExtra = "";
     enableCompletion = true;
   };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
   };
 
+  wayland.windowManager.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    systemd.enable = true;
+
+    settings = {
+      "$terminal" = "alacritty";
+      "$mod" = "SUPER";
+      bind = [
+        "$mod, f, exec, google-chrome-stable"
+        "$mod, q, exec, alacritty"
+      ];
+    };
+  };
+
 
   home.file = {
     #".config/nvim".source = "${neovimConfigRepo}/";
-    #".screenrc".source = dotfiles/screenrc;
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # # You can also set the file content immediately.
-    # ".gradle/gradle.properties".text = ''
-    #   org.gradle.console=verbose
-    #   org.gradle.daemon.idletimeout=3600000
-    # '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -97,7 +108,7 @@ in
   # either
   #
   #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-	  #
+  #
   # or
   #
   #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh

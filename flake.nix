@@ -16,7 +16,6 @@
         flake-utils.follows = "flake-utils";
       };
     };
-
     nixos-wsl.url = github:nix-community/nixos-wsl;
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -39,7 +38,7 @@
             nixos-wsl.nixosModules.wsl
           ];
         };
-	zephyrus = nixpkgs.lib.nixosSystem {
+        zephyrus = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
           modules = [
