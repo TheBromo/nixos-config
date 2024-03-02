@@ -16,6 +16,7 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
     nixos-wsl.url = github:nix-community/nixos-wsl;
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };

@@ -7,7 +7,7 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" ];
     initialPassword = "changeme";
     shell = pkgs.bash;
   };

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, root, ... }:
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -8,30 +8,30 @@
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-    git
-    gcc
-    go-task
-    nixpkgs-fmt
     alacritty
+    firefox
 
-    wlroots
-    dunst
-
-    google-chrome
     rustc
     cargo
     rustfmt
     clippy
+    git
+    gcc
+    go-task
+    nixpkgs-fmt
+
     go
     gopls
     gotools
+
     eza
     fzf
     starship
     bash
-    (nerdfonts.override { fonts = [ "GeistMono" ]; })
-
+    nerdfonts
   ];
+
+  programs.git-credential-oauth.enable = true;
 
   programs.git = {
     enable = true;
@@ -54,6 +54,7 @@
   programs.fzf = {
     enable = true;
   };
+  #  programs.light.enable = true;
 
   programs.alacritty = {
     enable = true;
@@ -81,23 +82,6 @@
     enable = true;
     enableBashIntegration = true;
   };
-
-  wayland.windowManager.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    systemd.enable = true;
-
-    settings = {
-      "$terminal" = "alacritty";
-      "$mod" = "SUPER";
-      bind = [
-        "$mod, f, exec, google-chrome-stable"
-        "$mod, q, exec, alacritty"
-      ];
-    };
-  };
-
-
   home.file = {
     #".config/nvim".source = "${neovimConfigRepo}/";
   };

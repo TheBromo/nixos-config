@@ -16,6 +16,13 @@ in
     };
   };
 
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+    };
+  };
+
   environment = {
     variables = {
       EDITOR = "${neovim}/bin/nvim";

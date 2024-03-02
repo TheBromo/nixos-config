@@ -6,13 +6,11 @@
 # https://github.com/nix-community/NixOS-WSL
 
 { config, lib, pkgs, inputs, root, ... }:
-
 {
-  nixpkgs.config.allowUnfree = true;
   imports = [
+    ./hardware-configuration.nix
     (root + "/modules/nixos/base")
     ./user/manuel
-    ./hardware-configuration.nix
   ];
 
   # Bootloader.
@@ -22,7 +20,6 @@
       device = "nodev"; # for UEFI, set to the EFI system partition, e.g., "/dev/sda1"; for BIOS, set to "nodev"
       efiSupport = true; # set to false if not using UEFI
       enableCryptodisk = true; # Add Fedora to the boot menu
-      fontSize = 50;
       extraEntries = ''
             	menuentry "Fedora" {
               		set root=(hd0,1) 
@@ -69,6 +66,24 @@
     man.enable = true;
   };
 
+  # enable the x11 windowing system.
+  services.xserver = {
+    enable = true;
+    displayManager = {
+      gdm = {
+        enable = true;
+        wayland = true;
+      };
+    };
+    # enable the gnome desktop environment.
+    desktopManager.gnome.enable = true;
+  };
+  # configure keymap in x11
+  services.xserver = {
+    xkb.layout = "us";
+  };
+
+
   # enable cups to print documents.
   services.printing.enable = true;
 
@@ -82,7 +97,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # if you want to use jack applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -92,10 +107,6 @@
   # enable touchpad support (enabled default in most desktopmanager).
   # services.xserver.libinput.enable = true;
 
-  # allow unfree packages
-  nixpkgs.config.allowunfree = true;
-
-  # list packages installed in system profile. to search, run:
   # $ nix search wget 
   # This value determines the NixOS release from which the default settings for 
   # stateful data, like file locations and database versions on your system were 
@@ -104,10 +115,10 @@
   # documentation for this option (e.g. man configuration.nix or on 
   # https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
+
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
   };
-
   hardware.opengl.enable = true;
 
   #environment = {
