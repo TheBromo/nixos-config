@@ -2,25 +2,48 @@
   description = "My personal nixos config";
   inputs = {
     nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
       url = github:nix-community/home-manager;
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    neovim-config = {
+      url = "github:thebromo/neovim-config";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     nixos-wsl.url = github:nix-community/nixos-wsl;
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, nixos-wsl, ... }@inputs:
+  outputs = inputs@{ self, nixpkgs, nixos-wsl, neovim-config, ... }:
+    let
+      root = builtins.toString ./.;
+
+      specialArgs = {
+        inherit inputs root neovim-config;
+      };
+    in
     {
       nixosConfigurations = {
         wsl = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = { inherit inputs; };
+          inherit specialArgs;
           modules = [
-            ./hosts/wsl/configuration.nix
+            ./hosts/wsl
             nixos-wsl.nixosModules.wsl
-            inputs.home-manager.nixosModules.default
+          ];
+        };
+        zephyrus = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./hosts/zephyrus
           ];
         };
       };
