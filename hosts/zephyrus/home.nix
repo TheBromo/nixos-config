@@ -40,6 +40,7 @@
     swayidle
     wofi
     glib
+    gnome.nautilus
     waybar
   ];
 
@@ -102,6 +103,14 @@
     enableBashIntegration = true;
   };
 
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    shortcut = "a";
+    terminal = "screen-256color";
+    clock24 = true;
+  };
+
 
   wayland.windowManager.sway = {
     enable = true;
@@ -127,8 +136,13 @@
       bindsym Print+Shift         exec shotman -c region
       bindsym Print+Shift+Control exec shotman -c window
     
-      output "eDP-2" bg /etc/wallpaper.png fill
+      output * background /etc/wallpaper.png fill
     '';
+    extraSessionCommands = ''  
+      export SDL_VIDEODRIVER=wayland  # needs qt5.qtwayland in systemPackages  
+      export QT_QPA_PLATFORM=wayland  
+      export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"  # Fix for some Java AWT applications (e.g. Android Studio),  
+      # use this if they aren't displayed properly:   export _JAVA_AWT_WM_NONREPARENTING=1'';
   };
 
   home.file = {
