@@ -8,9 +8,11 @@
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
+    #apps
     alacritty
     firefox
 
+    #devtools
     rustc
     cargo
     rustfmt
@@ -19,16 +21,26 @@
     gcc
     go-task
     nixpkgs-fmt
-
     go
     gopls
     gotools
 
+    #cli tools
     eza
     fzf
     starship
     bash
     nerdfonts
+
+    # wayland 
+    mako
+    wl-clipboard
+    shotman
+    swaylock
+    swayidle
+    wofi
+    glib
+    waybar
   ];
 
   programs.git-credential-oauth.enable = true;
@@ -59,8 +71,15 @@
   programs.alacritty = {
     enable = true;
     settings = {
+      env.TERM = "alacritty";
       window = {
         decorations = "full";
+        title = "Alacritty";
+        dynamic_title = true;
+        class = {
+          instance = "Alacritty";
+          general = "Alacritty";
+        };
       };
       font = {
         size = 12.0;
@@ -82,6 +101,36 @@
     enable = true;
     enableBashIntegration = true;
   };
+
+
+  wayland.windowManager.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
+
+    config = rec {
+      menu = "wofi --show run";
+      bars = [{
+        fonts.size = 15.0;
+        command = "waybar"; # You can change it if you want
+        position = "bottom";
+      }];
+      modifier = "Mod4"; # Super key
+      terminal = "alacritty";
+      output = {
+        "eDP-2" = {
+          mode = "2560x1600@120Hz";
+        };
+      };
+    };
+    extraConfig = ''
+      bindsym Print               exec shotman -c output
+      bindsym Print+Shift         exec shotman -c region
+      bindsym Print+Shift+Control exec shotman -c window
+    
+      output "eDP-2" bg /etc/wallpaper.png fill
+    '';
+  };
+
   home.file = {
     #".config/nvim".source = "${neovimConfigRepo}/";
   };

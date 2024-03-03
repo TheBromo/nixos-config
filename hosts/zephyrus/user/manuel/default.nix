@@ -18,6 +18,15 @@
 
     users.manuel = ({ ... }: {
       imports = [ ./../../home.nix ];
+      home.pointerCursor = {
+        name = "Adwaita";
+        package = pkgs.gnome.adwaita-icon-theme;
+        size = 24;
+        x11 = {
+          enable = true;
+          defaultCursor = "Adwaita";
+        };
+      };
       home.stateVersion = "23.11";
     });
     extraSpecialArgs = {
