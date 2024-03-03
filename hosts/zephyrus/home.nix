@@ -11,8 +11,10 @@
     #apps
     alacritty
     firefox
+    jetbrains.idea-ultimate
 
     #devtools
+    jdk17
     rustc
     cargo
     rustfmt
@@ -42,6 +44,8 @@
     glib
     gnome.nautilus
     waybar
+
+
   ];
 
   programs.git-credential-oauth.enable = true;
@@ -50,9 +54,8 @@
     enable = true;
     userName = "thebromo";
     userEmail = "manuel@strenge.ch";
-  }; # Home Manager is pretty good at managing dotfiles. The primary way to manage
+  };
 
-  # plain files is through 'home.file
   programs.eza = {
     enable = true;
     enableAliases = true;
@@ -67,7 +70,6 @@
   programs.fzf = {
     enable = true;
   };
-  #  programs.light.enable = true;
 
   programs.alacritty = {
     enable = true;
@@ -92,7 +94,6 @@
   };
 
   programs.fzf.enableBashIntegration = true;
-
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -135,8 +136,17 @@
       bindsym Print               exec shotman -c output
       bindsym Print+Shift         exec shotman -c region
       bindsym Print+Shift+Control exec shotman -c window
-    
+      
       output * background /etc/wallpaper.png fill
+      
+      # Brightness
+      bindsym XF86MonBrightnessDown exec light -U 10
+      bindsym XF86MonBrightnessUp exec light -A 10
+
+      # Volume
+      bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
+      bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
+      bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
     '';
     extraSessionCommands = ''  
       export SDL_VIDEODRIVER=wayland  # needs qt5.qtwayland in systemPackages  

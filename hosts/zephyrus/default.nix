@@ -159,6 +159,7 @@
     };
   };
 
+  programs.light.enable = true;
   security.pam.services.swaylock = {
     text = "auth include login";
   };
