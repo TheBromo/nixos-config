@@ -43,7 +43,7 @@
 
   # enable networking
   networking.networkmanager.enable = true;
-  environment.etc."wallpaper.png".source = (root + "/wallpaper.png");
+  environment.etc."wallpaper.jpg".source = (root + "/wallpaper.jpg");
 
   # set your time zone.
   time = {

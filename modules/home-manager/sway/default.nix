@@ -1,7 +1,6 @@
 { pkgs, root, ... }: {
 
   home.packages = with pkgs; [
-    # wayland 
     dunst
     wl-clipboard
     shotman
@@ -54,10 +53,10 @@
       bindsym Print+Shift         exec shotman -c region
       bindsym Print+Shift+Control exec shotman -c window
       
-      output * background /etc/wallpaper.png fill
-     
-      gaps inner 5
-      gaps outer 5 
+      output * background /etc/wallpaper.jpg fill
+      smart_gaps on    
+      gaps inner 3 
+      gaps outer 3 
       default_border pixel 0 
 
       # Brightness
