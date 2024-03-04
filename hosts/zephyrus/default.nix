@@ -44,6 +44,7 @@
   # enable networking
   networking.networkmanager.enable = true;
   environment.etc."wallpaper.png".source = (root + "/wallpaper.png");
+
   # set your time zone.
   time = {
     timeZone = "Europe/Zurich";
@@ -66,23 +67,6 @@
     dev.enable = true;
     man.enable = true;
   };
-
-  # enable the x11 windowing system.
-  #  services.xserver = {
-  #    enable = true;
-  #    displayManager = {
-  #      gdm = {
-  #        enable = true;
-  #        wayland = true;
-  #      };
-  #    };
-  #    # enable the gnome desktop environment.
-  #    desktopManager.gnome.enable = true;
-  #  };
-  # configure keymap in x11
-  #  services.xserver = {
-  #    xkb.layout = "us";
-  #  };
 
   # wayland-related
   # programs.sway.enable = true; # commented out due to usage of home-manager's sway
@@ -163,8 +147,5 @@
   security.pam.services.swaylock = {
     text = "auth include login";
   };
-  #environment = {
-  #  shells = [ pkgs.zsh ];
-  #};
 }
 
