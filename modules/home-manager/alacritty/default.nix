@@ -14,6 +14,10 @@ in
         decorations = "full";
         title = "Alacritty";
         dynamic_title = true;
+        padding = {
+          x = 12;
+          y = 2;
+        };
         class = {
           instance = "Alacritty";
           general = "Alacritty";

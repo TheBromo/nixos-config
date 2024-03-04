@@ -1,7 +1,7 @@
 * {
-font-size: 12px;
+  font-size: 12px;
   font-family: "GeistMono Nerd Font", sans-serif;
-  color: #c5c8c6;
+  color: #f0f0f0;
   border: none;
   border-radius: 0;
   padding: 0;
@@ -11,13 +11,13 @@ font-size: 12px;
 
 window#waybar {
   background: transparent;
-  color: #ffffff;
+  color: #f0f0f0;
 }
 
 #workspaces {
-  border: 1px solid #333331;
+  border: 1px solid #262626;
   border-radius: 5px;
-    background: #1d1f21;
+  background: #0f0f0f;
   margin-left: 4px;
   margin-top: 2px;
   margin-bottom: 5px;
@@ -31,7 +31,7 @@ window#waybar {
   margin-left: 2px;
   margin-right: 2px;
 
-  color: #dddddd;
+  color: #f0f0f0;
 }
 
 #workspaces button:hover{
@@ -39,11 +39,11 @@ window#waybar {
 }
 
 #mode {
-    background: #1d1f21;
-  border: 1px solid #333331; 
+  background: #0f0f0f;
+  border: 1px solid #262626; 
   border-radius: 4px;
   
-  color: #dddddd;
+  color: #f0f0f0;
   
   margin-top: 2px;
   margin-bottom: 5px;
@@ -54,11 +54,11 @@ window#waybar {
 }
 
 #backlight {
-    background: #1d1f21;
+  background: #0f0f0f;
   font-size: 11px;
-  border-left: 1px solid #333331;
-  border-top: 1px solid #333331;
-  border-bottom: 1px solid #333331;
+  border-left: 1px solid #262626;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
   border-bottom-left-radius: 5px;
   border-top-left-radius: 5px;
   margin-top: 2px;
@@ -68,17 +68,17 @@ window#waybar {
 }
 
 #pulseaudio {
-    background: #1d1f21;
+    background: #0f0f0f;
   font-size: 11px;
-  border-top: 1px solid #333331;
-  border-bottom: 1px solid #333331;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
   margin-top: 2px;
   margin-bottom: 5px;
   padding-left: 8px;
 }
 
 #clock {
-  border: 1px solid #333331;
+  border: 1px solid #262626;
   border-radius: 4px;
 
   margin-top: 2px;
@@ -89,25 +89,25 @@ window#waybar {
   
   font-size: 11px;
   
-    background: #1d1f21;
+  background: #0f0f0f;
   color: #eeeeee;
 }
 
 #network {
-    background: #1d1f21;
+  background: #0f0f0f;
   font-size: 11px;
-  border-top: 1px solid #333331;
-  border-bottom: 1px solid #333331;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
   margin-top: 2px;
   margin-bottom: 5px;
   padding-left: 8px;
 }
 
 #battery {
-    background: #1d1f21;
-  border-right: 1px solid #333331;
-  border-top: 1px solid #333331;
-  border-bottom: 1px solid #333331;
+  background: #0f0f0f;
+  border-right: 1px solid #262626;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
   border-bottom-right-radius: 5px;
   border-top-right-radius: 5px;
   margin-right: 4px;
@@ -116,5 +116,5 @@ window#waybar {
   padding-left: 3px;
   padding-right: 8px;
   font-size: 11px;
-  color: #eeeeee;
+  color: #aca98a;
 }
