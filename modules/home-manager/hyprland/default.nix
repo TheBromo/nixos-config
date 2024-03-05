@@ -6,10 +6,29 @@
     shotman
     swaylock
     swayidle
+    wofi
     glib
     gnome.nautilus
+    waybar
     dconf
+    pavucontrol
   ];
+
+  programs.waybar = {
+    enable = true;
+    settings = import ./waybar/config.nix;
+    style = ''
+      ${builtins.readFile ./waybar/style.css} 
+    '';
+  };
+
+  programs.wofi = {
+    enable = true;
+    style = ''
+      ${builtins.readFile ./wofi/style.css} 
+    '';
+  };
+
 
   wayland.windowManager.sway = {
     enable = true;

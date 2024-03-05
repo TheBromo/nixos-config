@@ -1,0 +1,120 @@
+* {
+  font-size: 12px;
+  font-family: "GeistMono Nerd Font", sans-serif;
+  color: #f0f0f0;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  margin: 0;
+
+}
+
+window#waybar {
+  background: transparent;
+  color: #f0f0f0;
+}
+
+#workspaces {
+  border: 1px solid #262626;
+  border-radius: 5px;
+  background: #0f0f0f;
+  margin-left: 4px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+#workspaces button {
+  font-size: 15px;
+  margin-left: 2px;
+  margin-right: 2px;
+
+  color: #f0f0f0;
+}
+
+#workspaces button:hover{
+  background: transparent;
+}
+
+#mode {
+  background: #0f0f0f;
+  border: 1px solid #262626; 
+  border-radius: 4px;
+  
+  color: #f0f0f0;
+  
+  margin-top: 2px;
+  margin-bottom: 5px;
+  margin-left: 4px;
+  
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#backlight {
+  background: #0f0f0f;
+  font-size: 11px;
+  border-left: 1px solid #262626;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  padding-left: 8px;
+
+}
+
+#pulseaudio {
+    background: #0f0f0f;
+  font-size: 11px;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  padding-left: 8px;
+}
+
+#clock {
+  border: 1px solid #262626;
+  border-radius: 4px;
+
+  margin-top: 2px;
+  margin-bottom: 5px;
+
+  padding-left: 12px;
+  padding-right: 12px;
+  
+  font-size: 11px;
+  
+  background: #0f0f0f;
+  color: #eeeeee;
+}
+
+#network {
+  background: #0f0f0f;
+  font-size: 11px;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  padding-left: 8px;
+}
+
+#battery {
+  background: #0f0f0f;
+  border-right: 1px solid #262626;
+  border-top: 1px solid #262626;
+  border-bottom: 1px solid #262626;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  margin-right: 4px;
+  margin-top: 2px;
+  margin-bottom: 5px;
+  padding-left: 3px;
+  padding-right: 8px;
+  font-size: 11px;
+  color: #aca98a;
+}
