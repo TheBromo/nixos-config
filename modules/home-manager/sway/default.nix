@@ -58,7 +58,7 @@
       gaps inner 3 
       gaps outer 3 
       default_border pixel 0 
-
+      workspace number 1
       # Brightness
       bindsym XF86MonBrightnessDown exec light -U 10
       bindsym XF86MonBrightnessUp exec light -A 10
