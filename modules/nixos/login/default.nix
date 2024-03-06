@@ -12,7 +12,7 @@ in
           --time \
           --asterisks \
           --user-menu \
-          --cmd sway
+          --cmd Hyprland
       '';
       #      hyprland.command = ''
       #        "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
@@ -30,7 +30,7 @@ in
     TTYVTDisallocate = true;
   };
   environment.etc."greetd/environments".text = ''
-    sway
+    Hyprland
   '';
   #   hyprland
 }

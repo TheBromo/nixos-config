@@ -1,9 +1,9 @@
 [{
-  height = 15;
+  height = 33;
   layer = "top";
   position = "top";
   modules-center = [ "clock" ];
-  modules-left = [ "sway/workspaces" "sway/mode" ];
+  modules-left = [ "custom/logo" "hyprland/workspaces" ];
   modules-right = [
     "backlight"
     "pulseaudio"
@@ -11,6 +11,19 @@
     "network"
     "battery"
   ];
+  "custom/logo" = {
+    "format" = " ";
+  };
+  "hyprland/workspaces" = {
+    "persistent-workspaces" = {
+      "*" = 5;
+    };
+    "format" = "{icon}";
+    "format-icons" = {
+      "default" = "󰝦";
+      "active" = "󰝥";
+    };
+  };
 
   "sway/workspaces" = {
     "disable-scroll" = true;
@@ -29,9 +42,11 @@
     };
     "disable-click" = true;
   };
-
-  "sway/mode" = {
+  "hyprland/submap" = {
     "format" = "󱨈";
+  };
+  "sway/mode" = {
+    "format" = "{}";
   };
   "battery" = {
     "format" = "{icon} {capacity}";
@@ -65,7 +80,7 @@
       "ethernet" = [ "" ];
       "disconnected" = [ "󰤮" ];
     };
-    "on-click" = "alacritty -e nmtui";
+    "on-click" = "alacritty -e nimcli";
     "tooltip" = false;
   };
   pulseaudio = {

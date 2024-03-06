@@ -14,6 +14,7 @@ in
         decorations = "full";
         title = "Alacritty";
         dynamic_title = true;
+        opacity = 0.9;
         padding = {
           x = 12;
           y = 2;

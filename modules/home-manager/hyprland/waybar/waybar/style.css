@@ -38,7 +38,7 @@ window#waybar {
   background: transparent;
 }
 
-#mode {
+#custom-logo {
   background: #0f0f0f;
   border: 1px solid #262626; 
   border-radius: 4px;

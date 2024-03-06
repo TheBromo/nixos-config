@@ -1,78 +1,56 @@
-{ pkgs, root, ... }: {
-
-  home.packages = with pkgs; [
-    dunst
-    wl-clipboard
-    shotman
-    swaylock
-    swayidle
-    wofi
-    glib
-    gnome.nautilus
-    waybar
-    dconf
-    pavucontrol
+{ pkgs, root, ... }:
+let
+  startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
+    ${pkgs.waybar}/bin/dunst &
+    
+    ${pkgs.waybar}/bin/waybar &
+    ${pkgs.swww}/bin/swww init &
+  
+    sleep 1
+  
+    ${pkgs.swww}/bin/swww img ${"/etc/wallpaper.jpg"} &
+  '';
+in
+{
+  imports = [
+    ./waybar
+    ./wofi
+    ./mako
+    ./swaylock
   ];
 
-  programs.waybar = {
+  wayland.windowManager.hyprland = {
     enable = true;
-    settings = import ./waybar/config.nix;
-    style = ''
-      ${builtins.readFile ./waybar/style.css} 
-    '';
-  };
-
-  programs.wofi = {
-    enable = true;
-    style = ''
-      ${builtins.readFile ./wofi/style.css} 
-    '';
-  };
-
-
-  wayland.windowManager.sway = {
-    enable = true;
-    wrapperFeatures.gtk = true;
-    config = rec {
-      menu = "wofi --show run";
-      bars = [{
-        fonts.size = 12.0;
-        command = "waybar"; # You can change it if you want
-        position = "top";
-      }];
-      modifier = "Mod4"; # Super key
-      terminal = "alacritty";
-      output = {
-        "eDP-2" = {
-          mode = "2560x1600@120Hz";
-        };
-      };
-    };
     extraConfig = ''
-      bindsym Print               exec shotman -c output
-      bindsym Print+Shift         exec shotman -c region
-      bindsym Print+Shift+Control exec shotman -c window
-      
-      output * background /etc/wallpaper.jpg fill
-      smart_gaps on    
-      gaps inner 3 
-      gaps outer 3 
-      default_border pixel 0 
-      workspace number 1
-      # Brightness
-      bindsym XF86MonBrightnessDown exec light -U 10
-      bindsym XF86MonBrightnessUp exec light -A 10
-
-      # Volume
-      bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
-      bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
-      bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+      ${builtins.readFile ./hyprland.conf} 
     '';
-    extraSessionCommands = ''  
-            export SDL_VIDEODRIVER=wayland  # needs qt5.qtwayland in systemPackages  
-            export QT_QPA_PLATFORM=wayland  
-            export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"  # Fix for some Java AWT applications (e.g. Android Studio),  
-            # use this if they aren't displayed properly:   export _JAVA_AWT_WM_NONREPARENTING=1'';
+
+    settings = {
+      exec-once = ''
+        ${startupScript}/bin/start
+      '';
+    };
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.adw-gtk3;
+      name = "adw-gtk3-dark";
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.gnome.adwaita-icon-theme;
+    };
+
+    iconTheme = {
+      package = pkgs.gnome.adwaita-icon-theme;
+      name = "Adwaita";
+    };
+
+    font = {
+      name = "Sans";
+      size = 11;
+    };
+  };
 }

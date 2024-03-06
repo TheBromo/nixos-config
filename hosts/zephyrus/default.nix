@@ -10,8 +10,8 @@
   imports = [
     ./hardware-configuration.nix
     (root + "/modules/nixos/base")
-    (root + "/modules/nixos/login")
     ./user/manuel
+    (root + "/modules/nixos/login")
   ];
 
   # Bootloader.
@@ -43,7 +43,6 @@
 
   # enable networking
   networking.networkmanager.enable = true;
-  environment.etc."wallpaper.jpg".source = (root + "/wallpaper.jpg");
 
   # set your time zone.
   time = {
@@ -69,13 +68,9 @@
   };
 
   # wayland-related
-  # programs.sway.enable = true; # commented out due to usage of home-manager's sway
   security.polkit.enable = true;
+  programs.gnupg.agent.enable = true;
   hardware.opengl.enable = true; # when using QEMU KVM
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
-
 
   # enable cups to print documents.
   services.printing.enable = true;
@@ -83,6 +78,8 @@
   # enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -90,7 +87,8 @@
     alsa.support32Bit = true;
     pulse.enable = true;
     # if you want to use jack applications, uncomment this
-    jack.enable = true;
+    #jack.enable = true;
+    wireplumber.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -127,25 +125,6 @@
     };
   };
 
-  xdg = {
-    portal = {
-      enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-wlr
-        xdg-desktop-portal-gtk
-      ];
-      config = {
-        common = {
-          default = "*";
-        };
-      };
-
-    };
-  };
-
   programs.light.enable = true;
-  security.pam.services.swaylock = {
-    text = "auth include login";
-  };
 }
 

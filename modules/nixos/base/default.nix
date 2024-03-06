@@ -29,6 +29,10 @@ in
     };
 
     systemPackages = with pkgs; [
+      unzip
+      zip
+      coreutils
+      dnsutils
       coreutils
       htop
       neovim
