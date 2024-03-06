@@ -80,7 +80,7 @@
       "ethernet" = [ "" ];
       "disconnected" = [ "󰤮" ];
     };
-    "on-click" = "alacritty -e nimcli";
+    "on-click" = "alacritty -e nimtui";
     "tooltip" = false;
   };
   pulseaudio = {
