@@ -15,6 +15,7 @@
       jetbrains.pycharm-professional
       nerdfonts
       wireshark
+      google-chrome
     ];
     shell = pkgs.bash;
   };

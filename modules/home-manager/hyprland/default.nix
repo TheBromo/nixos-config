@@ -39,8 +39,8 @@ in
       name = "adw-gtk3-dark";
     };
     cursorTheme = {
-      name = "Adwaita";
-      package = pkgs.gnome.adwaita-icon-theme;
+      name = "macchiatoDark";
+      package = pkgs.catppuccin-cursors;
     };
 
     iconTheme = {
