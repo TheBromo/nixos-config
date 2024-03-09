@@ -34,7 +34,6 @@
       slurp
       swaylock
       wl-clipboard
-
       # Required if applications are having trouble opening links
       xdg-utils
       xfce.thunar
@@ -83,6 +82,8 @@
       };
     };
   };
+
+  #  environment.variables.XCURSOR_SIZE = "16";
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -96,7 +97,18 @@
         (root + "/modules/home-manager/console")
         (root + "/modules/home-manager/tmux")
       ];
-      home.stateVersion = "23.11";
+      home = {
+        stateVersion = "23.11";
+        pointerCursor = {
+          gtk.enable = true;
+          x11.enable = true;
+          name = "Simp1e Dark";
+
+          package = pkgs.simp1e-cursors;
+
+          size = 16;
+        };
+      };
     });
     extraSpecialArgs = {
       inherit inputs;

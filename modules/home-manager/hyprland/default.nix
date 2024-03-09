@@ -1,8 +1,6 @@
 { pkgs, root, ... }:
 let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.waybar}/bin/dunst &
-    
     ${pkgs.waybar}/bin/waybar &
     ${pkgs.swww}/bin/swww init &
   
@@ -38,11 +36,6 @@ in
       package = pkgs.adw-gtk3;
       name = "adw-gtk3-dark";
     };
-    cursorTheme = {
-      name = "macchiatoDark";
-      package = pkgs.catppuccin-cursors;
-    };
-
     iconTheme = {
       package = pkgs.gnome.adwaita-icon-theme;
       name = "Adwaita";
