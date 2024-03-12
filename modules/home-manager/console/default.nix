@@ -1,7 +1,7 @@
 { ... }: {
   programs.eza = {
     enable = true;
-    enableAliases = true;
+    enableBashIntegration = true;
     extraOptions = [
       "--group-directories-first"
       "--header"
