@@ -7,7 +7,7 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "networkmanager" "wheel" "video" "wireshark" ];
+    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
     initialPassword = "changeme";
     packages = with pkgs; [
       firefox
@@ -16,10 +16,16 @@
       nerdfonts
       wireshark
       google-chrome
+      jdk17
+      glibc
+      cmake
+      gnumake
+
     ];
     shell = pkgs.bash;
   };
-
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   environment = {
     sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";

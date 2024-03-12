@@ -1,14 +1,4 @@
 { pkgs, root, ... }:
-let
-  startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
-    ${pkgs.waybar}/bin/waybar &
-    ${pkgs.swww}/bin/swww init &
-  
-    sleep 1
-  
-    ${pkgs.swww}/bin/swww img ${"/etc/wallpaper.jpg"} &
-  '';
-in
 {
   imports = [
     ./waybar
@@ -22,12 +12,6 @@ in
     extraConfig = ''
       ${builtins.readFile ./hyprland.conf} 
     '';
-
-    settings = {
-      exec-once = ''
-        ${startupScript}/bin/start
-      '';
-    };
   };
 
   gtk = {
