@@ -62,6 +62,14 @@
       LC_MEASUREMENT = "de_CH.UTF-8";
     };
   };
+  services.xserver = {
+    layout = "ch";
+    xkbVariant = "";
+  };
+
+  # Configure console keymap
+  console.keyMap = "sg";
+
 
   documentation = {
     enable = true;

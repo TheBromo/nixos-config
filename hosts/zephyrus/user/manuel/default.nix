@@ -16,11 +16,6 @@
       nerdfonts
       wireshark
       google-chrome
-      jdk17
-      glibc
-      cmake
-      gnumake
-
     ];
     shell = pkgs.bash;
   };
