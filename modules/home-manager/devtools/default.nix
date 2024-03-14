@@ -11,7 +11,12 @@
     go
     gopls
     gotools
-
+    gnumake
+    cmake
+    cunit
+    jdk17
+    glibc
+    spyder
   ];
 
 }
