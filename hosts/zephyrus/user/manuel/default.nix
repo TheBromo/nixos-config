@@ -40,6 +40,7 @@
       xfce.thunar
       xfce.tumbler
       overskride
+      cunit
     ];
   };
 

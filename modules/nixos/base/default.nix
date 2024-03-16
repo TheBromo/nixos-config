@@ -20,12 +20,12 @@ in
     config = {
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
-                 permittedInsecurePackages = [
-                "nix-2.16.2"
-              ];
+      permittedInsecurePackages = [
+        "nix-2.16.2"
+      ];
 
     };
-              
+
   };
 
   environment = {

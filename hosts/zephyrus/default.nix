@@ -13,9 +13,6 @@
     ./user/manuel
     (root + "/modules/nixos/login")
   ];
-  nixpkgs.config.permittedInsecurePackages = [
-    "nix-2.16.2"
-  ];
   # Bootloader.
   boot.loader = {
     grub = {
@@ -62,6 +59,7 @@
       LC_MEASUREMENT = "de_CH.UTF-8";
     };
   };
+
   services.xserver = {
     layout = "ch";
     xkbVariant = "";
