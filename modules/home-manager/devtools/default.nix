@@ -16,7 +16,6 @@
     cunit
     jdk17
     glibc
-    spyder
   ];
 
 }
