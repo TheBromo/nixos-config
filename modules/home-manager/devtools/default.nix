@@ -16,6 +16,7 @@
     cunit
     jdk17
     glibc
+    obsidian
   ];
 
 }
