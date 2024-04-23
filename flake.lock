@@ -113,11 +113,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1713819507,
-        "narHash": "sha256-mG0kD8HmkCsHRkTBmqGb/QvM1vAvkAmB5p2H5XQ0zLo=",
+        "lastModified": 1713886692,
+        "narHash": "sha256-q/vi+a8LnfdT1VQMszZ350N6/si0geQjJroatj7MXOI=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "da839f20f1b1a57ec78d6b041f8d1369150d253e",
+        "rev": "bb4646bbdf7d3490c2442347d852a62470aec2aa",
         "type": "github"
       },
       "original": {
@@ -211,11 +211,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1713821971,
-        "narHash": "sha256-zHZMYzzVDnSg4McsmVJGxpZo+Vgi+ZDfq8CIox7YPj4=",
+        "lastModified": 1713887785,
+        "narHash": "sha256-+YZHeDoR8oUpsjSmx4DKr42XQEBN08rVndXRbxmkYEo=",
         "owner": "thebromo",
         "repo": "neovim-config",
-        "rev": "8dc9e78ef6b7f423610ce4ae43935e7c448b7e80",
+        "rev": "d21c7f20577fc38323b859a67c9461f969b5a700",
         "type": "github"
       },
       "original": {
