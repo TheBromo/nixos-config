@@ -1,11 +1,9 @@
 { pkgs, ... }:
 {
-
   programs.tmux = {
     enable = true;
     baseIndex = 1;
     secureSocket = false;
-    shortcut = "a";
     mouse = true;
     clock24 = true;
     plugins = with pkgs.tmuxPlugins;[
@@ -25,7 +23,6 @@
         extraConfig = ''
           set -g @resurrect-strategy-nvim 'session'
         '';
-
       }
     ];
     extraConfig = ''
@@ -34,9 +31,7 @@
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"
 
-      # bind '"' split-window -c "#{pane_current_path}"
-      # bind '%' split-window -h -c "#{pane_current_path}"
-      set-option -g status-position top
+      set -g status-style 'bg=#181616 fg=#c5c9c5'
     '';
   };
 }
