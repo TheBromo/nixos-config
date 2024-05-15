@@ -3,6 +3,11 @@
 version: '3'
 
 tasks:
+  aeterus:
+    alias:
+      - a
+    cmds:
+      - sudo nixos-rebuild switch --flake .#aeterus
   wsl:
     cmds:
       - sudo nixos-rebuild switch --flake .#wsl 
