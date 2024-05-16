@@ -9,9 +9,12 @@ in
     (root + "/modules/home-manager/console")
     (root + "/modules/home-manager/tmux")
   ];
+
+
   home.stateVersion = "23.11";
   home.packages = with pkgs; [
     neovim
+    _1password
   ];
 
   home.username = "thebromo";
@@ -19,8 +22,11 @@ in
   nixpkgs = {
     config = {
       allowUnfree = true;
+      allowUnsupportedSystem = true;
+      allowUnfreePredicate = (_: true);
     };
   };
+
   programs.home-manager.enable = true;
 }
 

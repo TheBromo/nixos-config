@@ -3,11 +3,11 @@
 version: '3'
 
 tasks:
-  aeterus:
+  aeternus:
     alias:
       - a
     cmds:
-      - sudo nixos-rebuild switch --flake .#aeterus
+      - home-manager switch  --flake .#thebromo
   wsl:
     cmds:
       - sudo nixos-rebuild switch --flake .#wsl 

@@ -6,10 +6,10 @@ in
   programs.alacritty = {
     enable = true;
     settings = {
-      env.TERM = "alacritty";
+      #      env.TERM = "alacritty";
       scrolling.history = 100000;
       live_config_reload = true;
-      term = "xterm-256color";
+      #      term = "xterm-256color";
 
       window = {
         decorations = "full";
