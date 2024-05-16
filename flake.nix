@@ -24,7 +24,6 @@
   outputs = inputs@{ self, nixpkgs, nixos-wsl, neovim-config, home-manager, ... }:
     let
       root = builtins.toString ./.;
-
       specialArgs = {
         inherit inputs root neovim-config;
       };
@@ -46,8 +45,8 @@
             ./hosts/zephyrus
           ];
         };
- 
-	casa = nixpkgs.lib.nixosSystem {
+
+        casa = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
           modules = [
@@ -55,11 +54,14 @@
           ];
         };
       };
-      # Available through 'home-manager --flake .#thebromo'
-      homeConfigurations."thebromo" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs =specialArgs;
-        modules = [ ./hosts/aeternus/default.nix ];
+      homeConfigurations = {
+        thebromo = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages."x86_64-linux";
+          extraSpecialArgs = specialArgs;
+          modules = [
+            ./hosts/aeternus/default.nix
+          ];
+        };
       };
     };
 }
