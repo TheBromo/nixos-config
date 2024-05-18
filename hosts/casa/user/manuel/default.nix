@@ -1,4 +1,4 @@
-{ pkgs, home-manager, inputs, root, ... }: {
+{ pkgs, inputs, root, ... }: {
 
   imports = [
     inputs.home-manager.nixosModules.default
@@ -10,22 +10,24 @@
     extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
     initialPassword = "changeme";
     packages = with pkgs; [
-      firefox
       jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
       nerdfonts
       wireshark
-      google-chrome
     ];
     shell = pkgs.bash;
   };
+
+
+
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   environment = {
     sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
     sessionVariables.NIXOS_OZONE_WL = "1";
+
   };
+
   programs.wireshark.enable = true;
 
 
@@ -46,11 +48,12 @@
         pointerCursor = {
           gtk.enable = true;
           x11.enable = true;
-          name = "Simp1e Dark";
-
-          package = pkgs.simp1e-cursors;
-
+          name = "MacOS";
+          package = pkgs.apple-cursor;
           size = 16;
+        };
+        sessionVariables = {
+          GTK_CURSOR_THEME = "MacOS";
         };
       };
     });

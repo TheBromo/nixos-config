@@ -2,11 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs,root, ... }:
+{ config, pkgs, root, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       (root + "/modules/nixos/base")
       ./user/manuel
@@ -36,7 +37,7 @@
     enable = true;
     dev.enable = true;
     man.enable = true;
-  }; 
+  };
   # Enable OpenGL
   hardware.opengl = {
     enable = true;
@@ -45,7 +46,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"]; # or "nvidiaLegacy470 etc.
+  services.xserver.videoDrivers = [ "nvidia" ]; # or "nvidiaLegacy470 etc.
 
   hardware.nvidia = {
 
@@ -72,7 +73,7 @@
     open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+    # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
@@ -87,12 +88,12 @@
 
   # Configure keymap in X11
   services.xserver = {
-    layout = "ch";
-    xkbVariant = "";
+    xkb = {
+      layout = "ch";
+      variant = "";
+    };
   };
 
-  # Configure console keymap
-  console.keyMap = "sg";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -118,7 +119,7 @@
   # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
-    fonts = {
+  fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
@@ -142,10 +143,17 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
+    google-chrome
+    dunst
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  wget
   ];
-
+  environment.gnome.excludePackages = (with pkgs; [
+    gnome-photos
+    gnome-tour
+  ]) ++ (with pkgs; [
+    epiphany # web browser
+  ]);
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -153,7 +161,8 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
+  services.xserver.displayManager.gdm.autoSuspend = false;
+  #  services.dunst.enable = true;
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
