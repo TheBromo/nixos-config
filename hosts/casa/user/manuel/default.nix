@@ -11,6 +11,7 @@
     initialPassword = "changeme";
     packages = with pkgs; [
       jetbrains.idea-ultimate
+      jetbrains.pycharm-professional
       nerdfonts
       wireshark
     ];
@@ -18,18 +19,15 @@
   };
 
 
-
   virtualisation.virtualbox.host.enable = true;
   users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
 
   environment = {
-    sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
-    sessionVariables.NIXOS_OZONE_WL = "1";
-
+    #sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
+    #sessionVariables.NIXOS_OZONE_WL = "1";
   };
 
   programs.wireshark.enable = true;
-
 
   home-manager = {
     useGlobalPkgs = true;
@@ -48,12 +46,12 @@
         pointerCursor = {
           gtk.enable = true;
           x11.enable = true;
-          name = "MacOS";
+          name = "macOS-BigSur";
           package = pkgs.apple-cursor;
-          size = 16;
+          size = 24;
         };
         sessionVariables = {
-          GTK_CURSOR_THEME = "MacOS";
+          GTK_CURSOR_THEME = "macOS-BigSur";
         };
       };
     });

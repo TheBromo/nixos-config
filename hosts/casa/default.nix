@@ -89,7 +89,7 @@
   # Configure keymap in X11
   services.xserver = {
     xkb = {
-      layout = "ch";
+      layout = "us";
       variant = "";
     };
   };
@@ -118,7 +118,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
@@ -137,16 +136,14 @@
       emoji = [ "Noto Color Emoji" ];
     };
   };
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     google-chrome
     dunst
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    #  wget
   ];
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos
@@ -161,8 +158,9 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  #  services.dunst.enable = true;
+
+  # services.xserver.displayManager.gdm.autoSuspend = false;
+
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
