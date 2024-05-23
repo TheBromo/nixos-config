@@ -8,6 +8,12 @@
     gcc
     go-task
     nixpkgs-fmt
+    nix-output-monitor
+
+    jq
+    zip
+    unzip
+
     go
     gopls
     gotools

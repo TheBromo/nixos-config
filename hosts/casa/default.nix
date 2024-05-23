@@ -10,6 +10,7 @@
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
       (root + "/modules/nixos/base")
+      (root + "/modules/nixos/docker")
       ./user/manuel
     ];
 

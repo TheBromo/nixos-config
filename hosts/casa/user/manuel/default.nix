@@ -7,20 +7,21 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
+    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark" ];
     initialPassword = "changeme";
     packages = with pkgs; [
       jetbrains.idea-ultimate
       jetbrains.pycharm-professional
       nerdfonts
       wireshark
+      conda
     ];
     shell = pkgs.bash;
   };
 
 
   virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
 
   environment = {
     #sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
