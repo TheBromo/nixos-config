@@ -12,6 +12,7 @@
     (root + "/modules/nixos/base")
     ./user/manuel
     (root + "/modules/nixos/login")
+    (root + "/modules/nixos/fonts")
   ];
   # Bootloader.
   boot.loader = {
@@ -114,25 +115,6 @@
   # documentation for this option (e.g. man configuration.nix or on 
   # https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      font-awesome
-      source-han-sans
-      open-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
-    ];
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Source Han Serif" ];
-      sansSerif = [ "Open Sans" "Source Han Sans" ];
-      emoji = [ "Noto Color Emoji" ];
-    };
-  };
-
   programs.light.enable = true;
 }
 

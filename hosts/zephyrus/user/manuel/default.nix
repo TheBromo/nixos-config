@@ -10,17 +10,11 @@
     extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
     initialPassword = "changeme";
     packages = with pkgs; [
-      firefox
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      nerdfonts
-      wireshark
       google-chrome
     ];
     shell = pkgs.bash;
   };
-  virtualisation.virtualbox.host.enable = true;
-  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+
 
   environment = {
     sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";

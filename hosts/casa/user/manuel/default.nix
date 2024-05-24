@@ -9,26 +9,8 @@
     description = "manuel";
     extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark" ];
     initialPassword = "changeme";
-    packages = with pkgs; [
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      nerdfonts
-      wireshark
-      conda
-    ];
     shell = pkgs.bash;
   };
-
-
-  virtualisation.virtualbox.host.enable = true;
-
-
-  environment = {
-    #sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
-    #sessionVariables.NIXOS_OZONE_WL = "1";
-  };
-
-  programs.wireshark.enable = true;
 
   home-manager = {
     useGlobalPkgs = true;
@@ -44,16 +26,6 @@
       ];
       home = {
         stateVersion = "23.11";
-        pointerCursor = {
-          gtk.enable = true;
-          x11.enable = true;
-          name = "macOS-BigSur";
-          package = pkgs.apple-cursor;
-          size = 24;
-        };
-        sessionVariables = {
-          GTK_CURSOR_THEME = "macOS-BigSur";
-        };
       };
     });
     extraSpecialArgs = {

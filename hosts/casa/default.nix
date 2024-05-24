@@ -11,6 +11,8 @@
       ./hardware-configuration.nix
       (root + "/modules/nixos/base")
       (root + "/modules/nixos/docker")
+      (root + "/modules/nixos/jetbrains")
+      (root + "/modules/nixos/fonts")
       ./user/manuel
     ];
 
@@ -118,26 +120,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk
-      noto-fonts-emoji
-      font-awesome
-      source-han-sans
-      open-sans
-      source-han-sans-japanese
-      source-han-serif-japanese
-    ];
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" "Source Han Serif" ];
-      sansSerif = [ "Open Sans" "Source Han Sans" ];
-      emoji = [ "Noto Color Emoji" ];
-    };
-  };
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
