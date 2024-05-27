@@ -14,6 +14,7 @@
       (root + "/modules/nixos/jetbrains")
       (root + "/modules/nixos/wireshark")
       (root + "/modules/nixos/fonts")
+      (root + "/modules/nixos/1password")
       ./user/manuel
     ];
 

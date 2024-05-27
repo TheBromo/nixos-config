@@ -23,8 +23,6 @@
     jdk17
     glibc
     obsidian
-    _1password-gui
-    _1password
   ];
 
 }
