@@ -4,14 +4,18 @@ version: '3'
 
 tasks:
   casa:
+    alias: 
+      - c
     cmds:
       - nixos-rebuild switch --flake '.#casa' |& nom
   wsl:
+    alias: 
+      - w
     cmds:
-      - sudo nixos-rebuild switch --flake .#wsl  |& nom
+      - nixos-rebuild switch --flake .#wsl  |& nom
   up:
     cmds:
-      - sudo nix flake update |& nom
+      - nix flake update |& nom
   fmt:
     cmds: 
       - nixpkgs-fmt . 
@@ -19,5 +23,5 @@ tasks:
     alias: 
       - z
     cmds:
-      - sudo nixos-rebuild switch --flake .#zephyrus |& nom
+      - nixos-rebuild switch --flake .#zephyrus |& nom
  

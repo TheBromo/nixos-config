@@ -12,6 +12,7 @@
       (root + "/modules/nixos/base")
       (root + "/modules/nixos/docker")
       (root + "/modules/nixos/jetbrains")
+      (root + "/modules/nixos/wireshark")
       (root + "/modules/nixos/fonts")
       ./user/manuel
     ];

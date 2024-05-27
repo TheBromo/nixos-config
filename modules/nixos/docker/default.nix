@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   virtualisation.docker.enable = true;
 
-  environment.systempackages = with pkgs; [
+  environment.systemPackages = with pkgs; [
     docker-compose
   ];
 
