@@ -46,6 +46,13 @@
             ./hosts/zephyrus
           ];
         };
+        lunar = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./hosts/lunar
+          ];
+        };
 	casa = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
