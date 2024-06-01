@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, root, ... }:
+let
+  berkley-path = (root + "/secrets/berkeley-mono.zip");
+in
+{
 
   fonts = {
     enableDefaultPackages = true;
@@ -11,6 +15,17 @@
       open-sans
       source-han-sans-japanese
       source-han-serif-japanese
+      (stdenv.mkDerivation {
+        name = "berkley-mono";
+        src = berkley-path;
+
+        buildInputs = [ unzip ];
+        unpackPhase = "unzip $src -d $out";
+        installPhase = ''
+          mkdir -p $out/share/fonts
+          mv * $out/share/fonts/
+        '';
+      })
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" "Source Han Serif" ];

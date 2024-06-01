@@ -40,6 +40,7 @@ in
       dnsutils
       coreutils
       htop
+      git-crypt
       neovim
     ];
   };

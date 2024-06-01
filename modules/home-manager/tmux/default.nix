@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   programs.tmux = {
     enable = true;
@@ -15,7 +15,7 @@
         plugin = continuum;
         extraConfig = ''
           set -g @continuum-restore 'on'
-          set -g @continuum-save-interval '60' # minutes
+          set -g @continuum-save-interval '15' # minutes
         '';
       }
       {
@@ -32,6 +32,15 @@
       set-environment -g COLORTERM "truecolor"
 
       set -g status-style 'bg=#181616 fg=#c5c9c5'
+      set -g mode-keys vi
+
+      bind-key o display-popup -E "${lib.getExe pkgs.tmux-sessionizer} switch"
     '';
+
   };
+  programs.fzf.tmux.enableShellIntegration = true;
+
+  home.packages = [
+    pkgs.tmux-sessionizer
+  ];
 }
