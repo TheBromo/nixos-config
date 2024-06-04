@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   programs.eza = {
     enable = true;
     enableBashIntegration = true;
@@ -9,6 +9,10 @@
     git = true;
     #icons = true;
   };
+
+  home.packages = with pkgs; [
+    bat
+  ];
 
   programs.zoxide = {
     enable = true;
@@ -25,6 +29,7 @@
     enableCompletion = true;
     shellAliases = {
       cd = "z";
+      cat = "bat";
     };
   };
 
