@@ -264,11 +264,19 @@
     },
     "nixpkgs_2": {
       "locked": {
+<<<<<<< HEAD
         "lastModified": 1717196966,
         "narHash": "sha256-yZKhxVIKd2lsbOqYd5iDoUIwsRZFqE87smE2Vzf6Ck0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "57610d2f8f0937f39dbd72251e9614b1561942d8",
+=======
+        "lastModified": 1716948383,
+        "narHash": "sha256-SzDKxseEcHR5KzPXLwsemyTR/kaM9whxeiJohbL04rs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ad57eef4ef0659193044870c731987a6df5cf56b",
+>>>>>>> b663041 (added encrypted font)
         "type": "github"
       },
       "original": {
