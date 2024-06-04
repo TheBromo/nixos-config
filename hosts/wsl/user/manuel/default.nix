@@ -7,10 +7,11 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "docker" ];
     initialPassword = "changeme";
     shell = pkgs.bash;
   };
+
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
