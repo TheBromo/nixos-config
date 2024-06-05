@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       (root + "/modules/nixos/base")
       (root + "/modules/nixos/nvidia")
+      (root + "/modules/nixos/gnome")
       (root + "/modules/nixos/docker")
       (root + "/modules/nixos/jetbrains")
       (root + "/modules/nixos/wireshark")
@@ -45,22 +46,6 @@
     man.enable = true;
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    xkb = {
-      layout = "us";
-      variant = "";
-    };
-  };
-
-
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -92,12 +77,6 @@
     firefox
     dunst
   ];
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs; [
-    epiphany # web browser
-  ]);
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
