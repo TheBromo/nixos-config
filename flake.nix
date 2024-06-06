@@ -23,8 +23,7 @@
 
   outputs = inputs@{ self, nixpkgs, nixos-wsl, neovim-config, ... }:
     let
-      root = builtins.toString ./.;
-
+      root = self;
       specialArgs = {
         inherit inputs root neovim-config;
       };

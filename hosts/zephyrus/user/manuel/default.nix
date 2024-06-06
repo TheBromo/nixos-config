@@ -20,7 +20,7 @@
     sessionVariables.WLR_NO_HARDWARE_CURSORS = "1";
     sessionVariables.NIXOS_OZONE_WL = "1";
 
-    etc."wallpaper.jpg".source = (root + "/wallpaper.jpg");
+    etc."wallpaper.jpg".source = "${root}/wallpaper.jpg";
     systemPackages = with pkgs; [
       grim
       swww
@@ -86,12 +86,12 @@
 
     users.manuel = ({ ... }: {
       imports = [
-        (root + "/modules/home-manager/git")
-        (root + "/modules/home-manager/alacritty")
-        (root + "/modules/home-manager/devtools")
-        (root + "/modules/home-manager/hyprland")
-        (root + "/modules/home-manager/console")
-        (root + "/modules/home-manager/tmux")
+        "${root}/modules/home-manager/git"
+        "${root}/modules/home-manager/alacritty"
+        "${root}/modules/home-manager/devtools"
+        "${root}/modules/home-manager/hyprland"
+        "${root}/modules/home-manager/console"
+        "${root}/modules/home-manager/tmux"
       ];
       home = {
         stateVersion = "23.11";

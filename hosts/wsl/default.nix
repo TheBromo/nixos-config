@@ -9,8 +9,8 @@
 
 {
   imports = [
-    (root + "/modules/nixos/base")
-    (root + "/modules/nixos/docker")
+    "${root}/modules/nixos/base"
+    "${root}/modules/nixos/docker"
     ./user/manuel
   ];
   wsl.enable = true;

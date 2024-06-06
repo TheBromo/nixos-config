@@ -9,12 +9,12 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      (root + "/modules/nixos/base")
-      (root + "/modules/nixos/docker")
-      (root + "/modules/nixos/jetbrains")
-      (root + "/modules/nixos/wireshark")
-      (root + "/modules/nixos/fonts")
-      (root + "/modules/nixos/1password")
+      "${root}/modules/nixos/base"
+      "${root}/modules/nixos/docker"
+      "${root}/modules/nixos/jetbrains"
+      "${root}/modules/nixos/wireshark"
+      "${root}/modules/nixos/fonts"
+      "${root}/modules/nixos/1password"
       ./user/manuel
     ];
 

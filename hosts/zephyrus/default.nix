@@ -9,10 +9,10 @@
 {
   imports = [
     ./hardware-configuration.nix
-    (root + "/modules/nixos/base")
+    "${root}/modules/nixos/base"
     ./user/manuel
-    (root + "/modules/nixos/login")
-    (root + "/modules/nixos/fonts")
+    "${root}/modules/nixos/login"
+    "${root}/modules/nixos/fonts"
   ];
   # Bootloader.
   boot.loader = {
