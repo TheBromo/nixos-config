@@ -29,7 +29,7 @@
       };
     });
     extraSpecialArgs = {
-      inherit inputs;
+      inherit inputs root;
     };
   };
 }

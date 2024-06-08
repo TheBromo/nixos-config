@@ -26,7 +26,7 @@
       home.stateVersion = "23.11";
     });
     extraSpecialArgs = {
-      inherit inputs;
+      inherit inputs root;
     };
   };
 }
