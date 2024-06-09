@@ -1,6 +1,7 @@
 { pkgs, root, ... }:
 let
   bs = import "${root}/pkgs/branch-switcher" { inherit pkgs; };
+  info = import "${root}/pkgs/info" { inherit pkgs; };
 in
 {
   programs.eza = {
@@ -11,12 +12,12 @@ in
       "--header"
     ];
     git = true;
-    #icons = true;
   };
 
-  home.packages = with pkgs; [
-    bat
+  home.packages = [
+    pkgs.bat
     bs
+    info
   ];
 
   programs.zoxide = {
@@ -37,6 +38,9 @@ in
       cat = "bat";
       bs = "branch-switcher";
     };
+    initExtra = ''
+      screenfetch
+    '';
   };
 
   programs.starship = {
