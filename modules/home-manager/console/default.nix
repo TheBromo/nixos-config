@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, root, ... }:
+let
+  bs = import "${root}/pkgs/branch-switcher" { inherit pkgs; };
+in
+{
   programs.eza = {
     enable = true;
     enableBashIntegration = true;
@@ -12,6 +16,7 @@
 
   home.packages = with pkgs; [
     bat
+    bs
   ];
 
   programs.zoxide = {
@@ -30,6 +35,7 @@
     shellAliases = {
       cd = "z";
       cat = "bat";
+      bs = "branch-switcher";
     };
   };
 
