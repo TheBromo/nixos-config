@@ -9,10 +9,13 @@
 {
   imports = [
     ./hardware-configuration.nix
-    "${root}/modules/nixos/base"
     ./user/manuel
-    "${root}/modules/nixos/login"
+    "${root}/modules/nixos/base"
     "${root}/modules/nixos/fonts"
+    "${root}/modules/nixos/gnome"
+    "${root}/modules/nixos/audio"
+    "${root}/modules/nixos/1password"
+    "${root}/modules/nixos/docker"
   ];
   # Bootloader.
   boot.loader = {
@@ -60,59 +63,14 @@
       LC_MEASUREMENT = "de_CH.UTF-8";
     };
   };
-
-  services.xserver = {
-    layout = "ch";
-    xkbVariant = "";
-  };
-
-  # Configure console keymap
-  console.keyMap = "sg";
-
-
   documentation = {
     enable = true;
     dev.enable = true;
     man.enable = true;
   };
 
-  # wayland-related
-  security.polkit.enable = true;
-  programs.gnupg.agent.enable = true;
-
-  hardware.opengl.enable = true; # when using QEMU KVM
-  hardware.opengl.driSupport = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    rocmPackages.clr.icd
-    mesa
-    vulkan-loader
-    amdvlk
-  ];
-  hardware.opengl.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
   # enable cups to print documents.
   services.printing.enable = true;
-
-  # enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # if you want to use jack applications, uncomment this
-    #jack.enable = true;
-    wireplumber.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
   # enable touchpad support (enabled default in most desktopmanager).
   # services.xserver.libinput.enable = true;
 
@@ -124,6 +82,5 @@
   # documentation for this option (e.g. man configuration.nix or on 
   # https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-  programs.light.enable = true;
 }
 

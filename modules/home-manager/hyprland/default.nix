@@ -1,11 +1,19 @@
 { pkgs, root, ... }:
 {
-  imports = [
-    ./waybar
-    ./wofi
-    ./mako
-    ./swaylock
-  ];
+  home.sessionVariables = {
+    GDK_BACKEND = "wayland";
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    config.common = {
+      default = [ "hyprland" ];
+    };
+  };
+
 
   wayland.windowManager.hyprland = {
     enable = true;
