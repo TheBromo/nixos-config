@@ -79,8 +79,18 @@
   # wayland-related
   security.polkit.enable = true;
   programs.gnupg.agent.enable = true;
-  hardware.opengl.enable = true; # when using QEMU KVM
 
+  hardware.opengl.enable = true; # when using QEMU KVM
+  hardware.opengl.driSupport = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    rocmPackages.clr.icd
+    mesa
+    vulkan-loader
+    amdvlk
+  ];
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
   # enable cups to print documents.
   services.printing.enable = true;
 
@@ -103,7 +113,6 @@
     # no need to redefine it in your config for now)
     #media-session.enable = true;
   };
-
   # enable touchpad support (enabled default in most desktopmanager).
   # services.xserver.libinput.enable = true;
 

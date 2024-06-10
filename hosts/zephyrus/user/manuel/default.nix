@@ -10,6 +10,15 @@
     extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
     initialPassword = "changeme";
     packages = with pkgs; [
+      firefox
+      jetbrains.idea-ultimate
+      jetbrains.pycharm-professional
+      nerdfonts
+      wireshark
+      virtualglLib
+      libGL
+      glfw
+      glfw-wayland
       google-chrome
     ];
     shell = pkgs.bash;
@@ -111,5 +120,4 @@
     };
   };
 }
-
 
