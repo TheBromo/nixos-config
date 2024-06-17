@@ -37,6 +37,7 @@ in
       cd = "z";
       cat = "bat";
       bs = "branch-switcher";
+      lg = "lazygit";
     };
     initExtra = ''
       screenfetch

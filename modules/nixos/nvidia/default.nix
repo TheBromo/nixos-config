@@ -6,12 +6,16 @@
   nixpkgs.config.cudaSupport = false;
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   hardware = {
     opengl = {
       enable = true;
       driSupport = true;
       driSupport32Bit = true;
+      extraPackages = with pkgs; [
+        vaapiVdpau
+      ];
     };
 
     nvidia = {
