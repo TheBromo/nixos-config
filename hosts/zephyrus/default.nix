@@ -24,6 +24,7 @@
       device = "nodev"; # for UEFI, set to the EFI system partition, e.g., "/dev/sda1"; for BIOS, set to "nodev"
       efiSupport = true; # set to false if not using UEFI
       enableCryptodisk = true; # Add Fedora to the boot menu
+      useOSProber = true;
       extraEntries = ''
             	menuentry "Fedora" {
               		set root=(hd0,1) 

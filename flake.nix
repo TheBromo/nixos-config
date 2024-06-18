@@ -17,7 +17,7 @@
         flake-utils.follows = "flake-utils";
       };
     };
-    hyprland.url = "github:hyprwm/Hyprland";
+    #    hyprland.url = "github:hyprwm/Hyprland";
     nixos-wsl.url = github:nix-community/nixos-wsl;
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
