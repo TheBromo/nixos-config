@@ -32,6 +32,13 @@
         pointerCursor = {
           name = "Bibata-Modern-Classic";
           package = pkgs.bibata-cursors;
+
+          gtk.enable = true;
+          x11.enable = true;
+          size = 16;
+        };
+        sessionVariables = {
+          XCURSOR_SIZE = 16;
         };
       };
     });
