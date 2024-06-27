@@ -21,6 +21,7 @@ in
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"
 
+      set-option -g status-position top 
       bind C-s set-option -g status
 
       bind-key -r f run-shell "tmux neww tmux-sessionizer"
@@ -28,21 +29,21 @@ in
       # Set the left side of the status bar
       set -g status-left-length 20
       set -g status-left " ▲ #S | "
-      set -g status-left-style fg=black,bg=green
+      set -g status-left-style fg="#323437",bg="#85dc85"
 
       # Set the right side of the status bar
       set -g status-right " %H:%M %d-%b-%y "
-      set -g status-right-style fg=green,bg=black
+      set -g status-right-style fg="#85dc85",bg="#323437"
 
-      set -g status-bg black
-      set -g status-fg green
+      set -g status-bg "#323437"
+      set -g status-fg "#85dc85"
 
       # Set the window status format
       set -g window-status-format " #I: #W "
 
       # Set the current window status format
       set -g window-status-current-format " #I: #W "
-      set -g window-status-current-style fg=black,bg=green
+      set -g window-status-current-style fg="#323437",bg="#85dc85"
 
     '';
 
