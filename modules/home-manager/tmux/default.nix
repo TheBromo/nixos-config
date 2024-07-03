@@ -29,21 +29,21 @@ in
       # Set the left side of the status bar
       set -g status-left-length 20
       set -g status-left " ▲ #S | "
-      set -g status-left-style fg="#323437",bg="#85dc85"
+      set -g status-left-style fg="#323437",bg="#36c692"
 
       # Set the right side of the status bar
       set -g status-right " %H:%M %d-%b-%y "
-      set -g status-right-style fg="#85dc85",bg="#323437"
+      set -g status-right-style fg="#36c692",bg="#323437"
 
       set -g status-bg "#323437"
-      set -g status-fg "#85dc85"
+      set -g status-fg "#36c692"
 
       # Set the window status format
       set -g window-status-format " #I: #W "
 
       # Set the current window status format
       set -g window-status-current-format " #I: #W "
-      set -g window-status-current-style fg="#323437",bg="#85dc85"
+      set -g window-status-current-style fg="#323437",bg="#36c692"
 
     '';
 
