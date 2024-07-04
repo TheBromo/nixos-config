@@ -48,6 +48,9 @@ in
     enable = true;
     enableBashIntegration = true;
     settings = {
+      directory = {
+        style = "bold #36c692";
+      };
       battery = {
         full_symbol = "• ";
         charging_symbol = "⇡ ";
