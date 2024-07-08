@@ -1,12 +1,12 @@
 {
   description = "My personal nixos config";
   inputs = {
-    nixpkgs.url = github:NixOS/nixpkgs/nixos-unstable;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     home-manager = {
-      url = github:nix-community/home-manager;
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -18,7 +18,7 @@
       };
     };
     #    hyprland.url = "github:hyprwm/Hyprland";
-    nixos-wsl.url = github:nix-community/nixos-wsl;
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 

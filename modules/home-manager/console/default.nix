@@ -42,6 +42,8 @@ in
       cat = "bat";
       bs = "branch-switcher";
       lg = "lazygit";
+      vim = "nvim";
+      vi = "nvim";
     };
     initExtra = ''
       screenfetch

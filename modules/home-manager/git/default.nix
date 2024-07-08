@@ -24,6 +24,7 @@
         colorArg = "always";
         pager = "${lib.getExe pkgs.delta} --dark --paging=never";
       };
+      core.editor = "nvim";
     };
   };
 }
