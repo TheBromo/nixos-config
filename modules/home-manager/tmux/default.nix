@@ -1,4 +1,4 @@
-{ pkgs, lib, root, ... }:
+{ pkgs, root, ... }:
 let
   tmux-sessionizer = import "${root}/pkgs/tmux-sessionizer" { inherit pkgs; };
 in
@@ -12,8 +12,8 @@ in
     clock24 = true;
     plugins = with pkgs.tmuxPlugins;[
       pain-control
-      vim-tmux-navigator
       yank
+      vim-tmux-navigator
     ];
     extraConfig = ''
       set -g default-terminal "xterm-256color"
@@ -46,7 +46,6 @@ in
       set -g window-status-current-style fg="#303030",bg="#36c692"
 
     '';
-
   };
 
   programs.bash.bashrcExtra = ''
