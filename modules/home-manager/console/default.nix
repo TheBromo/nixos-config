@@ -2,6 +2,8 @@
 let
   bs = import "${root}/pkgs/branch-switcher" { inherit pkgs; };
   info = import "${root}/pkgs/info" { inherit pkgs; };
+  dvt = import "${root}/pkgs/dvt" { inherit pkgs; };
+  dvd = import "${root}/pkgs/dvd" { inherit pkgs; };
 in
 {
   programs.eza = {
@@ -18,6 +20,8 @@ in
     pkgs.bat
     bs
     info
+    dvt
+    dvd
   ];
 
   programs.zoxide = {
@@ -43,6 +47,8 @@ in
       screenfetch
     '';
   };
+
+  programs.direnv.enable = true;
 
   programs.starship = {
     enable = true;
