@@ -82,11 +82,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1720433079,
-        "narHash": "sha256-VFgZWdjH8GIxESxVlF24Sxela8jozxwNNpO8Ynp3T1M=",
+        "lastModified": 1720442833,
+        "narHash": "sha256-cjuj9ktS9Dqys/fO3dZYTnRWUwMmDMOB/sL57zbXJP0=",
         "owner": "thebromo",
         "repo": "neovim-config",
-        "rev": "f925956deb0a1b7d0967d2ec16af4d641e287ecd",
+        "rev": "0e4f5bf14982c25701d000a9062ab1b50446b29c",
         "type": "github"
       },
       "original": {
