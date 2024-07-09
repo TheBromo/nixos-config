@@ -1,7 +1,4 @@
-{ pkgs, neovim-config, ... }:
-let
-  neovim = neovim-config.makeDistribution pkgs;
-in
+{ pkgs, ... }:
 {
   nix = {
     settings = {
@@ -30,16 +27,15 @@ in
 
   environment = {
     variables = {
-      EDITOR = "${neovim}/bin/nvim";
+      EDITOR = "${pkgs.neovim}/bin/nvim";
     };
 
     systemPackages = with pkgs; [
       unzip
       zip
-      coreutils
       dnsutils
       coreutils
-      htop
+      btop
       git-crypt
       neovim
     ];

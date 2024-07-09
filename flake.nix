@@ -28,13 +28,16 @@
       specialArgs = {
         inherit inputs root neovim-config;
       };
+      baseModules = [
+        ./overlays.nix
+      ];
     in
     {
       nixosConfigurations = {
         wsl = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
-          modules = [
+          modules = baseModules ++ [
             ./hosts/wsl
             nixos-wsl.nixosModules.wsl
           ];
@@ -42,7 +45,7 @@
         zephyrus = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
-          modules = [
+          modules = baseModules ++ [
             nixos-hardware.nixosModules.asus-zephyrus-ga402
             ./hosts/zephyrus
           ];
@@ -50,14 +53,14 @@
         lunar = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
-          modules = [
+          modules = baseModules ++ [
             ./hosts/lunar
           ];
         };
         casa = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
-          modules = [
+          modules = baseModules ++ [
             ./hosts/casa
           ];
         };

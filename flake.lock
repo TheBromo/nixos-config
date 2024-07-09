@@ -59,11 +59,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1720327769,
-        "narHash": "sha256-kAsg3Lg4YKKpGw+f1W2s5hzjP8B0y/juowvjK8utIag=",
+        "lastModified": 1720470846,
+        "narHash": "sha256-7ftA4Bv5KfH4QdTRxqe8/Hz2YTKo+7IQ9n7vbNWgv28=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6b7ce96f34b324e4e104abc30d06955d216bac71",
+        "rev": "2fb5c1e0a17bc6059fa09dc411a43d75f35bb192",
         "type": "github"
       },
       "original": {
@@ -72,21 +72,50 @@
         "type": "github"
       }
     },
+    "neovim": {
+      "inputs": {
+        "flake-utils": [
+          "neovim-config",
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "neovim-config",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "contrib",
+        "lastModified": 1720407098,
+        "narHash": "sha256-M1eqDUwolecus7w0KtNBsKzVvy+k3gkL6hlFEzp5w/Q=",
+        "owner": "neovim",
+        "repo": "neovim",
+        "rev": "8fe17036bad04fa0c575cd7d7bc6d0bf3f4b1481",
+        "type": "github"
+      },
+      "original": {
+        "dir": "contrib",
+        "owner": "neovim",
+        "ref": "release-0.10",
+        "repo": "neovim",
+        "type": "github"
+      }
+    },
     "neovim-config": {
       "inputs": {
         "flake-utils": [
           "flake-utils"
         ],
+        "neovim": "neovim",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1720469540,
-        "narHash": "sha256-y+y4+H1E1pT+2V6GLF1r1Inn0OYGBgb0wuGm+uvKUJc=",
+        "lastModified": 1720518764,
+        "narHash": "sha256-JCnxK7r0nELd3kAa9vOvaz2BIc1M1JwOiwV8dhAYjlU=",
         "owner": "thebromo",
         "repo": "neovim-config",
-        "rev": "a121a14e9fcf76eeac144eae5722677ae22e2cc8",
+        "rev": "4f5a098d48c377f0f1895f4f82546754ddc98eb6",
         "type": "github"
       },
       "original": {
@@ -97,11 +126,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1720429258,
-        "narHash": "sha256-d6JI5IgJ1xdrk7DvYVx7y8ijcYz5I1nhCwOiDP6cq00=",
+        "lastModified": 1720515935,
+        "narHash": "sha256-8b+fzR4W2hI5axwB+4nBwoA15awPKkck4ghhCt8v39M=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "72d3c007024ce47d838bb38693c8773812f54bf2",
+        "rev": "a111ce6b537df12a39874aa9672caa87f8677eda",
         "type": "github"
       },
       "original": {
