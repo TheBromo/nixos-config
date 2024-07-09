@@ -22,12 +22,14 @@ in
       set-environment -g COLORTERM "truecolor"
 
       set-option -g status-position top 
+      set-option -g automatic-rename on
+
       bind C-s set-option -g status
 
       bind-key -r f run-shell "tmux neww tmux-sessionizer"
 
       # Set the left side of the status bar
-      set -g status-left-length 20
+      set -g status-left-length 30
       set -g status-left " ▲ #S | "
       set -g status-left-style fg="#303030",bg="#36c692"
 
@@ -38,11 +40,12 @@ in
       set -g status-bg "#303030"
       set -g status-fg "#36c692"
 
+
       # Set the window status format
-      set -g window-status-format " #I: #W "
+      set -g window-status-format " #I: #(basename #{pane_current_path}) "
 
       # Set the current window status format
-      set -g window-status-current-format " #I: #W "
+      set -g window-status-current-format " #I: #(basename #{pane_current_path}) "
       set -g window-status-current-style fg="#303030",bg="#36c692"
 
     '';
