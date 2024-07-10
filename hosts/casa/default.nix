@@ -18,6 +18,7 @@
       "${root}/modules/nixos/fonts"
       "${root}/modules/nixos/1password"
       "${root}/modules/nixos/steam"
+      "${root}/modules/nixos/ssh"
       ./user/manuel
     ];
 
