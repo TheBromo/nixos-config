@@ -8,6 +8,7 @@
     jq
     zip
     unzip
+    openssl
 
     go
     gopls

@@ -42,10 +42,10 @@ in
 
 
       # Set the window status format
-      set -g window-status-format " #I: #(basename #{pane_current_path}) "
+      set -g window-status-format " #I:[#W]#(basename #{pane_current_path}| cut -c1-5) "
 
       # Set the current window status format
-      set -g window-status-current-format " #I: #(basename #{pane_current_path}) "
+      set -g window-status-current-format " #I:[#W]#(basename #{pane_current_path}| cut -c1-10) "
       set -g window-status-current-style fg="#303030",bg="#36c692"
 
     '';
