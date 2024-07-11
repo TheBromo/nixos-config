@@ -19,6 +19,7 @@
       "${root}/modules/nixos/1password"
       "${root}/modules/nixos/steam"
       "${root}/modules/nixos/ssh"
+      "${root}/modules/nixos/tailscale"
       ./user/manuel
     ];
 
