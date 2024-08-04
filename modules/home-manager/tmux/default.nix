@@ -19,6 +19,11 @@ in
       set -g default-terminal "xterm-256color"
       set -ga terminal-overrides ",*256col*:Tc"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+      set-option -sa terminal-overrides ",xterm*:Tc"
+
+      set -g default-terminal "alacritty" 
+      set-option -sa terminal-overrides ",alacritty*:Tc"
+
       set-environment -g COLORTERM "truecolor"
 
       set-option -g status-position top 
