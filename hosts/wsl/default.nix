@@ -11,6 +11,8 @@
   imports = [
     "${root}/modules/nixos/base"
     "${root}/modules/nixos/docker"
+    "${root}/modules/nixos/1password"
+    "${root}/modules/nixos/ssh"
     ./user/manuel
   ];
   wsl.enable = true;
