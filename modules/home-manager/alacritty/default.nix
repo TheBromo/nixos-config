@@ -1,6 +1,6 @@
 { pkgs, lib, ... }:
 let
-  fontFamily = "Berkeley Mono"; # "GeistMono Nerd Font";
+  fontFamily = "BerkeleyMono Nerd Font"; # "GeistMono Nerd Font";
 in
 {
   programs.alacritty = {
