@@ -10,6 +10,7 @@
 {
   imports = [
     "${root}/modules/nixos/base"
+    "${root}/modules/nixos/fonts"
     "${root}/modules/nixos/docker"
     "${root}/modules/nixos/1password"
     "${root}/modules/nixos/ssh"

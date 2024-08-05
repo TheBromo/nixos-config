@@ -16,33 +16,30 @@ in
       vim-tmux-navigator
     ];
     extraConfig = ''
-      set -g default-terminal "alacritty" 
-      set-option -sa terminal-overrides ",alacritty*:Tc"
-
+      set-option -sa terminal-overrides ",xterm*:Tc"
       set-environment -g COLORTERM "truecolor"
 
       set-option -g status-position top 
       set-option -g automatic-rename on
 
       bind C-s set-option -g status
-
       bind-key -r f run-shell "tmux neww tmux-sessionizer"
 
-      # Set the left side of the status bar
+      # left side 
       set -g status-left-length 30
-      set -g status-left " ▲ #S | "
-      set -g status-left-style fg="black",bg="green"
+      set -g status-left " ▲ #S "
+      set -g status-left-style fg="green,bold",bg="black"
 
-      # Set the right side of the status bar
+      # right side 
       set -g status-right " %H:%M %d-%b-%y "
       set -g status-right-style fg="green",bg="black"
+
 
       set -g status-bg "black"
       set -g status-fg "green"
 
 
       # Set the window status format
-      # Set a custom window status format based on the current pane's program
       set -g window-status-format " #I:#( \
         if [ \"#{pane_current_command}\" = \"bash\" ]; then \
           basename \"#{pane_current_path}\" | cut -c1-10; \
@@ -50,7 +47,6 @@ in
           echo \"#{pane_current_command}\"; \
         fi \
       ) "
-
 
       # Set the current window status format
       set -g window-status-current-format " #I:#(basename #{pane_current_path}| cut -c1-10) "
