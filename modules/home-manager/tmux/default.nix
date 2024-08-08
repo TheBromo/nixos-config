@@ -7,6 +7,7 @@ in
     enable = true;
     baseIndex = 1;
     secureSocket = true;
+
     mouse = true;
     keyMode = "vi";
     clock24 = true;
@@ -16,8 +17,8 @@ in
       vim-tmux-navigator
     ];
     extraConfig = ''
-      set-option -sa terminal-overrides ",xterm*:Tc"
-      set-environment -g COLORTERM "truecolor"
+      set -g default-terminal "$TERM"
+      set -ag terminal-overrides ",$TERM:Tc"
 
       set-option -g status-position top 
       set-option -g automatic-rename on
