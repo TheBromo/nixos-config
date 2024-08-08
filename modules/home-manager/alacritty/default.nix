@@ -15,8 +15,8 @@ in
         title = "Alacritty";
         dynamic_title = true;
         padding = {
-          x = 10;
-          y = 10;
+          x = 0;
+          y = 4;
         };
         class = {
           instance = "Alacritty";

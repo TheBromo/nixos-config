@@ -7,7 +7,6 @@ in
     enable = true;
     baseIndex = 1;
     secureSocket = true;
-
     mouse = true;
     keyMode = "vi";
     clock24 = true;
@@ -16,6 +15,7 @@ in
       yank
       vim-tmux-navigator
     ];
+
     extraConfig = ''
       set -g default-terminal "$TERM"
       set -ag terminal-overrides ",$TERM:Tc"
@@ -52,7 +52,6 @@ in
       # Set the current window status format
       set -g window-status-current-format " #I:#(basename #{pane_current_path}| cut -c1-10) "
       set -g window-status-current-style fg="black",bg="green"
-
     '';
   };
 

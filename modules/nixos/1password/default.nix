@@ -1,6 +1,4 @@
 { ... }: {
-
-
   # Enables the 1Password CLI
   programs._1password = { enable = true; };
 

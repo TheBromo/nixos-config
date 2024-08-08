@@ -47,7 +47,6 @@ in
     };
     bashrcExtra = ''
       export PATH=$PATH:$HOME/go/bin
-
     '';
 
     initExtra = ''
