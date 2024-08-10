@@ -17,6 +17,10 @@
     useUserPackages = true;
 
     users.manuel = ({ ... }: {
+      dconf = {
+          enable = true;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      };
       imports = [
         "${root}/modules/home-manager/git"
         "${root}/modules/home-manager/alacritty"
