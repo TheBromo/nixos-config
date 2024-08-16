@@ -12,6 +12,9 @@ in
     extraOptions = [
       "--group-directories-first"
       "--header"
+      "-x"
+      "--color=never"
+      "--classify=always"
     ];
     git = true;
   };
@@ -61,6 +64,6 @@ in
     enableBashIntegration = true;
   };
 
-  home.file.".config/starship.toml".source = ./starship.toml;
+  home.file.".config/starship.toml".source = ./starship-pure.toml;
 
 }
