@@ -50,7 +50,7 @@
     settings = {
       git.paging = {
         colorArg = "always";
-        pager = "${lib.getExe pkgs.delta} --dark --paging=never";
+        #pager = "${lib.getExe pkgs.delta} --dark --paging=never";
       };
       core.editor = "nvim";
     };
