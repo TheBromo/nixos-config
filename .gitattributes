@@ -1,2 +1,6 @@
 secrets/** filter=git-crypt diff=git-crypt
+secret-key filter=git-crypt diff=git-crypt
+
+
+
 

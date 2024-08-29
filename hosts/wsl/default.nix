@@ -19,6 +19,7 @@
   wsl.enable = true;
   wsl.defaultUser = "manuel";
   wsl.startMenuLaunchers = true;
+  security.pki.certificateFiles = ["${root}/secrets/cert_0000.crt"];
 
   # This value determines the NixOS release from which the default settings for 
   # stateful data, like file locations and database versions on your system were 
