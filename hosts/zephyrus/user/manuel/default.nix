@@ -31,20 +31,6 @@
       gtk.enable = true;
       home = {
         stateVersion = "23.11";
-        pointerCursor = {
-          name = "macOS-BigSur";
-          package = pkgs.apple-cursor;
-          gtk.enable = true;
-          x11 = {
-            enable = true;
-            defaultCursor = "macOS-BigSur";
-          };
-          size = 24;
-        };
-        file.".icons/default".source = "${pkgs.apple-cursor}/share/icons/macOS-BigSur";
-        sessionVariables = {
-          XCURSOR_SIZE = 24;
-        };
       };
     });
     extraSpecialArgs = {
