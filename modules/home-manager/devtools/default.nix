@@ -13,6 +13,12 @@
     go
     gopls
     gotools
+    
+    k9s
+    kubectl
+    kubectx
+    kubectl-neat
+    kubectl-example
 
     gnumake
     cmake
