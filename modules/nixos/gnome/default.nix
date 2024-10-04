@@ -22,5 +22,9 @@
   ]) ++ (with pkgs; [
     epiphany # web browser
   ]);
+  environment.systemPackages = with pkgs; [
+    spotify
+  ];
+
 
 }

@@ -20,7 +20,7 @@ in
       set -g default-terminal "$TERM"
       set -ag terminal-overrides ",$TERM:Tc"
 
-      set-option -g status-position top 
+      #set-option -g status-position top 
       set-option -g automatic-rename on
 
       bind C-s set-option -g status
