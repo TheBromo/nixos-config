@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     gcc
-    go-task
     nixpkgs-fmt
     nix-output-monitor
 

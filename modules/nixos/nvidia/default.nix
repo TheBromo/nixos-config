@@ -7,7 +7,7 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.initrd.kernelModules = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  #boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   hardware = {
     graphics = {
       enable = true;
@@ -21,7 +21,7 @@
       modesetting.enable = true;
       powerManagement.enable = true;
 
-      open = false;
+      open = true;
       nvidiaSettings = true;
 
       package = config.boot.kernelPackages.nvidiaPackages.stable;
