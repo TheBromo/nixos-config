@@ -47,8 +47,12 @@ in
       lg = "lazygit";
       vim = "nvim";
       vi = "nvim";
+      k = "kubectl";
     };
     bashrcExtra = ''
+      source <(kubectl completion bash) 
+      complete -F __start_kubectl k
+
       export PATH=$PATH:$HOME/go/bin
     '';
 
