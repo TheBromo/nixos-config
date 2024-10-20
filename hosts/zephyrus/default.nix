@@ -15,6 +15,8 @@
     "${root}/modules/nixos/gnome"
     "${root}/modules/nixos/1password"
     "${root}/modules/nixos/docker"
+    "${root}/modules/nixos/wine"
+    "${root}/modules/nixos/qemu"
   ];
   # Bootloader.
   boot.loader = {
