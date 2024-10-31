@@ -8,7 +8,7 @@ in
     enableDefaultPackages = true;
     packages = [
       pkgs.noto-fonts
-      pkgs.noto-fonts-cjk
+      pkgs.noto-fonts-cjk-sans
       pkgs.noto-fonts-emoji
       pkgs.font-awesome
       pkgs.source-han-sans

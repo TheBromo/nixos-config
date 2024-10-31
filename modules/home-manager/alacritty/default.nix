@@ -8,7 +8,7 @@ in
     settings = {
       env.TERM = "alacritty";
       scrolling.history = 100000;
-      live_config_reload = true;
+
 
       window = {
         decorations = "full";
