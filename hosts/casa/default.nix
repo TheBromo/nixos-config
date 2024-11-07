@@ -20,6 +20,7 @@
       "${root}/modules/nixos/steam"
       "${root}/modules/nixos/ssh"
       "${root}/modules/nixos/tailscale"
+      "${root}/modules/nixos/gimp"
       ./user/manuel
     ];
 
