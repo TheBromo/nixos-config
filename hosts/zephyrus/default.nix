@@ -17,6 +17,8 @@
     "${root}/modules/nixos/docker"
     "${root}/modules/nixos/wine"
     "${root}/modules/nixos/qemu"
+    "${root}/modules/nixos/jetbrains"
+    "${root}/modules/nixos/slack"
   ];
   # Bootloader.
   boot.loader = {
