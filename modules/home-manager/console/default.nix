@@ -25,6 +25,7 @@ in
     info
     dvt
     dvd
+    pkgs.spotify-player
   ];
 
   programs.zoxide = {

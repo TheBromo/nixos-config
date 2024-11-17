@@ -10,6 +10,9 @@ in
     mouse = true;
     keyMode = "vi";
     clock24 = true;
+    shortcut = "a";
+    escapeTime = 10;
+
     plugins = with pkgs.tmuxPlugins;[
       pain-control
       yank
