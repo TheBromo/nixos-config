@@ -44,6 +44,7 @@ in
     #uvision-gdb
 
     imhex
+    undollar
   ];
 }
 
