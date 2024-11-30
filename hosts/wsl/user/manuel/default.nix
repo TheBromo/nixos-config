@@ -4,12 +4,13 @@
     inputs.home-manager.nixosModules.default
   ];
 
+  programs.zsh.enable = true;
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
     extraGroups = [ "wheel" "docker" ];
     initialPassword = "changeme";
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
   };
 
   home-manager = {

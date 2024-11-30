@@ -12,6 +12,7 @@ in
     clock24 = true;
     shortcut = "a";
     escapeTime = 10;
+    shell ="${pkgs.zsh}/bin/zsh" ;
 
     plugins = with pkgs.tmuxPlugins;[
       pain-control
@@ -45,7 +46,7 @@ in
 
       # Set the window status format
       set -g window-status-format " #I:#( \
-        if [ \"#{pane_current_command}\" = \"bash\" ]; then \
+        if [ \"#{pane_current_command}\" = \"zsh\" ]; then \
           basename \"#{pane_current_path}\" | cut -c1-10; \
         else \
           echo \"#{pane_current_command}\"; \
@@ -60,6 +61,10 @@ in
 
   programs.bash.bashrcExtra = ''
     bind -s '"\C-f":"tmux-sessionizer\n"'
+  '';
+
+  programs.zsh.initExtra= ''
+    bindkey -s "^F" "tmux-sessionizer\n"
   '';
 
   home.packages = [

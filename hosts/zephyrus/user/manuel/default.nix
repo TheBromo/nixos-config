@@ -3,6 +3,8 @@
   imports = [
     inputs.home-manager.nixosModules.default
   ];
+  programs.zsh.enable = true;
+
 
   users.users.manuel = {
     isNormalUser = true;
@@ -12,14 +14,18 @@
     packages = with pkgs; [
       google-chrome
     ];
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
   };
 
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-
-    users.manuel = ({ ... }: {
+   users.manuel = ({ ... }: {
+      dconf = {
+          enable = true;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      };
+ 
       imports = [
         "${root}/modules/home-manager/git"
         "${root}/modules/home-manager/alacritty"

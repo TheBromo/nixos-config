@@ -4,12 +4,14 @@
     inputs.home-manager.nixosModules.default
   ];
 
+  programs.zsh.enable = true;
+
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
     extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark" ];
     initialPassword = "changeme";
-    shell = pkgs.bash;
+    shell = pkgs.zsh;
   };
 
   home-manager = {

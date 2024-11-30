@@ -6,20 +6,7 @@ let
   dvd = import "${root}/pkgs/dvd" { inherit pkgs; };
 in
 {
-  programs.eza = {
-    enable = true;
-    enableBashIntegration = true;
-    extraOptions = [
-      "--group-directories-first"
-      "--header"
-      "-x"
-      "--color=never"
-      "--classify=always"
-    ];
-    git = true;
-  };
-
-  home.packages = [
+    home.packages = [
     pkgs.bat
     bs
     info
@@ -30,17 +17,20 @@ in
 
   programs.zoxide = {
     enable = true;
-    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
-  programs.bash = {
+  programs.zsh= {
     enable = true;
     enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
     shellAliases = {
       cd = "z";
       cat = "bat";
@@ -50,23 +40,24 @@ in
       vi = "nvim";
       k = "kubectl";
     };
-    bashrcExtra = ''
-      source <(kubectl completion bash) 
-      complete -F __start_kubectl k
-
-      export PATH=$PATH:$HOME/go/bin
-    '';
 
     initExtra = ''
-      screenfetch
+        source <(kubectl completion zsh)
+        export GOPATH=$HOME/go
+
+        screenfetch
     '';
   };
 
-  programs.direnv.enable = true;
+  programs.direnv={
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
+  };
 
   programs.starship = {
     enable = true;
-    enableBashIntegration = true;
+    enableZshIntegration = true;
   };
 
   home.file.".config/starship.toml".source = ./starship-pure.toml;

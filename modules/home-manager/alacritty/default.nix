@@ -8,6 +8,9 @@ in
     settings = {
       env.TERM = "alacritty";
       scrolling.history = 100000;
+      terminal.shell = {
+        program = "${pkgs.zsh}/bin/zsh";
+      };
 
 
       window = {

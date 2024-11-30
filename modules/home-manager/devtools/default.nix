@@ -45,6 +45,8 @@ in
 
     imhex
     undollar
+    gdbgui
+
   ];
 }
 
