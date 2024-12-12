@@ -27,6 +27,10 @@ in
     kind
     minikube
     
+    node2nix
+    nodejs 
+    pnpm
+    yarn
 
     gnumake
     cmake

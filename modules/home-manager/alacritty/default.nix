@@ -49,9 +49,6 @@ in
     };
   };
 
-  home.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "GeistMono" ]; })
-  ];
 
   fonts.fontconfig.enable = true;
 
