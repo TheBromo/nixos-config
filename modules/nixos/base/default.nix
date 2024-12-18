@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs,ghostty, ... }:
 {
   nix = {
     settings = {
@@ -33,6 +33,9 @@
       btop
       git-crypt
       neovim
+                  ghostty.packages.x86_64-linux.default
+
+
     ];
   };
 }
