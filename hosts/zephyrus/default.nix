@@ -27,12 +27,8 @@
       device = "nodev"; # for UEFI, set to the EFI system partition, e.g., "/dev/sda1"; for BIOS, set to "nodev"
       efiSupport = true; # set to false if not using UEFI
       enableCryptodisk = true; # Add Fedora to the boot menu
-      useOSProber = true;
+      useOSProber = false;
       extraEntries = ''
-            	menuentry "Fedora" {
-              		set root=(hd0,1) 
-        		chainloader /EFI/fedora/grubx64.efi
-            	}
         	menuentry "Windows" {
         		set root=(hd0,1)
         		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
