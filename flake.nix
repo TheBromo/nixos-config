@@ -20,22 +20,13 @@
     #    hyprland.url = "github:hyprwm/Hyprland";
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-
-    ghostty = {
-      url = "git+ssh://git@github.com/ghostty-org/ghostty";
-
-      # NOTE: The below 2 lines are only required on nixos-unstable,
-      # if you're on stable, they may break your build
-      inputs.nixpkgs-stable.follows = "nixpkgs";
-      inputs.nixpkgs-unstable.follows = "nixpkgs";
-    };
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-wsl, nixos-hardware, neovim-config,ghostty, ... }:
+  outputs = inputs@{ self, nixpkgs, nixos-wsl, nixos-hardware, neovim-config, ... }:
     let
       root = self;
       specialArgs = {
-        inherit inputs root neovim-config ghostty;
+        inherit inputs root neovim-config ;
       };
       baseModules = [
         ./overlays.nix
