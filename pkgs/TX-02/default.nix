@@ -1,7 +1,7 @@
 { pkgs, ... }: pkgs.stdenvNoCC.mkDerivation
 {
   name = "TX-02";
-  version = "1.1.0";
+  version = "2.002";
   src = ./../../secrets/TX-02.tar.xz;
   sourceRoot = ".";
 

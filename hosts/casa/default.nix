@@ -28,10 +28,17 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
+   boot.loader.grub.useOSProber = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.configurationLimit = 5;
-
+  # boot.loader.grub.extraEntries = ''
+  #       	menuentry "Windows" {
+  #       		set root=(nvme1n1p1@,1)
+  #       		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
+  # 	chainloader /dev/nvme1n1p1@/efi/Microsoft/Boot/bootmgfw.efi
+  #        	}
+  #          	'';
+  #
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
