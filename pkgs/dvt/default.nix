@@ -1,5 +1,5 @@
 { pkgs, ... }:let 
-    githash = "d5ad3c909c004f202019f662bf7304ee59f6b5e4";
+    githash = "959eff5d7eee92131e2bfcbe2bf86ab8c809974c";
 in pkgs.writeScriptBin "dvt" ''
   #!${pkgs.bash}/bin/bash
   if [ -z $1 ]; then
