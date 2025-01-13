@@ -1,7 +1,4 @@
-{ pkgs, root, ... }:
-let
-  tmux-sessionizer = import "${root}/pkgs/tmux-sessionizer" { inherit pkgs; };
-in
+{ pkgs,  ... }:
 {
   programs. tmux = {
     enable = true;
@@ -28,7 +25,7 @@ in
       set-option -g automatic-rename on
 
       bind C-s set-option -g status
-      bind-key -r f run-shell "tmux neww tmux-sessionizer"
+      bind-key -r f run-shell "tmux neww tms"
 
       # left side 
       set -g status-left-length 30
@@ -60,14 +57,29 @@ in
   };
 
   programs.bash.bashrcExtra = ''
-    bind -s '"\C-f":"tmux-sessionizer\n"'
+    bind -s '"\C-f":"tms\n"'
   '';
 
   programs.zsh.initExtra= ''
-    bindkey -s "^F" "tmux-sessionizer\n"
+    bindkey -s "^F" "tms\n"
   '';
 
   home.packages = [
-    tmux-sessionizer
+    pkgs.tmux-sessionizer
   ];
+
+  home.file.".config/tms/config.toml".text = ''
+    [[search_dirs]]
+    path = "/home/manuel/Development"
+    depth = 1
+
+    [[search_dirs]]
+    path = "/home/manuel/.config/home-manager"
+    depth = 1
+
+    [[search_dirs]]
+    path = "/home/manuel/.config/nvim"
+    depth = 1
+  '';
+
 }
