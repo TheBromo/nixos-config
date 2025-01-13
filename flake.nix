@@ -21,7 +21,7 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, nixos-wsl, nixos-hardware, neovim-config, ... }:
+  outputs = inputs@{ self, nixpkgs, home-manager, nixos-wsl, nixos-hardware, neovim-config, ... }:
     let
       root = self;
       specialArgs = {
@@ -63,6 +63,16 @@
             ./hosts/casa
           ];
         };
+      };
+      homeConfigurations."manuel" = home-manager.lib.homeManagerConfiguration {
+         pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        extraSpecialArgs = {
+          inherit root;
+        };
+          # Add your home-manager modules here
+         modules = baseModules ++ [
+            ./hosts/home-manager
+          ];
       };
     };
 }

@@ -1,4 +1,4 @@
-.PHONY: casa wsl up fmt zephyrus
+.PHONY: casa wsl up fmt zephyrus home
 
 # Alias for casa
 casa:
@@ -19,4 +19,7 @@ fmt:
 # Alias for zephyrus
 zephyrus:
 	nixos-rebuild switch --flake .#zephyrus |& nom
+
+home:
+	nix run nixpkgs#home-manager -- switch --flake .#manuel
 

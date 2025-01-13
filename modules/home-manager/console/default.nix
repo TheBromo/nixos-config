@@ -6,8 +6,14 @@ let
   dvd = import "${root}/pkgs/dvd" { inherit pkgs; };
 in
 {
-    home.packages = [
+  home.packages = [
     pkgs.bat
+    pkgs.zsh
+    pkgs.zoxide
+    pkgs._1password-cli
+    pkgs.fzf
+    pkgs.direnv
+    pkgs.starship
     bs
     info
     dvt
@@ -39,12 +45,12 @@ in
       vim = "nvim";
       vi = "nvim";
       k = "kubectl";
+
     };
 
     initExtra = ''
         source <(kubectl completion zsh)
         export GOPATH=$HOME/go
-
         screenfetch
     '';
   };
