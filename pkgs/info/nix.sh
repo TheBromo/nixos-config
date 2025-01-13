@@ -1,12 +1,13 @@
 #!/bin/sh
 #
 # ufetch-nixos - tiny system info for nixos
+. /etc/os-release
 
 ## INFO
 
 # user is already defined
 host="$(hostname)"
-os="$(nixos-version)"
+os="$VERSION"
 kernel="$(uname -sr)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
 packages="$(ls -d -1 /nix/store/*/ | wc -l)"

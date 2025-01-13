@@ -7,13 +7,6 @@ let
 in
 {
   home.packages = [
-    pkgs.bat
-    pkgs.zsh
-    pkgs.zoxide
-    pkgs._1password-cli
-    pkgs.fzf
-    pkgs.direnv
-    pkgs.starship
     bs
     info
     dvt
@@ -59,6 +52,9 @@ in
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
+  };
+  programs.bat = {
+    enable =true;
   };
 
   programs.starship = {
