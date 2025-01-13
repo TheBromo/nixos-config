@@ -70,7 +70,7 @@
           inherit root;
         };
           # Add your home-manager modules here
-         modules = baseModules ++ [
+         modules = [
             ./hosts/home-manager
           ];
       };
