@@ -38,7 +38,9 @@ in
       vim = "nvim";
       vi = "nvim";
       k = "kubectl";
-
+      ll="ls -alF";
+      la="ls -A";
+       l="ls -CF";
     };
 
     initExtra = ''
