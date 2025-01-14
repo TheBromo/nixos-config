@@ -7,7 +7,7 @@
 
 # user is already defined
 host="$(hostname)"
-os="$VERSION"
+os="$PRETTY_NAME"
 kernel="$(uname -sr)"
 uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
 packages="$(ls -d -1 /nix/store/*/ | wc -l)"

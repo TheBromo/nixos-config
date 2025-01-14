@@ -1,13 +1,11 @@
 { pkgs, root, ... }:
 let
-  bs = import "${root}/pkgs/branch-switcher" { inherit pkgs; };
   info = import "${root}/pkgs/info" { inherit pkgs; };
   dvt = import "${root}/pkgs/dvt" { inherit pkgs; };
   dvd = import "${root}/pkgs/dvd" { inherit pkgs; };
 in
 {
   home.packages = [
-    bs
     info
     dvt
     dvd

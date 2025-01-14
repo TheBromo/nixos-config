@@ -23,12 +23,14 @@
       "${root}/modules/nixos/gimp"
       ./user/manuel
     ];
+  programs.nix-ld.enable = true;
+
 
   # Bootloader.
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-   boot.loader.grub.useOSProber = true;
+  boot.loader.grub.useOSProber = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.configurationLimit = 5;
   # boot.loader.grub.extraEntries = ''

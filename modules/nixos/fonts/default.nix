@@ -1,6 +1,5 @@
 { pkgs, root, ... }:
 let
-  berkeley = import "${root}/pkgs/berkeley-mono" { inherit pkgs; };
   tx-02 = import "${root}/pkgs/TX-02" { inherit pkgs; };
 in
 {
@@ -16,7 +15,6 @@ in
       pkgs.open-sans
       pkgs.source-han-sans-japanese
       pkgs.source-han-serif-japanese
-      berkeley
       tx-02
     ];
     fontconfig.defaultFonts = {

@@ -9,6 +9,7 @@
     runHook preInstall
 
     install -Dm644 -t $out/share/fonts/opentype/ TX-02/*.otf
+    install -Dm644 -t $out/share/fonts/truetype/ TX-02/*.ttf
 
     runHook postInstall
   '';

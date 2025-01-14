@@ -12,7 +12,7 @@
       else
         echo "Neovim configuration already exists. Skipping clone."
       fi
-      chown -R manuel:manuel ~/.config/nvim
+#      chown -R manuel:manuel ~/.config/nvim
       chmod -R u+w ~/.config/nvim
     '';
   };

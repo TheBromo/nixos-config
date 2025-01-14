@@ -69,7 +69,6 @@
         extraSpecialArgs = {
           inherit root;
         };
-          # Add your home-manager modules here
          modules = [
             ./hosts/home-manager
           ];
