@@ -21,6 +21,9 @@
   wsl.startMenuLaunchers = true;
   security.pki.certificateFiles = ["${root}/secrets/cert_0000.crt"];
   programs.nix-ld.enable = true;
+  environment.systemPackages = [
+    pkgs.wsl-vpnkit
+  ];
 
   # This value determines the NixOS release from which the default settings for 
   # stateful data, like file locations and database versions on your system were 
