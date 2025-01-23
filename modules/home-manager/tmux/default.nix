@@ -29,7 +29,7 @@
 
       # left side 
       set -g status-left-length 30
-      set -g status-left " ▲ #S "
+      set -g status-left " ∫ #S "
       set -g status-left-style fg="green,bold",bg="black"
 
       # right side 
