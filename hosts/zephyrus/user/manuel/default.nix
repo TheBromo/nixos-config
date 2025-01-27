@@ -32,6 +32,7 @@
         "${root}/modules/home-manager/devtools"
         "${root}/modules/home-manager/edutools"
         "${root}/modules/home-manager/console"
+        "${root}/modules/home-manager/nvim-config"
         "${root}/modules/home-manager/tmux"
       ];
 

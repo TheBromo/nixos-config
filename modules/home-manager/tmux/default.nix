@@ -74,11 +74,7 @@
     depth = 1
 
     [[search_dirs]]
-    path = "/home/manuel/.config/home-manager"
-    depth = 1
-
-    [[search_dirs]]
-    path = "/home/manuel/.config/nvim"
+    path = "/home/manuel/.config"
     depth = 1
   '';
 
