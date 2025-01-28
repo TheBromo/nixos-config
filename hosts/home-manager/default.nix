@@ -7,6 +7,7 @@
         "${root}/modules/home-manager/tmux"
         "${root}/modules/home-manager/nvim-config"
   ];
+  programs.ghostty.enable = true;
   
   home= {
     username = "manuel";
@@ -17,7 +18,7 @@
     };
     packages =[
       pkgs._1password-cli
-      pkgs._1password-gui
+      pkgs.git-crypt
 
     ];
   };

@@ -2,6 +2,7 @@
 	home.packages =[
 		pkgs.neovim
 		pkgs.git
+		pkgs.cargo
 	];
 
 	  home.activation = {
