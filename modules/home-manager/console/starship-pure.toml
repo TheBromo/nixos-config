@@ -11,6 +11,10 @@ $python\
 
 $character"""
 
+
+scan_timeout = 10
+command_timeout = 100
+
 [directory]
 style = "blue"
 
@@ -38,6 +42,7 @@ stashed = "≡"
 
 [git_state]
 format = '\([$state( $progress_current/$progress_total)]($style)\) '
+disabled = true
 style = "bright-black"
 
 [cmd_duration]
