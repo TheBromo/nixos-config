@@ -1,8 +1,4 @@
 { pkgs,root, ... }: 
-let
-  uvision-flash = import "${root}/pkgs/uvision-flash" { inherit pkgs; };
-  uvision-gdb   = import "${root}/pkgs/uvision-gdb" { inherit pkgs; };
-in
 {
   home.packages = with pkgs; [
     gcc
@@ -15,10 +11,11 @@ in
     openssl
 
     go
+    cargo
+    zig
     gopls
     gotools
 
-    
     k9s
     kubectl
     kubectx
@@ -26,7 +23,6 @@ in
     kubectl-example
     kind
     minikube
-    
     node2nix
     nodejs 
     pnpm
@@ -36,18 +32,6 @@ in
     cmake
     glibc
 
-    obsidian
-
-    #for keil arm
-    gdbgui
-    vscode-fhs
-
-    #stlink
-
-    #uvision-flash
-    #uvision-gdb
-
-    imhex
     undollar
     gdbgui
 
