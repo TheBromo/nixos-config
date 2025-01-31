@@ -10,6 +10,7 @@
     "${root}/modules/home-manager/console"
     "${root}/modules/home-manager/tmux"
     "${root}/modules/home-manager/nvim-config"
+    "${root}/modules/home-manager/ghostty"
   ];
 
   home = {
