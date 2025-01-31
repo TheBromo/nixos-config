@@ -1,6 +1,6 @@
 {...}: {
   xdg.configFile."ghostty/config".text = ''
-    theme = vesper
+    theme = "Builtin Pastel Dark"
 
     font-family = TX-02
     font-size = 13

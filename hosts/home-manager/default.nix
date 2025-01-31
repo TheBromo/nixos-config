@@ -12,6 +12,10 @@
     "${root}/modules/home-manager/nvim-config"
     "${root}/modules/home-manager/ghostty"
   ];
+  dconf = {
+    enable = true;
+    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+  };
 
   home = {
     username = "manuel";
@@ -19,6 +23,9 @@
     stateVersion = "24.11";
     sessionVariables = {
       SHELL = pkgs.zsh;
+    };
+    keyboard = {
+      options = ["caps:escape"];
     };
     packages = [
       pkgs._1password-cli
