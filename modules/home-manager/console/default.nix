@@ -29,6 +29,7 @@ in {
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    defaultKeymap = "viins";
 
     shellAliases = {
       cd = "z";

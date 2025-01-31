@@ -28,16 +28,16 @@
 
       # left side
       set -g status-left-length 30
-      set -g status-left " ∫ #S "
-      set -g status-left-style fg="green,bold",bg="black"
+      set -g status-left " ∫ #I  "
+      set -g status-left-style fg="#A9DC76,bold",bg="#19181A"
 
       # right side
       set -g status-right " %H:%M %d-%b-%y "
-      set -g status-right-style fg="green",bg="black"
+      set -g status-right-style fg="#A9DC76",bg="#19181A"
 
 
-      set -g status-bg "black"
-      set -g status-fg "green"
+      set -g status-bg "#19181A"
+      set -g status-fg "#A9DC76"
 
 
       # Set the window status format
@@ -51,7 +51,7 @@
 
       # Set the current window status format
       set -g window-status-current-format " #I:#(basename #{pane_current_path}| cut -c1-10) "
-      set -g window-status-current-style fg="black",bg="green"
+      set -g window-status-current-style fg="#19181A",bg="#A9DC76"
     '';
   };
 
