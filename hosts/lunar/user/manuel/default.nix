@@ -1,5 +1,9 @@
-{ pkgs, inputs, root, ... }: {
-
+{
+  pkgs,
+  inputs,
+  root,
+  ...
+}: {
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -7,7 +11,7 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark" ];
+    extraGroups = ["vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark"];
     initialPassword = "changeme";
     shell = pkgs.bash;
   };
@@ -16,7 +20,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.manuel = ({ ... }: {
+    users.manuel = {...}: {
       imports = [
         "${root}/modules/home-manager/git"
         "${root}/modules/home-manager/alacritty"
@@ -27,11 +31,9 @@
       home = {
         stateVersion = "23.11";
       };
-    });
+    };
     extraSpecialArgs = {
       inherit inputs;
     };
   };
 }
-
-

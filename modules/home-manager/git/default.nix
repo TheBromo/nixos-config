@@ -1,4 +1,8 @@
-{ pkgs, lib, ... }: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   programs.gh.enable = true;
 
   programs.git = {
@@ -24,13 +28,11 @@
             if pkgs.stdenv.isDarwin
             then "${pkgs._1password-gui}/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
             else lib.getExe' pkgs._1password-gui "op-ssh-sign";
-          allowedSignersFile =
-            let
-              allowedSigners = pkgs.writeText "git-ssh-allowed-signers" ''
-                manuel@strenge.ch ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu
-              '';
-            in
-            "${allowedSigners}";
+          allowedSignersFile = let
+            allowedSigners = pkgs.writeText "git-ssh-allowed-signers" ''
+              manuel@strenge.ch ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu
+            '';
+          in "${allowedSigners}";
         };
       };
       credential."https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
@@ -43,7 +45,6 @@
     enable = true;
     package = pkgs.gnupg;
   };
-
 
   programs.lazygit = {
     enable = true;

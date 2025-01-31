@@ -1,10 +1,12 @@
-{ pkgs, root, ... }:
-let
-  info = import "${root}/pkgs/info" { inherit pkgs; };
-  dvt = import "${root}/pkgs/dvt" { inherit pkgs; };
-  dvd = import "${root}/pkgs/dvd" { inherit pkgs; };
-in
 {
+  pkgs,
+  root,
+  ...
+}: let
+  info = import "${root}/pkgs/info" {inherit pkgs;};
+  dvt = import "${root}/pkgs/dvt" {inherit pkgs;};
+  dvd = import "${root}/pkgs/dvd" {inherit pkgs;};
+in {
   home.packages = [
     info
     dvt
@@ -22,7 +24,7 @@ in
     enableZshIntegration = true;
   };
 
-  programs.zsh= {
+  programs.zsh = {
     enable = true;
     enableCompletion = true;
     autosuggestion.enable = true;
@@ -31,38 +33,35 @@ in
     shellAliases = {
       cd = "z";
       cat = "bat";
-      bs = "branch-switcher";
       lg = "lazygit";
       vim = "nvim";
       vi = "nvim";
       k = "kubectl";
-      ll="ls -alF";
-      la="ls -A";
-       l="ls -CF";
+      ll = "ls -alF";
+      la = "ls -A";
+      l = "ls -CF";
     };
 
     initExtra = ''
-        source <(kubectl completion zsh)
-        export GOPATH=$HOME/go
-        screenfetch
+      source <(kubectl completion zsh)
+      export GOPATH=$HOME/go
+      screenfetch
     '';
   };
 
-  programs.direnv={
+  programs.direnv = {
     enable = true;
     enableZshIntegration = true;
     nix-direnv.enable = true;
   };
   programs.bat = {
-    enable =true;
+    enable = true;
   };
 
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-
   };
 
   home.file.".config/starship.toml".source = ./starship-pure.toml;
-
 }

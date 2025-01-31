@@ -1,6 +1,6 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
-        slack
-        slack-term
+    slack
+    slack-term
   ];
 }

@@ -1,5 +1,8 @@
-{ pkgs, root, ... }:
 {
+  pkgs,
+  root,
+  ...
+}: {
   home.sessionVariables = {
     GDK_BACKEND = "wayland";
   };
@@ -10,15 +13,14 @@
       pkgs.xdg-desktop-portal-hyprland
     ];
     config.common = {
-      default = [ "hyprland" ];
+      default = ["hyprland"];
     };
   };
-
 
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      ${builtins.readFile ./hyprland.conf} 
+      ${builtins.readFile ./hyprland.conf}
     '';
   };
 

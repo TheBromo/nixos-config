@@ -1,5 +1,4 @@
-{ ... }: {
-
+{...}: {
   home.file = {
     ".config/swaylock/background.jpg".source = ./../../../../wallpaper.png;
 

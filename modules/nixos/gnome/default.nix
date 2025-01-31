@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -15,17 +14,16 @@
     };
   };
 
-
-  environment.gnome.excludePackages = (with pkgs; [
-    gnome-photos
-    gnome-tour
-  ]) ++ (with pkgs; [
-    epiphany # web browser
-  ]);
+  environment.gnome.excludePackages =
+    (with pkgs; [
+      gnome-photos
+      gnome-tour
+    ])
+    ++ (with pkgs; [
+      epiphany # web browser
+    ]);
   environment.systemPackages = with pkgs; [
     spotify
     # spotifywm
   ];
-
-
 }

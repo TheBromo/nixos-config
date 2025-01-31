@@ -1,5 +1,8 @@
-{ pkgs,root, ... }: 
 {
+  pkgs,
+  root,
+  ...
+}: {
   home.packages = with pkgs; [
     gcc
     nixpkgs-fmt
@@ -24,7 +27,7 @@
     kind
     minikube
     node2nix
-    nodejs 
+    nodejs
     pnpm
     yarn
 
@@ -34,7 +37,5 @@
 
     undollar
     gdbgui
-
   ];
 }
-

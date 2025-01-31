@@ -1,5 +1,4 @@
-{ pkgs,  ... }:
-{
+{pkgs, ...}: {
   programs. tmux = {
     enable = true;
     baseIndex = 1;
@@ -9,9 +8,9 @@
     clock24 = true;
     shortcut = "a";
     escapeTime = 10;
-    shell ="${pkgs.zsh}/bin/zsh" ;
+    shell = "${pkgs.zsh}/bin/zsh";
 
-    plugins = with pkgs.tmuxPlugins;[
+    plugins = with pkgs.tmuxPlugins; [
       pain-control
       yank
       vim-tmux-navigator
@@ -21,18 +20,18 @@
       set -g default-terminal "$TERM"
       set -ag terminal-overrides ",$TERM:Tc"
 
-      #set-option -g status-position top 
+      #set-option -g status-position top
       set-option -g automatic-rename on
 
       bind C-s set-option -g status
       bind-key -r f run-shell "tmux neww tms"
 
-      # left side 
+      # left side
       set -g status-left-length 30
       set -g status-left " ∫ #S "
       set -g status-left-style fg="green,bold",bg="black"
 
-      # right side 
+      # right side
       set -g status-right " %H:%M %d-%b-%y "
       set -g status-right-style fg="green",bg="black"
 
@@ -60,7 +59,7 @@
     bind -s '"\C-f":"tms\n"'
   '';
 
-  programs.zsh.initExtra= ''
+  programs.zsh.initExtra = ''
     bindkey -s "^F" "tms\n"
   '';
 
@@ -77,5 +76,4 @@
     path = "/home/manuel/.config"
     depth = 1
   '';
-
 }

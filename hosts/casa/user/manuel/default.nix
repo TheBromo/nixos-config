@@ -1,5 +1,9 @@
-{ pkgs, inputs, root, ... }: {
-
+{
+  pkgs,
+  inputs,
+  root,
+  ...
+}: {
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -9,7 +13,7 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark" ];
+    extraGroups = ["vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark"];
     initialPassword = "changeme";
     shell = pkgs.zsh;
   };
@@ -18,10 +22,10 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.manuel = ({ ... }: {
+    users.manuel = {...}: {
       dconf = {
-          enable = true;
-          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        enable = true;
+        settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
       };
       imports = [
         "${root}/modules/home-manager/git"
@@ -34,11 +38,9 @@
       home = {
         stateVersion = "23.11";
       };
-    });
+    };
     extraSpecialArgs = {
       inherit inputs root;
     };
   };
 }
-
-

@@ -1,8 +1,10 @@
-{ pkgs, lib, ... }:
-let
-  fontFamily = "BerkeleyMono Nerd Font"; # "GeistMono Nerd Font";
-in
 {
+  pkgs,
+  lib,
+  ...
+}: let
+  fontFamily = "BerkeleyMono Nerd Font"; # "GeistMono Nerd Font";
+in {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -11,7 +13,6 @@ in
       terminal.shell = {
         program = "${pkgs.zsh}/bin/zsh";
       };
-
 
       window = {
         decorations = "full";
@@ -49,7 +50,5 @@ in
     };
   };
 
-
   fonts.fontconfig.enable = true;
-
 }

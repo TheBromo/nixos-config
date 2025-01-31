@@ -1,5 +1,4 @@
-{ pkgs, ... }: {
-
+{pkgs, ...}: {
   home.packages = with pkgs; [
     waybar
     pavucontrol
@@ -9,7 +8,7 @@
     enable = true;
     settings = import ./waybar/config.nix;
     style = ''
-      ${builtins.readFile ./waybar/style.css} 
+      ${builtins.readFile ./waybar/style.css}
     '';
   };
 }

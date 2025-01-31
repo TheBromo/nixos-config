@@ -21,57 +21,71 @@
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs@{ self, nixpkgs, home-manager, nixos-wsl, nixos-hardware, neovim-config, ... }:
-    let
-      root = self;
-      specialArgs = {
-        inherit inputs root neovim-config ;
-      };
-      baseModules = [
-        ./overlays.nix
-      ];
-    in
-    {
-      nixosConfigurations = {
-        wsl = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = baseModules ++ [
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    nixos-wsl,
+    nixos-hardware,
+    neovim-config,
+    ...
+  }: let
+    root = self;
+    specialArgs = {
+      inherit inputs root neovim-config;
+    };
+    baseModules = [
+      ./overlays.nix
+    ];
+  in {
+    nixosConfigurations = {
+      wsl = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules =
+          baseModules
+          ++ [
             ./hosts/wsl
             nixos-wsl.nixosModules.wsl
           ];
-        };
-        zephyrus = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = baseModules ++ [
+      };
+      zephyrus = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules =
+          baseModules
+          ++ [
             nixos-hardware.nixosModules.asus-zephyrus-ga402
             ./hosts/zephyrus
           ];
-        };
-        lunar = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = baseModules ++ [
+      };
+      lunar = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules =
+          baseModules
+          ++ [
             ./hosts/lunar
           ];
-        };
-        casa = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = baseModules ++ [
-            ./hosts/casa
-          ];
-        };
       };
-      homeConfigurations."manuel" = home-manager.lib.homeManagerConfiguration {
-         pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        extraSpecialArgs = {
-          inherit root;
-        };
-         modules = [
-            ./hosts/home-manager
+      casa = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        inherit specialArgs;
+        modules =
+          baseModules
+          ++ [
+            ./hosts/casa
           ];
       };
     };
+    homeConfigurations."manuel" = home-manager.lib.homeManagerConfiguration {
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      extraSpecialArgs = {
+        inherit root;
+      };
+      modules = [
+        ./hosts/home-manager
+      ];
+    };
+  };
 }

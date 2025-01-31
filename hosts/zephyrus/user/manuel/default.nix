@@ -1,15 +1,18 @@
-{ pkgs, inputs, root, ... }: {
-
+{
+  pkgs,
+  inputs,
+  root,
+  ...
+}: {
   imports = [
     inputs.home-manager.nixosModules.default
   ];
   programs.zsh.enable = true;
 
-
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = [ "vboxusers" "networkmanager" "wheel" "video" "wireshark" ];
+    extraGroups = ["vboxusers" "networkmanager" "wheel" "video" "wireshark"];
     initialPassword = "changeme";
     packages = with pkgs; [
       google-chrome
@@ -20,12 +23,12 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-   users.manuel = ({ ... }: {
+    users.manuel = {...}: {
       dconf = {
-          enable = true;
-          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        enable = true;
+        settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
       };
- 
+
       imports = [
         "${root}/modules/home-manager/git"
         "${root}/modules/home-manager/alacritty"
@@ -40,10 +43,9 @@
       home = {
         stateVersion = "23.11";
       };
-    });
+    };
     extraSpecialArgs = {
       inherit inputs root;
     };
   };
 }
-
