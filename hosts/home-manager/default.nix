@@ -14,7 +14,10 @@
   ];
   dconf = {
     enable = true;
-    settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    settings = {
+      "org/gnome/desktop/interface".color-scheme = "prefer-dark";
+      "org/gnome/desktop/input-sources".xkb-options = ["caps:escape"];
+    };
   };
 
   home = {
