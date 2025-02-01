@@ -8,12 +8,17 @@
     shell-integration = zsh
     command = zsh
 
-    keybind = ctrl+shift+h=goto_split:left
-    keybind = ctrl+shift+l=goto_split:right
-    keybind = ctrl+shift+j=goto_split:down
-    keybind = ctrl+shift+k=goto_split:up
+    keybind = alt+h=goto_split:left
+    keybind = alt+l=goto_split:right
+    keybind = alt+j=goto_split:down
+    keybind = alt+k=goto_split:up
+    keybind = ctrl+shift+l=next_tab
+    keybind = ctrl+shift+h=previous_tab
 
-    #keybind = ctrl+shift+v=new_split:right
-    keybind = ctrl+shift+s=new_split:down
+    keybind = alt+v=new_split:right
+    keybind = alt+s=new_split:down
+
+
+
   '';
 }
