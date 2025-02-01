@@ -56,11 +56,11 @@
   };
 
   programs.bash.bashrcExtra = ''
-    bind -s '"\C-f":"tms\n"'
+    bind -s '"\C-t":"tms\n"'
   '';
 
   programs.zsh.initExtra = ''
-    bindkey -s "^F" "tms\n"
+    bindkey -s "^T" "tms\n"
   '';
 
   home.packages = [

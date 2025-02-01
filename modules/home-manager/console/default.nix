@@ -6,11 +6,13 @@
   info = import "${root}/pkgs/info" {inherit pkgs;};
   dvt = import "${root}/pkgs/dvt" {inherit pkgs;};
   dvd = import "${root}/pkgs/dvd" {inherit pkgs;};
+  wsswitch = import "${root}/pkgs/wsswitch" {inherit pkgs;};
 in {
   home.packages = [
     info
     dvt
     dvd
+    wsswitch
     pkgs.spotify-player
   ];
 
@@ -44,6 +46,19 @@ in {
     };
 
     initExtra = ''
+      function cd_from_ws() {
+        local target=$(wsswitch)
+        if [[ -d "$target" ]]; then
+          cd "$target"
+        else
+          print -ru2 "Error: '$target' is not a valid directory."
+        fi
+
+        zle reset-prompt
+      }
+      zle -N cd_from_ws
+      bindkey '^F' cd_from_ws
+
       source <(kubectl completion zsh)
       export GOPATH=$HOME/go
       screenfetch
