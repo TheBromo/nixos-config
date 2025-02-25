@@ -19,7 +19,45 @@
     extraConfig = {
       init.defaultBranch = "main";
       pull.rebase = "true";
-      delta.enable = true;
+      delta.enable = "true";
+      column.ui = "auto";
+      branch.sort = "-committerdate";
+      tag.sort = "version:refname";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+      push = {
+        default = "simple";
+        autoSetupRemote = true;
+        followTags = true;
+      };
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+      help.autocorrect = "prompt";
+      commit.verbose = true;
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+      core = {
+        excludesfile = "~/.gitignore";
+        fsmonitor = true;
+        untrackedCache = true;
+      };
+      rebase = {
+        autoSquash = true;
+        autoStash = true;
+        updateRefs = true;
+      };
+      merge = {
+        conflictstyle = "zdiff3";
+      };
 
       gpg = {
         format = "ssh";
