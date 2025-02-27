@@ -21,7 +21,7 @@
 
   environment = {
     variables = {
-      EDITOR = "${pkgs.neovim}/bin/nvim";
+      EDITOR = "nvim";
     };
 
     systemPackages = with pkgs; [
@@ -31,7 +31,6 @@
       coreutils
       btop
       git-crypt
-      neovim
       ghostty
     ];
   };

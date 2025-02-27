@@ -4,7 +4,7 @@
   ...
 }: {
   home.packages = [
-    pkgs.neovim
+    pkgs.neovim-unwrapped
     pkgs.git
     pkgs.stdenv.cc
     pkgs.cargo

@@ -3,6 +3,9 @@
   root,
   ...
 }: {
+  nixpkgs.config.permittedInsecurePackages = [
+    "dotnet-sdk-6.0.428"
+  ];
   home.packages = with pkgs; [
     gcc
     nixpkgs-fmt
@@ -37,5 +40,6 @@
 
     undollar
     gdbgui
+    dotnet-sdk_6
   ];
 }
