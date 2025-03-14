@@ -29,10 +29,6 @@
     kubectl-example
     kind
     minikube
-    node2nix
-    nodejs
-    pnpm
-    yarn
 
     gnumake
     cmake
@@ -41,10 +37,5 @@
     undollar
     gdbgui
     dotnet-sdk_6
-    protobuf
-    jdt-language-server
-    java-language-server
-    maven
-    zulu
   ];
 }

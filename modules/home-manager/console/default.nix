@@ -59,6 +59,10 @@ in {
       zle -N cd_from_ws
       bindkey '^F' cd_from_ws
 
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
       source <(kubectl completion zsh)
       export GOPATH=$HOME/go
       screenfetch
