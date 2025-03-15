@@ -7,7 +7,7 @@
   imports = [
     inputs.home-manager.nixosModules.default
   ];
-  programs.zsh.enable = true;
+    # programs.zsh.enable = true;
 
   users.users.manuel = {
     isNormalUser = true;
@@ -17,7 +17,7 @@
     packages = with pkgs; [
       google-chrome
     ];
-    shell = pkgs.zsh;
+    # shell = pkgs.zsh;
   };
 
   home-manager = {

@@ -25,7 +25,7 @@
     homeDirectory = "/home/manuel";
     stateVersion = "24.11";
     sessionVariables = {
-      SHELL = pkgs.zsh;
+      SHELL = "usr/bin/zsh";
     };
     keyboard = {
       options = ["caps:escape"];
@@ -37,6 +37,6 @@
     ];
   };
 
-  programs.zsh.enable = true;
+  # programs.zsh.enable = true;
   programs.home-manager.enable = true;
 }
