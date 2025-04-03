@@ -37,5 +37,6 @@
     undollar
     gdbgui
     dotnet-sdk_6
+    flyctl
   ];
 }
