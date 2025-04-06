@@ -4,7 +4,7 @@
 
     font-family = TX-02
     font-size = 13
-    font-feature = -calt
+    font-feature = -calt, -liga, -dlig
 
     shell-integration = zsh
     command = zsh

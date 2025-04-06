@@ -71,6 +71,10 @@ in {
       source "$HOME/.sdkman/bin/sdkman-init.sh"
       source <(kubectl completion zsh)
       export GOPATH=$HOME/go
+      export PATH="$HOME/neovim/bin:$PATH"
+      export BUN_INSTALL="$HOME/.bun"
+      export PATH="$BUN_INSTALL/bin:$PATH"
+
       screenfetch
     '';
   };
