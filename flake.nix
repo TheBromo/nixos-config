@@ -78,7 +78,8 @@
           ];
       };
     };
-    homeConfigurations."manuel" = home-manager.lib.homeManagerConfiguration {
+    homeConfigurations = {
+      "manuel" = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       extraSpecialArgs = {
         inherit root;
@@ -86,6 +87,16 @@
       modules = [
         ./hosts/home-manager
       ];
+    };
+      "manuel-darwin" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+        extraSpecialArgs = {
+          inherit root;
+        };
+        modules = [
+          ./hosts/darwin 
+        ];
+      };
     };
   };
 }

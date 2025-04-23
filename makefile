@@ -23,3 +23,6 @@ zephyrus:
 home:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel
 
+darwin:
+	nix run nixpkgs#home-manager -- switch --flake .#manuel-darwin
+

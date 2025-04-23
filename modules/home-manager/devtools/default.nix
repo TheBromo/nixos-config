@@ -32,7 +32,7 @@
 
     gnumake
     cmake
-    glibc
+    #glibc
 
     undollar
     gdbgui
