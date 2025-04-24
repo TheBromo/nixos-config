@@ -19,7 +19,7 @@
     keybind = alt+v=new_split:right
     keybind = alt+s=new_split:down
 
-
+    macos-icon = xray
 
   '';
 }

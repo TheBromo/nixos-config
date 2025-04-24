@@ -38,5 +38,8 @@
     gdbgui
     dotnet-sdk_6
     flyctl
+
+    ninja
+    gettext
   ];
 }
