@@ -20,9 +20,6 @@
     sessionVariables = {
       SHELL = "usr/bin/zsh";
     };
-    #keyboard = {
-    #  options = ["caps:escape"];
-    #};
     packages = [
       pkgs.git-crypt
     ];

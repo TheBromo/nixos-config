@@ -1,3 +1,6 @@
+scan_timeout = 10
+command_timeout = 100
+
 format = """
 $username\
 $hostname\
@@ -12,8 +15,6 @@ $python\
 $character"""
 
 
-scan_timeout = 10
-command_timeout = 100
 
 [directory]
 style = "blue"

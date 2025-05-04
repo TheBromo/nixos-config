@@ -91,5 +91,5 @@ in {
     enableZshIntegration = true;
   };
 
-  home.file.".config/starship.toml".source = ./starship-pure.toml;
+  home.file.".config/starship.toml".source = ./starship.toml;
 }
