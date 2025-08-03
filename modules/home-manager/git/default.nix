@@ -73,8 +73,8 @@
           in "${allowedSigners}";
         };
       };
-            #      credential."https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
-            #credential."https://gist.github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
+      credential."https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
+      credential."https://gist.github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
       credential."https://github.zhaw.ch".helper = "${lib.getExe pkgs.gh} auth git-credential";
     };
   };

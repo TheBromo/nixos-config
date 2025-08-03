@@ -56,8 +56,17 @@ in {
 
         zle reset-prompt
       }
+
+      reopen_nvim() {
+          fg
+      }
+
+
       zle -N cd_from_ws
+      zle -N reopen_nvim 
+
       bindkey '^F' cd_from_ws
+      bindkey '^Z' reopen_nvim
 
       export NVM_DIR="$HOME/.nvm"
       [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -69,10 +78,8 @@ in {
 
 
       source "$HOME/.sdkman/bin/sdkman-init.sh"
-      source $HOME/.local/bin/env
       source <(kubectl completion zsh)
       export GOPATH=$HOME/go
-      export PATH=$PATH:$HOME/go/bin
       export PATH="$HOME/neovim/bin:$PATH"
       export BUN_INSTALL="$HOME/.bun"
       export PATH="$BUN_INSTALL/bin:$PATH"
