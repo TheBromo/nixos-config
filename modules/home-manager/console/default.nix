@@ -45,7 +45,7 @@ in {
       l = "ls -CF";
     };
 
-    initExtra = ''
+    initContent = ''
       function cd_from_ws() {
         local target=$(wsswitch)
         if [[ -d "$target" ]]; then

@@ -59,7 +59,7 @@
     bind -s '"\C-t":"tms\n"'
   '';
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     bindkey -s "^T" "tms\n"
   '';
 

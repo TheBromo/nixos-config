@@ -16,8 +16,8 @@
     unzip
     openssl
 
+    rustup
     go
-    cargo
     zig
     gopls
     gotools
