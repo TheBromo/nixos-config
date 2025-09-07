@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 pkgs.writeScriptBin "wsswitch" ''
   #!${pkgs.bash}/bin/bash
 

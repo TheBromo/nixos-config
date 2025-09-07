@@ -1,18 +1,25 @@
 {
   pkgs,
   inputs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.default
   ];
-    # programs.zsh.enable = true;
+  # programs.zsh.enable = true;
 
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = ["vboxusers" "networkmanager" "wheel" "video" "wireshark"];
+    extraGroups = [
+      "vboxusers"
+      "networkmanager"
+      "wheel"
+      "video"
+      "wireshark"
+    ];
     initialPassword = "changeme";
     packages = with pkgs; [
       google-chrome
@@ -23,29 +30,31 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    users.manuel = {...}: {
-      dconf = {
-        enable = true;
-        settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-      };
+    users.manuel =
+      { ... }:
+      {
+        dconf = {
+          enable = true;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        };
 
-      imports = [
-        "${root}/modules/home-manager/git"
-        "${root}/modules/home-manager/alacritty"
-        "${root}/modules/home-manager/devtools"
-        "${root}/modules/home-manager/edutools"
-        "${root}/modules/home-manager/console"
-        "${root}/modules/home-manager/nvim-config"
-        "${root}/modules/home-manager/tmux"
-      ];
+        imports = [
+          "${self}/modules/home-manager/git"
+          "${self}/modules/home-manager/alacritty"
+          "${self}/modules/home-manager/devtools"
+          "${self}/modules/home-manager/edutools"
+          "${self}/modules/home-manager/console"
+          "${self}/modules/home-manager/nvim-config"
+          "${self}/modules/home-manager/tmux"
+        ];
 
-      gtk.enable = true;
-      home = {
-        stateVersion = "23.11";
+        gtk.enable = true;
+        home = {
+          stateVersion = "23.11";
+        };
       };
-    };
     extraSpecialArgs = {
-      inherit inputs root;
+      inherit inputs self;
     };
   };
 }

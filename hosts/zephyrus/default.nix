@@ -8,21 +8,22 @@
   lib,
   pkgs,
   inputs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./user/manuel
-    "${root}/modules/nixos/base"
-    "${root}/modules/nixos/fonts"
-    "${root}/modules/nixos/gnome"
-    "${root}/modules/nixos/1password"
-    "${root}/modules/nixos/docker"
-    "${root}/modules/nixos/wine"
-    "${root}/modules/nixos/qemu"
-    "${root}/modules/nixos/jetbrains"
-    "${root}/modules/nixos/slack"
+    "${self}/modules/nixos/base"
+    "${self}/modules/nixos/fonts"
+    "${self}/modules/nixos/gnome"
+    "${self}/modules/nixos/1password"
+    "${self}/modules/nixos/docker"
+    "${self}/modules/nixos/wine"
+    "${self}/modules/nixos/qemu"
+    "${self}/modules/nixos/jetbrains"
+    "${self}/modules/nixos/slack"
   ];
   # Bootloader.
   boot.loader = {
@@ -34,7 +35,7 @@
       useOSProber = false;
       extraEntries = ''
         menuentry "Windows" {
-        	set root=(hd0,1)
+        	set self=(hd0,1)
         	chainloader /EFI/Microsoft/Boot/bootmgfw.efi
         }
       '';
@@ -73,7 +74,10 @@
   };
 
   i18n = {
-    supportedLocales = ["en_US.UTF-8/UTF-8" "de_CH.UTF-8/UTF-8"];
+    supportedLocales = [
+      "en_US.UTF-8/UTF-8"
+      "de_CH.UTF-8/UTF-8"
+    ];
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
       LC_NUMERIC = "de_CH.UTF-8";

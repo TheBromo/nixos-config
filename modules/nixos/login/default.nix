@@ -2,10 +2,12 @@
   pkgs,
   inputs,
   ...
-}: let
+}:
+let
   tuigr = "${pkgs.greetd.tuigreet}/bin/tuigreet";
   #  hyprland-session = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/share/wayland-sessions";
-in {
+in
+{
   services.greetd = {
     enable = true;
     settings = {

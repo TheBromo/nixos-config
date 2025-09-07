@@ -1,8 +1,8 @@
 {
   pkgs,
-  root,
   ...
-}: {
+}:
+{
   home.sessionVariables = {
     GDK_BACKEND = "wayland";
   };
@@ -13,7 +13,7 @@
       pkgs.xdg-desktop-portal-hyprland
     ];
     config.common = {
-      default = ["hyprland"];
+      default = [ "hyprland" ];
     };
   };
 

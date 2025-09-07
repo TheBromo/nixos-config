@@ -1,10 +1,13 @@
 {
   pkgs,
-  root,
+  inputs,
   ...
-}: let
-  tx-02 = import "${root}/pkgs/TX-02" {inherit pkgs;};
-in {
+
+}:
+let
+  tx-02 = import inputs.self + "/pkgs/TX-02" { inherit pkgs; };
+in
+{
   fonts = {
     enableDefaultPackages = true;
     packages = [
@@ -19,9 +22,15 @@ in {
       tx-02
     ];
     fontconfig.defaultFonts = {
-      serif = ["Noto Serif" "Source Han Serif"];
-      sansSerif = ["Open Sans" "Source Han Sans"];
-      emoji = ["Noto Color Emoji"];
+      serif = [
+        "Noto Serif"
+        "Source Han Serif"
+      ];
+      sansSerif = [
+        "Open Sans"
+        "Source Han Sans"
+      ];
+      emoji = [ "Noto Color Emoji" ];
     };
   };
 }

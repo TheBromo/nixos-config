@@ -4,24 +4,25 @@
 {
   config,
   pkgs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    "${root}/modules/nixos/base"
-    "${root}/modules/nixos/nvidia"
-    "${root}/modules/nixos/gnome"
-    "${root}/modules/nixos/docker"
-    "${root}/modules/nixos/jetbrains"
-    "${root}/modules/nixos/wireshark"
-    "${root}/modules/nixos/fonts"
-    "${root}/modules/nixos/1password"
-    "${root}/modules/nixos/steam"
-    "${root}/modules/nixos/ssh"
-    "${root}/modules/nixos/tailscale"
-    "${root}/modules/nixos/gimp"
+    "${self}/modules/nixos/base"
+    "${self}/modules/nixos/nvidia"
+    "${self}/modules/nixos/gnome"
+    "${self}/modules/nixos/docker"
+    "${self}/modules/nixos/jetbrains"
+    "${self}/modules/nixos/wireshark"
+    "${self}/modules/nixos/fonts"
+    "${self}/modules/nixos/1password"
+    "${self}/modules/nixos/steam"
+    "${self}/modules/nixos/ssh"
+    "${self}/modules/nixos/tailscale"
+    "${self}/modules/nixos/gimp"
     ./user/manuel
   ];
   programs.nix-ld.enable = true;
@@ -35,7 +36,7 @@
   boot.loader.grub.configurationLimit = 5;
   # boot.loader.grub.extraEntries = ''
   #       	menuentry "Windows" {
-  #       		set root=(nvme1n1p1@,1)
+  #       		set self=(nvme1n1p1@,1)
   #       		chainloader /EFI/Microsoft/Boot/bootmgfw.efi
   # 	chainloader /dev/nvme1n1p1@/efi/Microsoft/Boot/bootmgfw.efi
   #        	}

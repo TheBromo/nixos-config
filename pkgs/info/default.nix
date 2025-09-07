@@ -1,2 +1,1 @@
-{pkgs, ...}:
-pkgs.writeScriptBin "screenfetch" (builtins.readFile ./nix.sh)
+{ pkgs, ... }: pkgs.writeScriptBin "screenfetch" (builtins.readFile ./nix.sh)

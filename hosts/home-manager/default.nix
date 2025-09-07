@@ -1,22 +1,23 @@
 {
-  root,
+  self,
   pkgs,
   ...
-}: {
+}:
+{
   nixpkgs.config.allowUnfree = true;
   imports = [
-    "${root}/modules/home-manager/git"
-    "${root}/modules/home-manager/devtools"
-    "${root}/modules/home-manager/console"
-    "${root}/modules/home-manager/tmux"
-    "${root}/modules/home-manager/nvim-config"
-    "${root}/modules/home-manager/ghostty"
+    "${self}/modules/home-manager/git"
+    "${self}/modules/home-manager/devtools"
+    "${self}/modules/home-manager/console"
+    "${self}/modules/home-manager/tmux"
+    "${self}/modules/home-manager/nvim-config"
+    "${self}/modules/home-manager/ghostty"
   ];
   dconf = {
     enable = true;
     settings = {
       "org/gnome/desktop/interface".color-scheme = "prefer-dark";
-      "org/gnome/desktop/input-sources".xkb-options = ["caps:escape"];
+      "org/gnome/desktop/input-sources".xkb-options = [ "caps:escape" ];
     };
   };
 
@@ -28,7 +29,7 @@
       SHELL = "usr/bin/zsh";
     };
     keyboard = {
-      options = ["caps:escape"];
+      options = [ "caps:escape" ];
     };
     packages = [
       pkgs._1password-cli

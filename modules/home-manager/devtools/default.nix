@@ -1,15 +1,17 @@
 {
   pkgs,
-  root,
   ...
-}: {
+}:
+{
   nixpkgs.config.permittedInsecurePackages = [
     "dotnet-sdk-6.0.428"
   ];
   home.packages = with pkgs; [
     gcc
-    nixpkgs-fmt
     nix-output-monitor
+    nixfmt-rfc-style
+    neovim
+    gitoxide
 
     jq
     zip
@@ -41,5 +43,6 @@
 
     ninja
     gettext
+    terraform
   ];
 }

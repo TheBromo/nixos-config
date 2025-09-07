@@ -2,9 +2,10 @@
   pkgs,
   home-manager,
   inputs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -13,7 +14,10 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = ["wheel" "docker"];
+    extraGroups = [
+      "wheel"
+      "docker"
+    ];
     initialPassword = "changeme";
     shell = pkgs.zsh;
   };
@@ -22,17 +26,19 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.manuel = {...}: {
-      imports = [
-        "${root}/modules/home-manager/git"
-        "${root}/modules/home-manager/devtools"
-        "${root}/modules/home-manager/console"
-        "${root}/modules/home-manager/tmux"
-      ];
-      home.stateVersion = "23.11";
-    };
+    users.manuel =
+      { ... }:
+      {
+        imports = [
+          "${self}/modules/home-manager/git"
+          "${self}/modules/home-manager/devtools"
+          "${self}/modules/home-manager/console"
+          "${self}/modules/home-manager/tmux"
+        ];
+        home.stateVersion = "23.11";
+      };
     extraSpecialArgs = {
-      inherit inputs root;
+      inherit inputs self;
     };
   };
 }

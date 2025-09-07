@@ -1,16 +1,17 @@
 {
-  root,
+  self,
   pkgs,
   ...
-}: {
+}:
+{
   nixpkgs.config.allowUnfree = true;
   imports = [
-    "${root}/modules/home-manager/git"
-    "${root}/modules/home-manager/devtools"
-    "${root}/modules/home-manager/console"
-    "${root}/modules/home-manager/tmux"
-    "${root}/modules/home-manager/nvim-config"
-    "${root}/modules/home-manager/ghostty"
+    "${self}/modules/home-manager/git"
+    "${self}/modules/home-manager/devtools"
+    "${self}/modules/home-manager/console"
+    "${self}/modules/home-manager/tmux"
+    "${self}/modules/home-manager/nvim-config"
+    "${self}/modules/home-manager/ghostty"
   ];
 
   home = {
@@ -18,7 +19,7 @@
     homeDirectory = "/Users/manuel";
     stateVersion = "24.11";
     sessionVariables = {
-      SHELL = "usr/bin/zsh";
+      SHELL = pkgs.zsh;
     };
     packages = [
       pkgs.git-crypt

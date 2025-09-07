@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   environment = {
     variables.LIBVA_DRIVER_NAME = "nvidia";
     sessionVariables.NIXOS_OZONE_WL = "1";
@@ -10,8 +11,8 @@
 
   nixpkgs.config.cudaSupport = false;
 
-  services.xserver.videoDrivers = ["nvidia"];
-  boot.initrd.kernelModules = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  boot.initrd.kernelModules = [ "nvidia" ];
   #boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   hardware = {
     graphics = {

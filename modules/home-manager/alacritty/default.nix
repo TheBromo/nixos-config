@@ -2,9 +2,11 @@
   pkgs,
   lib,
   ...
-}: let
+}:
+let
   fontFamily = "BerkeleyMono Nerd Font"; # "GeistMono Nerd Font";
-in {
+in
+{
   programs.alacritty = {
     enable = true;
     settings = {

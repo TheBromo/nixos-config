@@ -3,7 +3,8 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   environment.systemPackages = with pkgs; [
     shotman
     clipcat # wl-copy and wl-paste for copy/paste from stdin / stdout

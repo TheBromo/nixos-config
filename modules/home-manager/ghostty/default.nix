@@ -1,4 +1,5 @@
-{...}: {
+{ ... }:
+{
   xdg.configFile."ghostty/config".text = ''
     theme = "Builtin Pastel Dark"
 

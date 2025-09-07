@@ -3,8 +3,11 @@
     height = 33;
     layer = "top";
     position = "top";
-    modules-center = ["clock"];
-    modules-left = ["custom/logo" "hyprland/workspaces"];
+    modules-center = [ "clock" ];
+    modules-left = [
+      "custom/logo"
+      "hyprland/workspaces"
+    ];
     modules-right = [
       "backlight"
       "pulseaudio"
@@ -35,11 +38,11 @@
         "focused" = "󰝥";
       };
       "persistent-workspaces" = {
-        "1" = [];
-        "2" = [];
-        "3" = [];
-        "4" = [];
-        "5" = [];
+        "1" = [ ];
+        "2" = [ ];
+        "3" = [ ];
+        "4" = [ ];
+        "5" = [ ];
       };
       "disable-click" = true;
     };
@@ -51,7 +54,18 @@
     };
     "battery" = {
       "format" = "{icon} {capacity}";
-      "format-icons" = ["󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
+      "format-icons" = [
+        "󰁺"
+        "󰁻"
+        "󰁼"
+        "󰁽"
+        "󰁾"
+        "󰁿"
+        "󰂀"
+        "󰂁"
+        "󰂂"
+        "󰁹"
+      ];
       "tooltip" = false;
     };
     "custom/notifications" = {
@@ -69,7 +83,7 @@
 
     "backlight" = {
       "format" = "{icon} {percent}";
-      "format-icons" = [""];
+      "format-icons" = [ "" ];
     };
     "network" = {
       interval = 1;
@@ -77,9 +91,15 @@
       "format-alt" = "{ipaddr}/{cidr} {icon}";
       "format-alt-click" = "click-right";
       "format-icons" = {
-        "wifi" = ["󰤯" "󰤢" "󰤢" "󰤥" "󰤨"];
-        "ethernet" = [""];
-        "disconnected" = ["󰤮"];
+        "wifi" = [
+          "󰤯"
+          "󰤢"
+          "󰤢"
+          "󰤥"
+          "󰤨"
+        ];
+        "ethernet" = [ "" ];
+        "disconnected" = [ "󰤮" ];
       };
       "on-click" = "alacritty -e nmtui";
       "tooltip" = false;
@@ -90,7 +110,11 @@
       format-bluetooth-muted = " {icon} {format_source}";
       format-icons = {
         car = "";
-        default = ["" "" ""];
+        default = [
+          ""
+          ""
+          ""
+        ];
         handsfree = "";
         headphones = "";
         headset = "";

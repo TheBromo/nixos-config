@@ -4,18 +4,19 @@
 {
   config,
   pkgs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    "${root}/modules/nixos/base"
-    "${root}/modules/nixos/docker"
-    "${root}/modules/nixos/jetbrains"
-    "${root}/modules/nixos/wireshark"
-    "${root}/modules/nixos/fonts"
-    "${root}/modules/nixos/1password"
+    "${self}/modules/nixos/base"
+    "${self}/modules/nixos/docker"
+    "${self}/modules/nixos/jetbrains"
+    "${self}/modules/nixos/wireshark"
+    "${self}/modules/nixos/fonts"
+    "${self}/modules/nixos/1password"
     ./user/manuel
   ];
 
@@ -53,7 +54,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"]; # or "nvidiaLegacy470 etc.
+  services.xserver.videoDrivers = [ "nvidia" ]; # or "nvidiaLegacy470 etc.
 
   hardware.nvidia = {
     # Modesetting is required.

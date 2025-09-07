@@ -1,9 +1,10 @@
 {
   pkgs,
   inputs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
     inputs.home-manager.nixosModules.default
   ];
@@ -13,7 +14,14 @@
   users.users.manuel = {
     isNormalUser = true;
     description = "manuel";
-    extraGroups = ["vboxusers" "networkmanager" "wheel" "video" "docker" "wireshark"];
+    extraGroups = [
+      "vboxusers"
+      "networkmanager"
+      "wheel"
+      "video"
+      "docker"
+      "wireshark"
+    ];
     initialPassword = "changeme";
     shell = pkgs.zsh;
   };
@@ -22,25 +30,27 @@
     useGlobalPkgs = true;
     useUserPackages = true;
 
-    users.manuel = {...}: {
-      dconf = {
-        enable = true;
-        settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+    users.manuel =
+      { ... }:
+      {
+        dconf = {
+          enable = true;
+          settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+        };
+        imports = [
+          "${self}/modules/home-manager/git"
+          "${self}/modules/home-manager/alacritty"
+          "${self}/modules/home-manager/devtools"
+          "${self}/modules/home-manager/console"
+          "${self}/modules/home-manager/tmux"
+          "${self}/modules/home-manager/nvim-config"
+        ];
+        home = {
+          stateVersion = "23.11";
+        };
       };
-      imports = [
-        "${root}/modules/home-manager/git"
-        "${root}/modules/home-manager/alacritty"
-        "${root}/modules/home-manager/devtools"
-        "${root}/modules/home-manager/console"
-        "${root}/modules/home-manager/tmux"
-        "${root}/modules/home-manager/nvim-config"
-      ];
-      home = {
-        stateVersion = "23.11";
-      };
-    };
     extraSpecialArgs = {
-      inherit inputs root;
+      inherit inputs self;
     };
   };
 }

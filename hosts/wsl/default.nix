@@ -8,21 +8,22 @@
   lib,
   pkgs,
   inputs,
-  root,
+  self,
   ...
-}: {
+}:
+{
   imports = [
-    "${root}/modules/nixos/base"
-    "${root}/modules/nixos/fonts"
-    "${root}/modules/nixos/docker"
-    "${root}/modules/nixos/1password"
-    "${root}/modules/nixos/ssh"
+    "${self}/modules/nixos/base"
+    "${self}/modules/nixos/fonts"
+    "${self}/modules/nixos/docker"
+    "${self}/modules/nixos/1password"
+    "${self}/modules/nixos/ssh"
     ./user/manuel
   ];
   wsl.enable = true;
   wsl.defaultUser = "manuel";
   wsl.startMenuLaunchers = true;
-  security.pki.certificateFiles = ["${root}/secrets/cert_0000.crt"];
+  security.pki.certificateFiles = [ "${self}/secrets/cert_0000.crt" ];
   programs.nix-ld.enable = true;
   environment.systemPackages = [
     pkgs.wsl-vpnkit

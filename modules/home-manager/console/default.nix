@@ -1,19 +1,20 @@
 {
   pkgs,
-  root,
+  self,
   ...
-}: let
-  info = import "${root}/pkgs/info" {inherit pkgs;};
-  dvt = import "${root}/pkgs/dvt" {inherit pkgs;};
-  dvd = import "${root}/pkgs/dvd" {inherit pkgs;};
-  wsswitch = import "${root}/pkgs/wsswitch" {inherit pkgs;};
-in {
+}:
+let
+  info = import "${self}/pkgs/info" { inherit pkgs; };
+  dvt = import "${self}/pkgs/dvt" { inherit pkgs; };
+  dvd = import "${self}/pkgs/dvd" { inherit pkgs; };
+  wsswitch = import "${self}/pkgs/wsswitch" { inherit pkgs; };
+in
+{
   home.packages = [
     info
     dvt
     dvd
     wsswitch
-    pkgs.spotify-player
   ];
 
   programs.zoxide = {
@@ -29,7 +30,7 @@ in {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    autosuggestion.enable = true;
+    autosuggestion.enable = false;
     syntaxHighlighting.enable = true;
     defaultKeymap = "viins";
 
@@ -100,7 +101,38 @@ in {
   programs.starship = {
     enable = true;
     enableZshIntegration = true;
-  };
+    settings = {
+      format = "$character $directory";
+      right_format = "$cmd_duration$shlvl[$username@$hostname](cyan)";
+      add_newline = false;
 
-  home.file.".config/starship.toml".source = ./starship.toml;
+      character = {
+        format = "$symbol";
+        success_symbol = "[➜](bold green)";
+        error_symbol = "[➜](bold red)";
+        vimcmd_symbol = "[➜](bold purple)";
+      };
+
+      username = {
+        format = "$user";
+        show_always = true;
+      };
+
+      hostname = {
+        format = "$hostname";
+        ssh_only = false;
+      };
+
+      shlvl = {
+        disabled = false;
+        format = "[$symbol]($style) ";
+        symbol = "";
+        threshold = 3;
+      };
+
+      cmd_duration = {
+        format = "[$duration](bold yellow) ";
+      };
+    };
+  };
 }
