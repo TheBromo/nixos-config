@@ -54,29 +54,6 @@
         "type": "github"
       }
     },
-    "neovim-config": {
-      "inputs": {
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746391993,
-        "narHash": "sha256-YJJGW55Qnyn6hC/fU89GZ96hN0SzfjKqNTSGR7ZMCY8=",
-        "owner": "thebromo",
-        "repo": "neovim-config",
-        "rev": "6417f8cc41f018f71da17283c030ade2a108187c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "thebromo",
-        "repo": "neovim-config",
-        "type": "github"
-      }
-    },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1753122741,
@@ -134,7 +111,6 @@
       "inputs": {
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
-        "neovim-config": "neovim-config",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs"

@@ -10,13 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    neovim-config = {
-      url = "github:thebromo/neovim-config";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-        flake-utils.follows = "flake-utils";
-      };
-    };
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
   };
@@ -26,17 +19,14 @@
       self,
       nixpkgs,
       home-manager,
-      nixos-wsl,
       nixos-hardware,
-      neovim-config,
       ...
     }:
     let
       specialArgs = {
-        inherit inputs neovim-config;
+        inherit self inputs;
       };
       systems = [
-        #"aarch64-linux"
         "x86_64-linux"
         "aarch64-darwin"
       ];
@@ -64,6 +54,7 @@
         "manuel" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
+            inherit self;
           };
           modules = [
             ./hosts/home-manager

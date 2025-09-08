@@ -5,9 +5,10 @@
 }:
 {
   home.packages = with pkgs; [
+    neovim
     #nix
     nixfmt-rfc-style
-    nil
+    nixd
     #web
     typescript-language-server
     prettierd
@@ -24,6 +25,8 @@
     #cpp
     llvmPackages_21.clang-tools
 
+    vscode-langservers-extracted
+    gopls
     terraform-ls
   ];
 

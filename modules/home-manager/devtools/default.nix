@@ -10,8 +10,6 @@
     gcc
     nix-output-monitor
     nixfmt-rfc-style
-    neovim
-    gitoxide
 
     jq
     zip
