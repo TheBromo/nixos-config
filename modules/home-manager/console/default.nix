@@ -88,6 +88,11 @@ in
       export PATH="$BUN_INSTALL/bin:$PATH"
     '';
   };
+  programs.atuin = {
+    enable = true;
+    enableZshIntegration = true;
+    daemon.enable = true;
+  };
 
   programs.direnv = {
     enable = true;
@@ -108,14 +113,17 @@ in
 
       character = {
         format = "$symbol";
-        success_symbol = "[➜](bold green)";
-        error_symbol = "[➜](bold red)";
-        vimcmd_symbol = "[➜](bold purple)";
+        success_symbol = "[▲](bold green)";
+        error_symbol = "[△](bold red)";
+        vimcmd_symbol = "[▲](bold purple)";
       };
 
       username = {
         format = "$user";
         show_always = true;
+      };
+      directory = {
+        style = "bold green";
       };
 
       hostname = {
