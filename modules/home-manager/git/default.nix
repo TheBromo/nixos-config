@@ -95,6 +95,7 @@
         colorArg = "always";
         pager = "${lib.getExe pkgs.delta} --dark --paging=never";
       };
+      gui.border = "single";
       core.editor = "nvim";
     };
   };

@@ -70,11 +70,11 @@
 
   home.file.".config/tms/config.toml".text = ''
     [[search_dirs]]
-    path = "/home/manuel/Development"
+    path = "$HOME/Development"
     depth = 1
 
     [[search_dirs]]
-    path = "/home/manuel/.config"
+    path = "$HOME/.config"
     depth = 1
   '';
 }

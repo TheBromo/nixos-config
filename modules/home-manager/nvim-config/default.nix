@@ -4,25 +4,27 @@
   ...
 }:
 {
-  home.packages = [
+  home.packages = with pkgs; [
     #nix
-    pkgs.nixfmt-rfc-style
-    pkgs.nil
+    nixfmt-rfc-style
+    nil
     #web
-    pkgs.typescript-language-server
-    pkgs.prettierd
-    pkgs.tailwindcss-language-server
+    typescript-language-server
+    prettierd
+    tailwindcss-language-server
     #python
-    pkgs.ty
-    pkgs.ruff
+    ty
+    ruff
     #kubernetes
-    pkgs.kube-linter
-    pkgs.yamlfmt
-    pkgs.yaml-language-server
+    kube-linter
+    yamlfmt
+    yaml-language-server
     #neovim
-    pkgs.lua-language-server
+    lua-language-server
     #cpp
-    pkgs.llvmPackages_21.clang-tools
+    llvmPackages_21.clang-tools
+
+    terraform-ls
   ];
 
   home.activation = {
