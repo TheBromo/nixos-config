@@ -22,11 +22,10 @@
   };
 
   home = {
-    username = "manuel";
-    homeDirectory = "/home/manuel";
+    username = "strenge";
+    homeDirectory = "/home/strenge";
     stateVersion = "24.11";
     sessionVariables = {
-      SHELL = "usr/bin/zsh";
     };
     keyboard = {
       options = [ "caps:escape" ];

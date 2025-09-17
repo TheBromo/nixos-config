@@ -47,42 +47,42 @@ in
     };
 
     initContent = ''
-      function cd_from_ws() {
-        local target=$(wsswitch)
-        if [[ -d "$target" ]]; then
-          cd "$target"
-        else
-          print -ru2 "Error: '$target' is not a valid directory."
-        fi
+            function cd_from_ws() {
+              local target=$(wsswitch)
+              if [[ -d "$target" ]]; then
+                cd "$target"
+              else
+                print -ru2 "Error: '$target' is not a valid directory."
+              fi
 
-        zle reset-prompt
-      }
+              zle reset-prompt
+            }
 
-      reopen_nvim() {
-          fg
-      }
+            reopen_nvim() {
+                fg
+            }
 
 
-      zle -N cd_from_ws
-      zle -N reopen_nvim 
+            zle -N cd_from_ws
+            zle -N reopen_nvim 
 
-      bindkey '^F' cd_from_ws
-      bindkey '^Z' reopen_nvim
+            bindkey '^F' cd_from_ws
+            bindkey '^Z' reopen_nvim
 
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-      export BUN_INSTALL="$HOME/.bun"
-      export PATH="$BUN_INSTALL/bin:$PATH"
+            export BUN_INSTALL="$HOME/.bun"
+            export PATH="$BUN_INSTALL/bin:$PATH"
 
-      source "$HOME/.sdkman/bin/sdkman-init.sh"
-      source $HOME/.local/bin/env
-      source <(kubectl completion zsh)
-      export GOPATH=$HOME/go
-      export PATH=$PATH:$HOME/go/bin
-      export BUN_INSTALL="$HOME/.bun"
-      export PATH="$BUN_INSTALL/bin:$PATH"
+      #      source "$HOME/.sdkman/bin/sdkman-init.sh"
+      #      source $HOME/.local/bin/env
+            source <(kubectl completion zsh)
+            export GOPATH=$HOME/go
+            export PATH=$PATH:$HOME/go/bin
+            export BUN_INSTALL="$HOME/.bun"
+            export PATH="$BUN_INSTALL/bin:$PATH"
     '';
   };
   programs.atuin = {
