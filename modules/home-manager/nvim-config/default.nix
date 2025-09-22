@@ -6,6 +6,7 @@
 {
   home.packages = with pkgs; [
     neovim
+    ripgrep
     #nix
     nixfmt-rfc-style
     nixd
@@ -19,7 +20,7 @@
     #kubernetes
     kube-linter
     yamlfmt
-    yaml-language-server
+    #    yaml-language-server currently broken
     #neovim
     lua-language-server
     #cpp

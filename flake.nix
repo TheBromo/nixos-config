@@ -9,6 +9,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    paragon = {
+      url = "git+ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixos-wsl.url = "github:nix-community/nixos-wsl";
     nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
@@ -20,6 +24,7 @@
       nixpkgs,
       home-manager,
       nixos-hardware,
+      paragon,
       ...
     }:
     let
@@ -51,10 +56,22 @@
       };
 
       homeConfigurations = {
+        "hexagon" = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          extraSpecialArgs = {
+            inherit self;
+            inherit paragon;
+            inherit inputs;
+          };
+          modules = [
+            ./hosts/hexagon
+          ];
+        };
         "manuel" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
             inherit self;
+            inherit inputs;
           };
           modules = [
             ./hosts/home-manager

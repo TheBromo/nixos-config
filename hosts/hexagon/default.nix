@@ -7,6 +7,7 @@
   nixpkgs.config.allowUnfree = true;
   imports = [
     "${self}/modules/home-manager/git"
+    "${self}/modules/home-manager/git/hexagon"
     "${self}/modules/home-manager/devtools"
     "${self}/modules/home-manager/console"
     "${self}/modules/home-manager/tmux"
@@ -22,8 +23,8 @@
   };
 
   home = {
-    username = "manuel";
-    homeDirectory = "/home/manuel";
+    username = "strenge";
+    homeDirectory = "/home/strenge";
     stateVersion = "24.11";
     sessionVariables = {
     };

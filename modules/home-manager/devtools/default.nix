@@ -42,5 +42,6 @@
     ninja
     gettext
     terraform
+    #    devenv
   ];
 }

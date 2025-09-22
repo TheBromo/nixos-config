@@ -83,6 +83,7 @@ in
             export PATH=$PATH:$HOME/go/bin
             export BUN_INSTALL="$HOME/.bun"
             export PATH="$BUN_INSTALL/bin:$PATH"
+            export ROS_DOMAIN_ID=0
     '';
   };
   programs.atuin = {

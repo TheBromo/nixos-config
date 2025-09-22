@@ -4,6 +4,7 @@
     theme = "Builtin Pastel Dark"
 
     font-family = TX-02
+    font-family = Apple Color Emoji
     font-size = 13
     font-feature = -calt, -liga, -dlig
 

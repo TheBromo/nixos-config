@@ -72,6 +72,7 @@
             let
               allowedSigners = pkgs.writeText "git-ssh-allowed-signers" ''
                 manuel@strenge.ch ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu
+                manuel.strenge-ext@hexagon.com ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu
               '';
             in
             "${allowedSigners}";
