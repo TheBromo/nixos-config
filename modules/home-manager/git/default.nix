@@ -8,8 +8,6 @@
 
   programs.git = {
     enable = true;
-    userName = "thebromo";
-    userEmail = "manuel@strenge.ch";
     lfs.enable = true;
 
     signing = {
@@ -17,7 +15,9 @@
       signByDefault = true;
     };
 
-    extraConfig = {
+    settings = {
+      user.Name = "thebromo";
+      user.Email = "manuel@strenge.ch";
       init.defaultBranch = "main";
       pull.rebase = "true";
       delta.enable = "true";
