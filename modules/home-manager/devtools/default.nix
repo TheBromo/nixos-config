@@ -42,6 +42,8 @@
     ninja
     gettext
     terraform
-    #    devenv
+    azure-cli
+    opentofu
+    kubernetes-helm
   ];
 }

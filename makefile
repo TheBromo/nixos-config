@@ -24,7 +24,7 @@ home:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel
 
 hexagon:
-	nix run nixpkgs#home-manager -- switch --flake .#hexagon
+	nix run nixpkgs#home-manager -- switch --impure --flake .#hexagon
 
 darwin:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel-darwin

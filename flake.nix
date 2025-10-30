@@ -4,6 +4,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    nixgl.url = "github:nix-community/nixGL";
+    vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -25,6 +27,9 @@
       home-manager,
       nixos-hardware,
       paragon,
+      nixgl,
+
+      vicinae, # enable the Output
       ...
     }:
     let
@@ -59,11 +64,13 @@
         "hexagon" = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.x86_64-linux;
           extraSpecialArgs = {
+            inherit nixgl;
             inherit self;
             inherit paragon;
             inherit inputs;
           };
           modules = [
+            vicinae.homeManagerModules.default
             ./hosts/hexagon
           ];
         };
