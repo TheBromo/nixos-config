@@ -31,8 +31,6 @@
       options = [ "caps:escape" ];
     };
     packages = [
-      pkgs._1password-cli
-      pkgs._1password-gui
       pkgs.git-crypt
     ];
   };

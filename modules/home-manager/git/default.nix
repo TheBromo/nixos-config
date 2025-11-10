@@ -81,6 +81,8 @@
       #      credential."https://github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
       #credential."https://gist.github.com".helper = "${lib.getExe pkgs.gh} auth git-credential";
       credential."https://github.zhaw.ch".helper = "${lib.getExe pkgs.gh} auth git-credential";
+      credential."https://gitlab.com/".helper =
+        "!f() { test \"$1\" = get && echo \"password=$(op read \"$PARAGON_GITLAB_USER_PAT_OP\")\"; }; f";
     };
   };
 

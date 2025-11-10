@@ -5,6 +5,7 @@
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixgl.url = "github:nix-community/nixGL";
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
 
     home-manager = {
@@ -44,6 +45,7 @@
       forAllSystems = nixpkgs.lib.genAttrs systems;
       baseModules = [
         ./overlays.nix
+        inputs.neovim-nightly-overlay.overlays.default
       ];
     in
     {

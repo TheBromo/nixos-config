@@ -7,6 +7,7 @@
     "dotnet-sdk-6.0.428"
   ];
   home.packages = with pkgs; [
+    tree
     gcc
     nix-output-monitor
     nixfmt-rfc-style
