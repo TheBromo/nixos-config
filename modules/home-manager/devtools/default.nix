@@ -3,9 +3,6 @@
   ...
 }:
 {
-  nixpkgs.config.permittedInsecurePackages = [
-    "dotnet-sdk-6.0.428"
-  ];
   home.packages = with pkgs; [
     tree
     gcc
@@ -37,8 +34,9 @@
 
     undollar
     gdbgui
-    dotnet-sdk_6
     flyctl
+    azure-cli
+    uv
 
     ninja
     gettext

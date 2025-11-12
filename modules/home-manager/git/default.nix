@@ -8,6 +8,8 @@
 
   programs.git = {
     enable = true;
+    userName = "thebromo";
+    userEmail = "manuel@strenge.ch";
     lfs.enable = true;
 
     signing = {
