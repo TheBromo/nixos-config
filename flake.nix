@@ -90,6 +90,7 @@
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = {
             inherit self;
+            inherit inputs;
           };
           modules = [
             ./hosts/darwin
