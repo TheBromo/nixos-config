@@ -96,10 +96,10 @@
   programs.lazygit = {
     enable = true;
     settings = {
-      git.paging = {
-        colorArg = "always";
-        pager = "${lib.getExe pkgs.delta} --dark --paging=never";
-      };
+      # git.pagers = {
+      #   colorArg = "always";
+      #   pager = "${lib.getExe pkgs.delta} --dark --paging=never";
+      # };
       overrideGpg = true;
       gui.border = "single";
       os.editPreset = "nvim";
