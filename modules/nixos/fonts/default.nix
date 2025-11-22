@@ -1,11 +1,11 @@
 {
   pkgs,
-  inputs,
+  self,
   ...
 
 }:
 let
-  tx-02 = import inputs.self + "/pkgs/TX-02" { inherit pkgs; };
+  tx-02 = import "${self}/pkgs/TX-02" { inherit pkgs; };
 in
 {
   fonts = {
@@ -15,7 +15,7 @@ in
       pkgs.noto-fonts-cjk-sans
       pkgs.noto-fonts-color-emoji
       pkgs.font-awesome
-#      tx-02
+      tx-02
     ];
     fontconfig.defaultFonts = {
       serif = [

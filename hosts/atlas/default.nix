@@ -11,6 +11,7 @@
     "${self}/modules/nixos/base"
     "${self}/modules/nixos/1password"
     "${self}/modules/nixos/gnome"
+    "${self}/modules/nixos/fonts"
     "${self}/modules/nixos/tailscale"
     ./hardware-configuration.nix
     ./user/manuel
