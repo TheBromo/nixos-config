@@ -4,6 +4,8 @@
 up:
 	nix flake update |& nom
 
+atlas:
+	nixos-rebuild switch --flake .#atlas #|& nom
 zephyrus:
 	nixos-rebuild switch --flake .#zephyrus |& nom
 

@@ -60,6 +60,14 @@
             ./hosts/zephyrus
           ];
         };
+	
+        atlas = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [
+            ./hosts/atlas
+          ];
+        };
       };
 
       homeConfigurations = {

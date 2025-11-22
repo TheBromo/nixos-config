@@ -36,6 +36,7 @@
       btop
       git-crypt
       ghostty
+      google-chrome
     ];
   };
 }
