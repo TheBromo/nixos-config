@@ -21,8 +21,8 @@
       "wireshark"
     ];
     initialPassword = "changeme";
-    packages = with pkgs; [
-      google-chrome
+    packages = [
+      pkgs.google-chrome
     ];
     # shell = pkgs.zsh;
   };

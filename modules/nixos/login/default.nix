@@ -5,7 +5,8 @@
 }:
 let
   tuigr = "${pkgs.greetd.tuigreet}/bin/tuigreet";
-  #  hyprland-session = "${inputs.hyprland.packages.${pkgs.system}.hyprland}/share/wayland-sessions";
+  # TODO: Re-enable hyprland session if needing advanced greeter options
+  # hyprland-session = "${inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland}/share/wayland-sessions";
 in
 {
   services.greetd = {
@@ -18,9 +19,10 @@ in
           --user-menu \
           --cmd Hyprland
       '';
-      #      hyprland.command = ''
-      #        "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
-      #      '';
+      # TODO: Uncomment hyprland command if session options needed
+      # hyprland.command = ''
+      #   "${tuigreet} --time --remember --remember-session --sessions ${hyprland-session}";
+      # '';
     };
   };
   systemd.services.greetd.serviceConfig = {
@@ -36,5 +38,4 @@ in
   environment.etc."greetd/environments".text = ''
     Hyprland
   '';
-  #   hyprland
 }

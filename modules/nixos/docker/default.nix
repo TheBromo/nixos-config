@@ -2,12 +2,13 @@
 {
   virtualisation.docker.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    docker-compose
+  environment.systemPackages = [
+    pkgs.docker-compose
   ];
 
-  #  virtualisation.docker.rootless = {
-  #  enable = true;
-  #  setSocketVariable = true;
-  #};
+  # TODO: Consider enabling rootless Docker for improved security
+  # virtualisation.docker.rootless = {
+  #   enable = true;
+  #   setSocketVariable = true;
+  # };
 }

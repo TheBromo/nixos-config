@@ -5,32 +5,32 @@
   ...
 }:
 {
-  home.packages = with pkgs; [
+  home.packages = [
     inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
 
-    ripgrep
+    pkgs.ripgrep
     #nix
-    nixfmt-rfc-style
-    nixd
+    pkgs.nixfmt-rfc-style
+    pkgs.nixd
     #web
-    typescript-language-server
-    prettierd
-    tailwindcss-language-server
+    pkgs.typescript-language-server
+    pkgs.prettierd
+    pkgs.tailwindcss-language-server
     #python
-    ty
-    ruff
+    pkgs.ty
+    pkgs.ruff
     #kubernetes
-    kube-linter
-    yamlfmt
+    pkgs.kube-linter
+    pkgs.yamlfmt
     #    yaml-language-server currently broken
     #neovim
-    lua-language-server
+    pkgs.lua-language-server
     #cpp
-    llvmPackages_21.clang-tools
+    pkgs.llvmPackages_21.clang-tools
 
-    vscode-langservers-extracted
-    gopls
-    terraform-ls
+    pkgs.vscode-langservers-extracted
+    pkgs.gopls
+    pkgs.terraform-ls
   ];
 
   home.activation = {

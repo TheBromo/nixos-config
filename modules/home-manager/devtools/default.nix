@@ -3,47 +3,47 @@
   ...
 }:
 {
-  home.packages = with pkgs; [
-    tree
-    gcc
-    nix-output-monitor
-    nixfmt-rfc-style
+  home.packages = [
+    pkgs.tree
+    pkgs.gcc
+    pkgs.nix-output-monitor
+    pkgs.nixfmt-rfc-style
 
-    jq
-    zip
-    unzip
-    openssl
+    pkgs.jq
+    pkgs.zip
+    pkgs.unzip
+    pkgs.openssl
 
-    rustup
-    go
-    zig
-    gopls
-    gotools
+    pkgs.rustup
+    pkgs.go
+    pkgs.zig
+    pkgs.gopls
+    pkgs.gotools
 
-    k9s
-    kubectl
-    kubectx
-    kubectl-neat
-    kubectl-example
-    kind
-    minikube
+    pkgs.k9s
+    pkgs.kubectl
+    pkgs.kubectx
+    pkgs.kubectl-neat
+    pkgs.kubectl-example
+    pkgs.kind
+    pkgs.minikube
 
-    gnumake
-    cmake
-    cilium-cli
-    #glibc
+    pkgs.gnumake
+    pkgs.cmake
+    pkgs.cilium-cli
+    #pkgs.glibc
 
-    undollar
-    gdbgui
-    flyctl
-    azure-cli
-    uv
+    pkgs.undollar
+    pkgs.gdbgui
+    pkgs.flyctl
+    pkgs.azure-cli
+    pkgs.uv
 
-    ninja
-    gettext
-    terraform
-    azure-cli
-    opentofu
-    kubernetes-helm
+    pkgs.ninja
+    pkgs.gettext
+    pkgs.terraform
+    pkgs.azure-cli
+    pkgs.opentofu
+    pkgs.kubernetes-helm
   ];
 }

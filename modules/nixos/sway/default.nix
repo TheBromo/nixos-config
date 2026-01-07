@@ -5,10 +5,10 @@
   ...
 }:
 {
-  environment.systemPackages = with pkgs; [
-    shotman
-    clipcat # wl-copy and wl-paste for copy/paste from stdin / stdout
-    mako # notification system developed by swaywm maintainer
+  environment.systemPackages = [
+    pkgs.shotman
+    pkgs.clipcat # wl-copy and wl-paste for copy/paste from stdin / stdout
+    pkgs.mako # notification system developed by swaywm maintainer
   ];
 
   # Enable the gnome-keyring secrets vault.

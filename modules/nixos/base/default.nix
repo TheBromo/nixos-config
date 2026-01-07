@@ -28,14 +28,14 @@
       EDITOR = "nvim";
     };
 
-    systemPackages = with pkgs; [
-      unzip
-      zip
-      dnsutils
-      coreutils
-      btop
-      git-crypt
-      # ghostty
+    systemPackages = [
+      pkgs.unzip
+      pkgs.zip
+      pkgs.dnsutils
+      pkgs.coreutils
+      pkgs.btop
+      pkgs.git-crypt
+      # pkgs.ghostty
     ];
   };
 }

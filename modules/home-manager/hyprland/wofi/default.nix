@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    wofi
+  home.packages = [
+    pkgs.wofi
   ];
 
   programs.wofi = {

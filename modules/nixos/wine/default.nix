@@ -1,15 +1,15 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # ...
 
     # support both 32- and 64-bit applications
-    wineWowPackages.stable
+    pkgs.wineWowPackages.stable
 
     # winetricks (all versions)
-    winetricks
+    pkgs.winetricks
 
     # native wayland support (unstable)
-    wineWowPackages.waylandFull
+    pkgs.wineWowPackages.waylandFull
   ];
 }

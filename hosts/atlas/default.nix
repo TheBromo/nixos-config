@@ -44,7 +44,8 @@
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
-  # # Enable the GNOME Desktop Environment.
+  # TODO: Decide on desktop environment (GNOME, Hyprland, Sway, etc.)
+  # Enable the GNOME Desktop Environment.
   # services.xserver.displayManager.gdm.enable = true;
   # services.xserver.desktopManager.gnome.enable = true;
 
@@ -84,9 +85,9 @@
       "networkmanager"
       "wheel"
     ];
-    packages = with pkgs; [
-      google-chrome
-      #  thunderbird
+    packages = [
+      pkgs.google-chrome
+      #  pkgs.thunderbird
     ];
   };
 
@@ -98,11 +99,11 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    neovim
-    git
-    #  wget
+  environment.systemPackages = [
+    #  pkgs.vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    pkgs.neovim
+    pkgs.git
+    #  pkgs.wget
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

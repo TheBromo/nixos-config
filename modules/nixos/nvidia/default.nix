@@ -13,13 +13,14 @@
 
   services.xserver.videoDrivers = [ "nvidia" ];
   boot.initrd.kernelModules = [ "nvidia" ];
-  #boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  # NOTE: nvidia_x11 is handled automatically when using modern nvidia package
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   hardware = {
     graphics = {
       enable = true;
       enable32Bit = true;
-      extraPackages = with pkgs; [
-        vaapiVdpau
+      extraPackages = [
+        pkgs.vaapiVdpau
       ];
     };
 

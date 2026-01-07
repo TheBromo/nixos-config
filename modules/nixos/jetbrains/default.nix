@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    jetbrains.idea-ultimate
-    jetbrains.pycharm-professional
+  environment.systemPackages = [
+    pkgs.jetbrains.idea-ultimate
+    pkgs.jetbrains.pycharm-professional
   ];
 }

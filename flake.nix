@@ -34,6 +34,7 @@
       ...
     }:
     let
+      lib = nixpkgs.lib;
       specialArgs = {
         inherit self inputs;
       };
@@ -42,7 +43,7 @@
         "aarch64-darwin"
       ];
 
-      forAllSystems = nixpkgs.lib.genAttrs systems;
+      forAllSystems = lib.genAttrs systems;
 
       hosts = {
         zephyrus = "x86_64-linux";
@@ -52,10 +53,7 @@
         manuel-darwin = "aarch64-darwin";
       };
 
-      baseModules = [
-        ./overlays.nix
-        inputs.neovim-nightly-overlay.overlays.default
-      ];
+      baseModules = [ ];
     in
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
@@ -64,7 +62,7 @@
         let
           mkNixos =
             name: modules:
-            nixpkgs.lib.nixosSystem {
+            lib.nixosSystem {
               pkgs = nixpkgs.legacyPackages.${hosts.${name}};
               inherit specialArgs;
               modules = baseModules ++ modules;

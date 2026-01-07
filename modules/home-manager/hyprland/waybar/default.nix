@@ -1,8 +1,8 @@
 { pkgs, ... }:
 {
-  home.packages = with pkgs; [
-    waybar
-    pavucontrol
+  home.packages = [
+    pkgs.waybar
+    pkgs.pavucontrol
   ];
 
   programs.waybar = {
