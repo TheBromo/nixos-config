@@ -30,6 +30,7 @@
 
     gnumake
     cmake
+    cilium-cli
     #glibc
 
     undollar

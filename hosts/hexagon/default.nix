@@ -13,7 +13,6 @@
     "${self}/modules/home-manager/console"
     "${self}/modules/home-manager/tmux"
     "${self}/modules/home-manager/nvim-config"
-    "${self}/modules/home-manager/ghostty"
   ];
   dconf = {
     enable = true;
@@ -22,7 +21,7 @@
       "org/gnome/desktop/input-sources".xkb-options = [ "caps:escape" ];
     };
   };
-  nixGL = {
+  targets.genericLinux.nixGL = {
     packages = nixgl.packages;
   };
 

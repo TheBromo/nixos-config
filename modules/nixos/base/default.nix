@@ -35,7 +35,7 @@
       coreutils
       btop
       git-crypt
-      ghostty
+      # ghostty
     ];
   };
 }

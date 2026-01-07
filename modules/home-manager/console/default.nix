@@ -86,6 +86,7 @@ in
             export PATH="$HOME/.local/bin:$PATH"
             export ROS_DOMAIN_ID=0
             export PARAGON_GITLAB_ADMIN_PAT_OP="op://Employee/Gitlab admin PAT/credential"
+            export PATH=$HOME/.opencode/bin:$PATH
     '';
   };
   programs.atuin = {

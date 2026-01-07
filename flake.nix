@@ -43,6 +43,15 @@
       ];
 
       forAllSystems = nixpkgs.lib.genAttrs systems;
+
+      hosts = {
+        zephyrus = "x86_64-linux";
+        atlas = "x86_64-linux";
+        hexagon = "x86_64-linux";
+        manuel = "x86_64-linux";
+        manuel-darwin = "aarch64-darwin";
+      };
+
       baseModules = [
         ./overlays.nix
         inputs.neovim-nightly-overlay.overlays.default
@@ -51,59 +60,52 @@
     {
       formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-tree);
 
-      nixosConfigurations = {
-        zephyrus = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = baseModules ++ [
+      nixosConfigurations =
+        let
+          mkNixos =
+            name: modules:
+            nixpkgs.lib.nixosSystem {
+              pkgs = nixpkgs.legacyPackages.${hosts.${name}};
+              inherit specialArgs;
+              modules = baseModules ++ modules;
+            };
+        in
+        {
+          zephyrus = mkNixos "zephyrus" [
             nixos-hardware.nixosModules.asus-zephyrus-ga402
             ./hosts/zephyrus
           ];
-        };
-	
-        atlas = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
-          inherit specialArgs;
-          modules = [
+
+          atlas = mkNixos "atlas" [
             ./hosts/atlas
           ];
         };
-      };
 
-      homeConfigurations = {
-        "hexagon" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit nixgl;
-            inherit self;
-            inherit paragon;
-            inherit inputs;
-          };
-          modules = [
+      homeConfigurations =
+        let
+          mkHome =
+            name: extraArgs: modules:
+            home-manager.lib.homeManagerConfiguration {
+              pkgs = nixpkgs.legacyPackages.${hosts.${name}};
+              extraSpecialArgs = extraArgs // {
+                inherit self inputs;
+              };
+              modules = modules;
+            };
+        in
+        {
+          hexagon = mkHome "hexagon" { inherit nixgl paragon; } [
             vicinae.homeManagerModules.default
             ./hosts/hexagon
           ];
-        };
-        "manuel" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-          extraSpecialArgs = {
-            inherit self;
-            inherit inputs;
-          };
-          modules = [
+
+          manuel = mkHome "manuel" { } [
             ./hosts/home-manager
           ];
-        };
-        "manuel-darwin" = home-manager.lib.homeManagerConfiguration {
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-          extraSpecialArgs = {
-            inherit self;
-            inherit inputs;
-          };
-          modules = [
+
+          manuel-darwin = mkHome "manuel-darwin" { } [
             ./hosts/darwin
           ];
         };
-      };
     };
 }
