@@ -36,7 +36,6 @@
     pkgs.undollar
     pkgs.gdbgui
     pkgs.flyctl
-    pkgs.azure-cli
     pkgs.uv
 
     pkgs.ninja
@@ -45,5 +44,6 @@
     pkgs.azure-cli
     pkgs.opentofu
     pkgs.kubernetes-helm
+    pkgs.worktrunk
   ];
 }

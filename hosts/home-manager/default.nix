@@ -12,6 +12,7 @@
     "${self}/modules/home-manager/tmux"
     "${self}/modules/home-manager/nvim-config"
     "${self}/modules/home-manager/ghostty"
+    "${self}/modules/home-manager/claude"
   ];
   dconf = {
     enable = true;

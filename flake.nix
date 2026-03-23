@@ -6,7 +6,6 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     nixgl.url = "github:nix-community/nixGL";
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    vicinae.url = "github:vicinaehq/vicinae"; # tell Nixos where to get Vicinae
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -30,7 +29,6 @@
       paragon,
       nixgl,
 
-      vicinae, # enable the Output
       ...
     }:
     let
@@ -93,7 +91,6 @@
         in
         {
           hexagon = mkHome "hexagon" { inherit nixgl paragon; } [
-            vicinae.homeManagerModules.default
             ./hosts/hexagon
           ];
 
