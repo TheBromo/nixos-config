@@ -87,6 +87,7 @@ in
             export ROS_DOMAIN_ID=0
             export PARAGON_GITLAB_ADMIN_PAT_OP="op://Employee/Gitlab admin PAT/credential"
             export PATH=$HOME/.opencode/bin:$PATH
+            if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
     '';
   };
   programs.atuin = {
