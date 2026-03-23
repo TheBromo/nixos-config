@@ -1,61 +1,43 @@
 { pkgs, ... }:
 let
   timew = "${pkgs.timewarrior}/bin/timew";
+  notify = "${pkgs.libnotify}/bin/notify-send";
 
   # Main event handler script
   timewAuto = pkgs.writeShellScript "timew-auto" ''
     set -euo pipefail
 
     EVENT="$1"
-    HOUR=$(date +%H)
-    MINUTE=$(date +%M)
-    NOW=$(( 10#$HOUR * 60 + 10#$MINUTE ))
-
-    LUNCH_START=$(( 11 * 60 + 30 ))  # 11:30
-    LUNCH_END=$(( 13 * 60 + 30 ))    # 13:30
-    EOD=$(( 15 * 60 ))               # 15:00
-
     STATE_DIR="$HOME/.local/share/timew-auto"
     STATE_FILE="$STATE_DIR/started_today"
     LOG="$STATE_DIR/timew-auto.log"
     TODAY=$(date +%Y-%m-%d)
 
     mkdir -p "$STATE_DIR"
-    echo "$(date -Iseconds) event=$EVENT now=''${NOW}min" >> "$LOG"
+    echo "$(date -Iseconds) event=$EVENT" >> "$LOG"
 
     case "$EVENT" in
       login)
-        # Only start once per day
         if [ ! -f "$STATE_FILE" ] || [ "$(cat "$STATE_FILE")" != "$TODAY" ]; then
           echo "$TODAY" > "$STATE_FILE"
           ${timew} start >> "$LOG" 2>&1 || true
           echo "$(date -Iseconds) timew start (first login)" >> "$LOG"
+          ${notify} "Timewarrior" "Started tracking" || true
+        else
+          ${timew} continue >> "$LOG" 2>&1 || true
+          echo "$(date -Iseconds) timew continue (login after restart)" >> "$LOG"
+          ${notify} "Timewarrior" "Resumed tracking" || true
         fi
         ;;
-      lock)
-        # Lunch window: stop tracking
-        if [ "$NOW" -ge "$LUNCH_START" ] && [ "$NOW" -le "$LUNCH_END" ]; then
-          ${timew} stop >> "$LOG" 2>&1 || true
-          echo "$(date -Iseconds) timew stop (lunch lock)" >> "$LOG"
-        # End of day: stop tracking
-        elif [ "$NOW" -ge "$EOD" ]; then
-          ${timew} stop >> "$LOG" 2>&1 || true
-          echo "$(date -Iseconds) timew stop (EOD lock)" >> "$LOG"
-        fi
+      lock|logout)
+        ${timew} stop >> "$LOG" 2>&1 || true
+        echo "$(date -Iseconds) timew stop ($EVENT)" >> "$LOG"
+        ${notify} "Timewarrior" "Stopped tracking" || true
         ;;
       unlock)
-        # Lunch window: resume tracking
-        if [ "$NOW" -ge "$LUNCH_START" ] && [ "$NOW" -le "$LUNCH_END" ]; then
-          ${timew} continue >> "$LOG" 2>&1 || true
-          echo "$(date -Iseconds) timew continue (lunch unlock)" >> "$LOG"
-        fi
-        ;;
-      logout)
-        # End of day: stop tracking on logout/shutdown
-        if [ "$NOW" -ge "$EOD" ]; then
-          ${timew} stop >> "$LOG" 2>&1 || true
-          echo "$(date -Iseconds) timew stop (logout)" >> "$LOG"
-        fi
+        ${timew} continue >> "$LOG" 2>&1 || true
+        echo "$(date -Iseconds) timew continue (unlock)" >> "$LOG"
+        ${notify} "Timewarrior" "Resumed tracking" || true
         ;;
     esac
   '';
@@ -109,6 +91,9 @@ let
       echo "$(date -Iseconds) jira-tag: timew tag @1 $TICKET" >> "$LOG"
       ${timew} tag @1 "$TICKET" >> "$LOG" 2>&1 || true
     done
+
+    TICKET_LIST=$(echo "$TICKETS" | tr '\n' ' ')
+    ${notify} "Timewarrior" "Tagged: $TICKET_LIST" || true
   '';
 
   # D-Bus monitor that listens for GNOME screen lock/unlock signals

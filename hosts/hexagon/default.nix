@@ -13,6 +13,7 @@
     "${self}/modules/home-manager/console"
     "${self}/modules/home-manager/tmux"
     "${self}/modules/home-manager/nvim-config"
+    "${self}/modules/home-manager/timewarrior-auto"
   ];
   dconf = {
     enable = true;
