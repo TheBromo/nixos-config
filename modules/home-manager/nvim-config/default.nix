@@ -10,7 +10,7 @@
 
     pkgs.ripgrep
     #nix
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
     pkgs.nixd
     #web
     pkgs.typescript-language-server

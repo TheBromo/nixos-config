@@ -7,7 +7,7 @@
     pkgs.tree
     pkgs.gcc
     pkgs.nix-output-monitor
-    pkgs.nixfmt-rfc-style
+    pkgs.nixfmt
 
     pkgs.jq
     pkgs.zip
