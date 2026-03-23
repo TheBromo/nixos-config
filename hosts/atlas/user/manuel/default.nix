@@ -10,22 +10,6 @@
   ];
   programs.zsh.enable = true;
 
-  # users.users.manuel = {
-  #   isNormalUser = true;
-  #   description = "manuel";
-  #   extraGroups = [
-  #     "vboxusers"
-  #     "networkmanager"
-  #     "wheel"
-  #     "video"
-  #     "wireshark"
-  #   ];
-  #   packages = with pkgs; [
-  #     google-chrome
-  #   ];
-  #   shell = pkgs.zsh;
-  # };
-
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
@@ -45,6 +29,7 @@
           "${self}/modules/home-manager/console"
           "${self}/modules/home-manager/nvim-config"
           "${self}/modules/home-manager/tmux"
+          "${self}/modules/home-manager/timewarrior-auto"
         ];
 
         gtk.enable = true;
