@@ -21,7 +21,7 @@ let
     TODAY=$(date +%Y-%m-%d)
 
     mkdir -p "$STATE_DIR"
-    echo "$(date -Iseconds) event=$EVENT now=${NOW}min" >> "$LOG"
+    echo "$(date -Iseconds) event=$EVENT now=''${NOW}min" >> "$LOG"
 
     case "$EVENT" in
       login)
@@ -58,6 +58,57 @@ let
         fi
         ;;
     esac
+  '';
+
+  # Jira → timewarrior tagger
+  # Reads ~/.config/jira/api-token (plain Jira API token).
+  # Queries for tickets assigned to the user that were "In Progress" in the last 24 h
+  # and tags yesterday's timewarrior intervals with each ticket key.
+  jiraTagger = pkgs.writeShellScript "timew-jira-tag" ''
+    set -euo pipefail
+
+    TOKEN_FILE="$HOME/.config/jira/api-token"
+    STATE_DIR="$HOME/.local/share/timew-auto"
+    LOG="$STATE_DIR/timew-auto.log"
+    EMAIL="manuel.strenge-ext@hexagon.com"
+    JIRA_BASE="https://hexagon-robotics.atlassian.net"
+
+    mkdir -p "$STATE_DIR"
+
+    if [ ! -f "$TOKEN_FILE" ]; then
+      echo "$(date -Iseconds) jira-tag: no token at $TOKEN_FILE, skipping" >> "$LOG"
+      exit 0
+    fi
+
+    TOKEN=$(cat "$TOKEN_FILE")
+    AUTH=$(printf '%s:%s' "$EMAIL" "$TOKEN" | ${pkgs.coreutils}/bin/base64 -w0)
+
+    JQL="assignee = currentUser() AND status WAS \"In Progress\" DURING (\"-1d\", \"-0d\")"
+
+    echo "$(date -Iseconds) jira-tag: querying Jira" >> "$LOG"
+
+    TICKETS=$(${pkgs.curl}/bin/curl -sf \
+      -G \
+      -H "Authorization: Basic $AUTH" \
+      -H "Content-Type: application/json" \
+      --data-urlencode "jql=$JQL" \
+      --data-urlencode "fields=key" \
+      --data-urlencode "maxResults=50" \
+      "$JIRA_BASE/rest/api/3/search/jql" \
+      | ${pkgs.jq}/bin/jq -r '.issues[].key') || {
+        echo "$(date -Iseconds) jira-tag: Jira API call failed" >> "$LOG"
+        exit 1
+      }
+
+    if [ -z "$TICKETS" ]; then
+      echo "$(date -Iseconds) jira-tag: no in-progress tickets found" >> "$LOG"
+      exit 0
+    fi
+
+    for TICKET in $TICKETS; do
+      echo "$(date -Iseconds) jira-tag: timew tag @1 $TICKET" >> "$LOG"
+      ${timew} tag @1 "$TICKET" >> "$LOG" 2>&1 || true
+    done
   '';
 
   # D-Bus monitor that listens for GNOME screen lock/unlock signals
@@ -110,6 +161,31 @@ in
     };
     Install = {
       WantedBy = [ "graphical-session.target" ];
+    };
+  };
+
+  # Tag yesterday's timewarrior intervals with Jira ticket keys at 10:00
+  systemd.user.services.timew-jira-tag = {
+    Unit = {
+      Description = "Tag timewarrior intervals with Jira in-progress tickets";
+      After = [ "network-online.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${jiraTagger}";
+    };
+  };
+
+  systemd.user.timers.timew-jira-tag = {
+    Unit = {
+      Description = "Daily Jira → timewarrior tagger at 10:00";
+    };
+    Timer = {
+      OnCalendar = "*-*-* 10:00:00";
+      Persistent = true;
+    };
+    Install = {
+      WantedBy = [ "timers.target" ];
     };
   };
 }
