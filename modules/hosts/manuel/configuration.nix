@@ -9,6 +9,10 @@
         self.homeModules.git
         self.homeModules.devtools
         self.homeModules.console
+        self.homeModules.info
+        self.homeModules.dvt
+        self.homeModules.dvd
+        self.homeModules.wsswitch
         self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.ghostty

@@ -2,20 +2,7 @@
 {
   flake.homeModules.console =
     { pkgs, ... }:
-    let
-      info = import "${self}/pkgs/info" { inherit pkgs; };
-      dvt = import "${self}/pkgs/dvt" { inherit pkgs; };
-      dvd = import "${self}/pkgs/dvd" { inherit pkgs; };
-      wsswitch = import "${self}/pkgs/wsswitch" { inherit pkgs; };
-    in
     {
-      home.packages = [
-        info
-        dvt
-        dvd
-        wsswitch
-      ];
-
       programs.zoxide = {
         enable = true;
         enableZshIntegration = true;
@@ -87,6 +74,11 @@
           if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
         '';
       };
+
+      home.file.".config/wt.toml".text = ''
+        [post-start]
+        copy = "wt step copy-ignored"
+      '';
 
       programs.atuin = {
         enable = true;
