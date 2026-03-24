@@ -1,44 +1,33 @@
 { self, inputs, ... }:
 {
-  flake.homeModules.git =
+  flake.lib.gitModule =
+    {
+      userName ? "thebromo",
+      userEmail ? "manuel@strenge.ch",
+    }:
     {
       pkgs,
       lib,
-      config,
       ...
     }:
     {
-      options.git = {
-        userName = lib.mkOption {
-          type = lib.types.str;
-          default = "thebromo";
-          description = "Git user name";
+      programs.gh.enable = true;
+
+      programs.git = {
+        enable = true;
+        lfs.enable = true;
+
+        signing = {
+          key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
+          signByDefault = true;
+          format = "openpgp";
         };
-        userEmail = lib.mkOption {
-          type = lib.types.str;
-          default = "manuel@strenge.ch";
-          description = "Git user email";
-        };
-      };
 
-      config = {
-        programs.gh.enable = true;
-
-        programs.git = {
-          enable = true;
-          lfs.enable = true;
-
-          signing = {
-            key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
-            signByDefault = true;
-            format = "openpgp";
+        settings = {
+          user = {
+            Name = userName;
+            Email = userEmail;
           };
-
-          settings = {
-            user = {
-              Name = config.git.userName;
-              Email = config.git.userEmail;
-            };
             init.defaultBranch = "main";
             pull.rebase = "true";
             delta.enable = "true";
@@ -118,6 +107,5 @@
             os.editPreset = "nvim";
           };
         };
-      };
     };
 }

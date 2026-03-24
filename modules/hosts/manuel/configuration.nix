@@ -6,7 +6,7 @@
       nixpkgs.config.allowUnfree = true;
 
       imports = [
-        self.homeModules.git
+        (self.lib.gitModule { })
         self.homeModules.devtools
         self.homeModules.console
         self.homeModules.info
