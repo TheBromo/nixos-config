@@ -1,7 +1,12 @@
 { self, inputs, ... }:
 {
   flake.homeModules.git =
-    { pkgs, lib, config, ... }:
+    {
+      pkgs,
+      lib,
+      config,
+      ...
+    }:
     {
       options.git = {
         userName = lib.mkOption {
