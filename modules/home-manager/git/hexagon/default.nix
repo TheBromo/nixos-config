@@ -1,10 +1,11 @@
+{ self, inputs, ... }:
 {
-  lib,
-  ...
-}:
-{
-  programs.git.settings = {
-    user.Name = lib.mkForce "Manuel Strenge";
-    user.Email = lib.mkForce "manuel.strenge-ext@hexagon.com";
-  };
+  flake.homeModules.gitHexagon =
+    { lib, ... }:
+    {
+      programs.git.settings = {
+        user.Name = lib.mkForce "Manuel Strenge";
+        user.Email = lib.mkForce "manuel.strenge-ext@hexagon.com";
+      };
+    };
 }
