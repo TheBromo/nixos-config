@@ -6,8 +6,10 @@
       nixpkgs.config.allowUnfree = true;
 
       imports = [
-        self.homeModules.git
-        self.homeModules.gitHexagon
+        (self.lib.gitModule {
+          userName = "Manuel Strenge";
+          userEmail = "manuel.strenge-ext@hexagon.com";
+        })
         self.homeModules.devtools
         self.homeModules.console
         self.homeModules.info
