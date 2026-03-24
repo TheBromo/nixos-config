@@ -15,6 +15,7 @@
         self.homeModules.wsswitch
         self.homeModules.tmux
         self.homeModules.nvimConfig
+        self.homeModules.gitHexagon
       ];
 
       home = {
