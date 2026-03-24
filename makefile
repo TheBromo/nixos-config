@@ -11,7 +11,8 @@ zephyrus:
 
 home:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel
-
+zhaw:
+	nix run nixpkgs#home-manager -- switch --flake .#zhaw
 hexagon:
 	nix run nixpkgs#home-manager -- switch --impure --flake .#hexagon
 
