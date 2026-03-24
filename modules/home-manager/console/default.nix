@@ -78,7 +78,7 @@
       programs.atuin = {
         enable = true;
         enableZshIntegration = true;
-        daemon.enable = true;
+        daemon.enable = false;
         flags = [
           "--disable-up-arrow"
         ];
