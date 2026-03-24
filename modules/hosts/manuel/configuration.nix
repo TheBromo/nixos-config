@@ -9,6 +9,16 @@
         (self.lib.gitModule { signing = false; })
         self.homeModules.devtools
         self.homeModules.console
+        self.homeModules.kubernetes
+        self.homeModules.node
+        self.homeModules.go
+        self.homeModules.starship
+        self.homeModules.atuin
+        self.homeModules.direnv
+        self.homeModules.bat
+        self.homeModules.wt
+        self.homeModules.ros
+        self.homeModules.terraform
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd

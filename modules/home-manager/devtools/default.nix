@@ -10,40 +10,25 @@
         pkgs.nixfmt
 
         pkgs.jq
+        pkgs.yq
+
         pkgs.zip
         pkgs.unzip
         pkgs.openssl
 
         pkgs.rustup
-        pkgs.go
         pkgs.zig
-        pkgs.gopls
-        pkgs.gotools
-
-        pkgs.k9s
-        pkgs.kubectl
-        pkgs.kubectx
-        pkgs.kubectl-neat
-        pkgs.kubectl-example
-        pkgs.kind
-        pkgs.minikube
 
         pkgs.gnumake
         pkgs.cmake
-        pkgs.cilium-cli
 
         pkgs.undollar
         pkgs.gdbgui
-        pkgs.flyctl
         pkgs.uv
 
         pkgs.ninja
         pkgs.gettext
-        pkgs.terraform
-        pkgs.azure-cli
-        pkgs.opentofu
-        pkgs.kubernetes-helm
-        pkgs.worktrunk
+
       ];
     };
 }

@@ -63,7 +63,7 @@
         TOKEN=$(cat "$TOKEN_FILE")
         AUTH=$(printf '%s:%s' "$EMAIL" "$TOKEN" | ${pkgs.coreutils}/bin/base64 -w0)
 
-        JQL="assignee = currentUser() AND status WAS \"In Progress\" DURING (\"-1d\", \"-0d\")"
+        JQL="assignee = currentUser() AND status WAS \"In Progress\" DURING (\"-1h\", \"-0d\")"
 
         echo "$(date -Iseconds) jira-tag: querying Jira" >> "$LOG"
 

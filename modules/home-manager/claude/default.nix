@@ -103,8 +103,9 @@
           };
 
           enabledMcpjsonServers = [
-            "dynamic-mcp"
+            # "dynamic-mcp" #TODO: correctly setup
             "atlassian"
+            "terraform"
           ];
           enabledPlugins = {
             "code-review@claude-code-plugins" = true;
@@ -122,12 +123,12 @@
         };
 
         mcpServers = {
-          dynamic-mcp = {
-            type = "stdio";
-            command = "dmcp";
-            args = [ "${config.home.homeDirectory}/.config/dynamic-mcp/config.json" ];
-            env = { };
-          };
+          # dynamic-mcp = {
+          #   type = "stdio";
+          #   command = "dmcp";
+          #   args = [ "${config.home.homeDirectory}/.config/dynamic-mcp/config.json" ];
+          #   env = { };
+          # };
           terraform = {
             command = "docker";
             args = [

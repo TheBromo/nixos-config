@@ -108,5 +108,9 @@
           os.editPreset = "nvim";
         };
       };
+
+      programs.zsh.shellAliases = {
+        lg = "lazygit";
+      };
     };
 }

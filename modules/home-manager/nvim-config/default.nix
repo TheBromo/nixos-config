@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.nvimConfig =
     {
@@ -12,16 +12,20 @@
         inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
 
         pkgs.ripgrep
+
         # nix
         pkgs.nixfmt
         pkgs.nixd
+
         # web
         pkgs.typescript-language-server
         pkgs.prettierd
         pkgs.tailwindcss-language-server
+
         # python
         pkgs.ty
         pkgs.ruff
+
         # kubernetes
         pkgs.kube-linter
         pkgs.yamlfmt
@@ -33,6 +37,10 @@
         pkgs.vscode-langservers-extracted
         pkgs.gopls
         pkgs.terraform-ls
+
+        # treesitter
+        pkgs.vimPlugins.nvim-treesitter-parsers.markdown
+        pkgs.vimPlugins.nvim-treesitter-parsers.markdown_inline
       ];
 
       home.activation = {
@@ -44,6 +52,21 @@
             echo "Neovim configuration already exists. Skipping clone."
           fi
           chmod -R u+w ~/.config/nvim
+        '';
+      };
+
+      programs.zsh = {
+        shellAliases = {
+          vim = "nvim";
+          vi = "nvim";
+        };
+        initContent = ''
+          reopen_nvim() {
+              fg
+          }
+
+          zle -N reopen_nvim
+          bindkey '^Z' reopen_nvim
         '';
       };
     };

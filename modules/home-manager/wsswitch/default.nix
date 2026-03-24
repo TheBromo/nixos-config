@@ -26,5 +26,20 @@
       home.packages = [
         wsswitch
       ];
+      programs.zsh.initContent = ''
+        function cd_from_ws() {
+          local target=$(wsswitch)
+          if [[ -d "$target" ]]; then
+            cd "$target"
+          else
+            print -ru2 "Error: '$target' is not a valid directory."
+          fi
+
+          zle reset-prompt
+        }
+
+        zle -N cd_from_ws
+        bindkey '^F' cd_from_ws
+      '';
     };
 }

@@ -17,123 +17,15 @@
         defaultKeymap = "viins";
 
         shellAliases = {
-          # cat = "bat";
-          lg = "lazygit";
-          vim = "nvim";
-          vi = "nvim";
-          k = "kubectl";
           ll = "ls -alF";
           la = "ls -A";
           l = "ls -CF";
         };
 
         initContent = ''
-          function cd_from_ws() {
-            local target=$(wsswitch)
-            if [[ -d "$target" ]]; then
-              cd "$target"
-            else
-              print -ru2 "Error: '$target' is not a valid directory."
-            fi
-
-            zle reset-prompt
-          }
-
-          reopen_nvim() {
-              fg
-          }
-
-
-          zle -N cd_from_ws
-          zle -N reopen_nvim
-
-          bindkey '^F' cd_from_ws
-          bindkey '^Z' reopen_nvim
-
-          export NVM_DIR="$HOME/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
-
-          source <(kubectl completion zsh)
-          export GOPATH=$HOME/go
-          export PATH=$PATH:$HOME/go/bin
-          export BUN_INSTALL="$HOME/.bun"
-          export PATH="$BUN_INSTALL/bin:$PATH"
           export PATH="$HOME/.local/bin:$PATH"
-          export ROS_DOMAIN_ID=0
-          export PARAGON_GITLAB_ADMIN_PAT_OP="op://Employee/Gitlab admin PAT/credential"
           export PATH=$HOME/.opencode/bin:$PATH
-          if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
         '';
-      };
-
-      home.file.".config/wt.toml".text = ''
-        [post-start]
-        copy = "wt step copy-ignored"
-      '';
-
-      programs.atuin = {
-        enable = true;
-        enableZshIntegration = true;
-        daemon.enable = false;
-        flags = [
-          "--disable-up-arrow"
-        ];
-      };
-
-      programs.direnv = {
-        enable = true;
-        enableZshIntegration = true;
-        nix-direnv.enable = true;
-      };
-
-      programs.bat = {
-        enable = true;
-      };
-
-      programs.starship = {
-        enable = true;
-        enableZshIntegration = true;
-        settings = {
-          format = "$character $directory";
-          right_format = "$cmd_duration$shlvl[$username@$hostname](cyan)";
-          add_newline = false;
-
-          character = {
-            format = "$symbol";
-            success_symbol = "[▲](bold green)";
-            error_symbol = "[△](bold red)";
-            vimcmd_symbol = "[▲](bold purple)";
-          };
-
-          username = {
-            format = "$user";
-            show_always = true;
-          };
-
-          directory = {
-            style = "bold green";
-          };
-
-          hostname = {
-            format = "$hostname";
-            ssh_only = false;
-          };
-
-          shlvl = {
-            disabled = false;
-            format = "[$symbol]($style) ";
-            symbol = "";
-            threshold = 3;
-          };
-
-          cmd_duration = {
-            format = "[$duration](bold yellow) ";
-          };
-        };
       };
     };
 }
