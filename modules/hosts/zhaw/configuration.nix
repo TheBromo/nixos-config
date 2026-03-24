@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  flake.homeModules.manuelConfiguration =
+  flake.homeModules.zhawConfiguration =
     { pkgs, ... }:
     {
       nixpkgs.config.allowUnfree = true;
@@ -15,13 +15,12 @@
         self.homeModules.wsswitch
         self.homeModules.tmux
         self.homeModules.nvimConfig
-        self.homeModules.ghostty
         self.homeModules.claude
       ];
 
       home = {
-        username = "manuel";
-        homeDirectory = "/home/manuel";
+        username = "strenman";
+        homeDirectory = "/home/strenman";
         stateVersion = "24.11";
         keyboard = {
           options = [ "caps:escape" ];
