@@ -12,11 +12,14 @@
         signing = {
           key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
           signByDefault = true;
+          format = "openpgp";
         };
 
         settings = {
-          user.Name = "thebromo";
-          user.Email = "manuel@strenge.ch";
+          user = {
+            Name = "thebromo";
+            Email = "manuel@strenge.ch";
+          };
           init.defaultBranch = "main";
           pull.rebase = "true";
           delta.enable = "true";

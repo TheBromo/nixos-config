@@ -156,10 +156,10 @@
 
       systemd.user.timers.timew-jira-tag = {
         Unit = {
-          Description = "Daily Jira → timewarrior tagger at 10:00";
+          Description = "Hourly Jira → timewarrior tagger";
         };
         Timer = {
-          OnCalendar = "*-*-* 10:00:00";
+          OnCalendar = "hourly";
           Persistent = true;
         };
         Install = {
