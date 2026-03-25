@@ -4,12 +4,14 @@
     {
       pkgs,
       lib,
+      self,
       inputs,
       ...
     }:
     {
       home.packages = [
         inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
+        self.packages.${pkgs.stdenv.hostPlatform.system}.tree-sitter-cli
 
         pkgs.ripgrep
 
@@ -37,10 +39,6 @@
         pkgs.vscode-langservers-extracted
         pkgs.gopls
         pkgs.terraform-ls
-
-        # treesitter
-        pkgs.vimPlugins.nvim-treesitter-parsers.markdown
-        pkgs.vimPlugins.nvim-treesitter-parsers.markdown_inline
       ];
 
       home.activation = {

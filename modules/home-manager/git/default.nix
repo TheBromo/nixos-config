@@ -26,8 +26,8 @@
 
         settings = {
           user = {
-            Name = userName;
-            Email = userEmail;
+            name = userName;
+            email = userEmail;
           };
           init.defaultBranch = "main";
           pull.rebase = "true";
