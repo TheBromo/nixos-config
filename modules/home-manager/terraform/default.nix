@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.terraform =
     { pkgs, ... }:

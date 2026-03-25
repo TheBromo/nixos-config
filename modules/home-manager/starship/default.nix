@@ -1,7 +1,7 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.starship =
-    { pkgs, ... }:
+    { ... }:
     {
 
       programs.starship = {

@@ -1,9 +1,8 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.atuin =
-    { pkgs, ... }:
+    { ... }:
     {
-
       programs.atuin = {
         enable = true;
         enableZshIntegration = true;

@@ -1,4 +1,4 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.timewarriorAuto =
     { pkgs, ... }:

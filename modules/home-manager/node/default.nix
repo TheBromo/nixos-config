@@ -1,7 +1,7 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.node =
-    { pkgs, ... }:
+    { ... }:
     {
 
       programs.zsh.initContent = ''

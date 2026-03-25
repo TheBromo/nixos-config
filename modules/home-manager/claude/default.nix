@@ -1,7 +1,7 @@
-{ self, inputs, ... }:
+{ ... }:
 {
   flake.homeModules.claude =
-    { config, ... }:
+    { ... }:
     {
       programs.claude-code = {
         enable = true;
