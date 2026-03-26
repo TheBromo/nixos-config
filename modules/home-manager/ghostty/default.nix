@@ -33,8 +33,34 @@
         enable = true;
         enableZshIntegration = true;
         installVimSyntax = true;
+        themes.monokai-pro = {
+          palette = [
+            "0=#121212"
+            "1=#ff6188"
+            "2=#a9dc76"
+            "3=#ffd866"
+            "4=#fc9867"
+            "5=#ab9df2"
+            "6=#78dce8"
+            "7=#fcfcfa"
+            "8=#727072"
+            "9=#ff6188"
+            "10=#a9dc76"
+            "11=#ffd866"
+            "12=#fc9867"
+            "13=#ab9df2"
+            "14=#78dce8"
+            "15=#fcfcfa"
+          ];
+          background = "#080808";
+          foreground = "#fcfcfa";
+          cursor-color = "#c1c0c0";
+          cursor-text = "#8e8d8d";
+          selection-background = "#5b595c";
+          selection-foreground = "#fcfcfa";
+        };
         settings = {
-          theme = "Builtin Pastel Dark";
+          theme = "monokai-pro";
 
           font-family = [
             "TX-02"
