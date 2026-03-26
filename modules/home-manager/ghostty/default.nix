@@ -1,12 +1,31 @@
 { ... }:
 {
   flake.homeModules.ghostty =
-    { config, pkgs, ... }:
     {
+      config,
+      pkgs,
+      inputs,
+      ...
+    }:
+    {
+      xdg.desktopEntries.ghostty = {
+        name = "Ghostty";
+        genericName = "Terminal Emulator";
+        exec = "${config.lib.nixGL.wrap pkgs.ghostty}/bin/ghostty";
+        icon = "com.mitchellh.ghostty";
+        terminal = false;
+        type = "Application";
+        categories = [
+          "System"
+          "TerminalEmulator"
+        ];
+      };
+
       programs.ghostty = {
-        package = (config.lib.nixGL.wrap pkgs.ghostty);
+        package = (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default);
         enable = true;
         enableZshIntegration = true;
+        installVimSyntax = true;
         settings = {
           theme = "Builtin Pastel Dark";
 
@@ -14,7 +33,7 @@
             "TX-02"
             "Apple Color Emoji"
           ];
-          font-size = 13;
+          font-size = 12.5;
           font-feature = "-calt, -liga, -dlig";
 
           shell-integration = "zsh";
@@ -23,14 +42,6 @@
           macos-icon = "xray";
 
           keybind = [
-            "alt+h=goto_split:left"
-            "ctrl+shift+l=goto_split:right"
-            "ctrl+shift+j=goto_split:down"
-            "ctrl+shift+k=goto_split:up"
-            "ctrl+shift+]=next_tab"
-            "ctrl+shift+[=previous_tab"
-            "alt+v=new_split:right"
-            "alt+s=new_split:down"
           ];
         };
       };

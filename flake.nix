@@ -11,8 +11,8 @@
     };
 
     nixgl.url = "github:nix-community/nixGL";
-
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    ghostty.url = "github:ghostty-org/ghostty";
 
     paragon = {
       url = "git+ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon?ref=main";

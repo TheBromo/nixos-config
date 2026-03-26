@@ -26,6 +26,7 @@
         self.homeModules.dvt
         self.homeModules.dvd
         self.homeModules.wsswitch
+        self.homeModules.ghostty
         self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.claude
