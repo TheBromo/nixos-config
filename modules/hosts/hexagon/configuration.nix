@@ -27,6 +27,7 @@
         self.homeModules.dvd
         self.homeModules.wsswitch
         self.homeModules.ghostty
+        self.homeModules.helium
         self.homeModules.fluentui-emoji
         self.homeModules.TX-02
         self.homeModules.tmux
