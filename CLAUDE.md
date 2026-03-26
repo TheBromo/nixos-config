@@ -2,48 +2,70 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Commands
+## Build & Deploy Commands
 
 ```bash
-make up        # nix flake update (uses nom for pretty output)
-make hexagon   # home-manager switch for hexagon host (--impure required for nixGL)
-make home      # home-manager switch for manuel host
-make darwin    # home-manager switch for manuel-darwin host
-make zephyrus  # nixos-rebuild switch for zephyrus
-make atlas     # nixos-rebuild switch for atlas
+make up          # Update flake inputs (uses nom)
+make home        # Switch home-manager for "manuel" (Linux)
+make zhaw        # Switch home-manager for "zhaw" (Linux)
+make hexagon     # Switch home-manager for "hexagon" (Linux, --impure)
+make darwin      # Switch home-manager for "manuel-darwin" (macOS)
+make atlas       # NixOS system rebuild (atlas host)
+make zephyrus    # NixOS system rebuild (zephyrus host)
 ```
 
-To check a config without applying: replace `switch` with `build` in the underlying nix command.
+## Testing with Nix
+
+Build a full home configuration (produces the activation package):
+```bash
+nix build .#homeConfigurations.manuel.activationPackage
+nix build .#homeConfigurations.zhaw.activationPackage
+nix build .#homeConfigurations.hexagon.activationPackage --impure
+nix build .#homeConfigurations.manuel-darwin.activationPackage
+```
+
+Evaluate a home configuration without building (fast syntax/value check):
+```bash
+nix eval .#homeConfigurations.manuel.activationPackage --apply 'x: "ok"'
+```
+
+Evaluate a single homeModule exists:
+```bash
+nix eval .#homeModules.console --apply 'x: "ok"'
+```
+
+List all available homeModules:
+```bash
+nix eval .#homeModules --apply builtins.attrNames
+```
+
+Build an individual package:
+```bash
+nix build .#packages.x86_64-linux.tree-sitter-cli
+```
 
 ## Architecture
 
-This is a flake-based NixOS/home-manager configuration managing multiple hosts across Linux and macOS.
+**Nix Flakes + flake-parts + import-tree**: The flake uses `import-tree` to auto-discover all modules under `./modules/`. Each module exports `flake.*` attributes (typically `flake.homeModules.<name>`).
 
-**Hosts:**
-- `hexagon` — standalone home-manager on a non-NixOS Linux system (uses `--impure` + nixGL for OpenGL)
-- `manuel` — home-manager on Linux
-- `manuel-darwin` — home-manager on macOS (aarch64-darwin)
-- `zephyrus` — full NixOS system (ASUS laptop)
-- `atlas` — full NixOS system (desktop, GNOME + Nvidia)
-
-**Layout:**
-- `hosts/` — per-host entry points; each imports from `modules/`
-- `modules/home-manager/` — reusable user-environment modules (shell, devtools, git, nvim, tmux, claude, etc.)
-- `modules/nixos/` — reusable system-level modules (docker, nvidia, gnome, ssh, etc.)
-- `pkgs/` — custom package derivations (info, dvt, dvd, wsswitch, TX-02 font)
-- `secrets/` — git-crypt encrypted secrets
-
-**Module import pattern** — hosts use `self` from `specialArgs` to reference modules:
+**Module pattern**: Every home-manager module lives in `modules/home-manager/<name>/default.nix` and exports:
 ```nix
-imports = [ "${self}/modules/home-manager/git" ];
+{ ... }:
+{
+  flake.homeModules.moduleName = { pkgs, ... }: { ... };
+}
 ```
 
-**hexagon is the primary development host.** It receives the most modules (paragon robotics package, nixGL, devtools, claude config) and is the one most likely to be modified.
+**Host configurations** in `modules/hosts/<name>/configuration.nix` compose modules and define per-host settings (username, home path, state version, which modules to include).
 
-## Key Conventions
+**Four hosts**: `manuel` (personal Linux), `zhaw` (university Linux), `hexagon` (work Linux, containerized with nixGL), `manuel-darwin` (personal macOS).
 
-- `nixpkgs` follows `nixos-unstable`; `stateVersion = "24.11"` across home-manager configs
-- `allowUnfree = true` set in all home-manager configs
-- SSH commit signing via Ed25519 key + 1Password agent
-- The `hexagon` host passes `nixgl` and `paragon` as `extraSpecialArgs` — use `nixgl.nixGL` wrapper when adding GUI apps to that host
-- `modules/home-manager/claude/enforce-lattice.py` is a pre-tool hook that enforces Claude's permission policy; edits to allowed/denied tools belong in `modules/home-manager/claude/default.nix`
+**Custom library**: `self.lib.gitModule` is a parameterized factory for git configuration supporting multiple identities, optional commit signing, and 1Password SSH signing.
+
+## Key Integration Points
+
+- **1Password CLI (`op`)**: Used for git commit signing, terraform secrets, SSH agent
+- **nixGL**: Wraps GUI applications on the hexagon host (non-NixOS container environment)
+- **Git crypt**: Protects encrypted files in the repo
+- **Neovim config**: Cloned via home activation hook from a separate repo, not managed inline
+- **MCP servers**: Terraform and Atlassian servers configured in the claude module
