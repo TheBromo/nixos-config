@@ -56,15 +56,12 @@
       "locked": {
         "lastModified": 1756385612,
         "narHash": "sha256-+NU5MMhuPHHRyvZZWNFG7zt+leRSPsJu1MwhOUzkPUk=",
-        "owner": "cachix",
-        "repo": "cachix",
-        "rev": "dc24688cd67518c3711d511fa369c0f5a131063a",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/cachix/cachix/dc24688cd67518c3711d511fa369c0f5a131063a"
       },
       "original": {
-        "owner": "cachix",
-        "repo": "cachix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/cachix/cachix/dc24688cd67518c3711d511fa369c0f5a131063a"
       }
     },
     "deploy-rs": {
@@ -85,15 +82,12 @@
       "locked": {
         "lastModified": 1756719547,
         "narHash": "sha256-N9gBKUmjwRKPxAafXEk1EGadfk2qDZPBQp4vXWPHINQ=",
-        "owner": "serokell",
-        "repo": "deploy-rs",
-        "rev": "125ae9e3ecf62fb2c0fd4f2d894eb971f1ecaed2",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/serokell/deploy-rs/125ae9e3ecf62fb2c0fd4f2d894eb971f1ecaed2"
       },
       "original": {
-        "owner": "serokell",
-        "repo": "deploy-rs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/serokell/deploy-rs/125ae9e3ecf62fb2c0fd4f2d894eb971f1ecaed2"
       }
     },
     "devenv": {
@@ -123,15 +117,12 @@
       "locked": {
         "lastModified": 1759850456,
         "narHash": "sha256-Egs0XVu3LQURz84I5Q/Gjo5aPYg5ZQrtEbhAc/ZZ90A=",
-        "owner": "cachix",
-        "repo": "devenv",
-        "rev": "2771d547ebcd423f9a4c7bddb9c4d182cb4efb10",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/cachix/devenv/2771d547ebcd423f9a4c7bddb9c4d182cb4efb10"
       },
       "original": {
-        "owner": "cachix",
-        "repo": "devenv",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/cachix/devenv/2771d547ebcd423f9a4c7bddb9c4d182cb4efb10"
       }
     },
     "disko": {
@@ -144,15 +135,12 @@
       "locked": {
         "lastModified": 1758287904,
         "narHash": "sha256-IGmaEf3Do8o5Cwp1kXBN1wQmZwQN3NLfq5t4nHtVtcU=",
-        "owner": "nix-community",
-        "repo": "disko",
-        "rev": "67ff9807dd148e704baadbd4fd783b54282ca627",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/disko/67ff9807dd148e704baadbd4fd783b54282ca627"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "disko",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/disko/67ff9807dd148e704baadbd4fd783b54282ca627"
       }
     },
     "flake-compat": {
@@ -175,15 +163,12 @@
       "locked": {
         "lastModified": 1746162366,
         "narHash": "sha256-5SSSZ/oQkwfcAz/o/6TlejlVGqeK08wyREBQ5qFFPhM=",
-        "owner": "nix-community",
-        "repo": "flake-compat",
-        "rev": "0f158086a2ecdbb138cd0429410e44994f1b7e4b",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/flake-compat/0f158086a2ecdbb138cd0429410e44994f1b7e4b"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "flake-compat",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/flake-compat/0f158086a2ecdbb138cd0429410e44994f1b7e4b"
       }
     },
     "flake-parts": {
@@ -255,17 +240,14 @@
         ]
       },
       "locked": {
-        "lastModified": 1759362264,
-        "narHash": "sha256-wfG0S7pltlYyZTM+qqlhJ7GMw2fTF4mLKCIVhLii/4M=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "758cf7296bee11f1706a574c77d072b8a7baa881",
-        "type": "github"
+        "lastModified": 1756770412,
+        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/hercules-ci/flake-parts/4524271976b625a4a605beefd893f270620fd751"
       },
       "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/hercules-ci/flake-parts/4524271976b625a4a605beefd893f270620fd751"
       }
     },
     "flake-root": {
@@ -311,15 +293,12 @@
       "locked": {
         "lastModified": 1731533236,
         "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/flake-utils/11707dc2f618dd54ca8739b309ec4fc024de578b"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/flake-utils/11707dc2f618dd54ca8739b309ec4fc024de578b"
       }
     },
     "flake-utils_3": {
@@ -392,11 +371,11 @@
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1774494477,
-        "narHash": "sha256-WeUHRLDD/Fa9RzOC2UvPQ25xQiU83hUh7HUqiLTrCUA=",
+        "lastModified": 1774534501,
+        "narHash": "sha256-bGK3apj+fkOFgOcflRhcxFl+esXHT+/jSX24wwVZ75s=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "b839561e5db36589d6a999044c76bfe785a013d7",
+        "rev": "4e2b227b6a81cbb80356127e198eafb19e852395",
         "type": "github"
       },
       "original": {
@@ -533,11 +512,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1774293042,
-        "narHash": "sha256-OEBV+Y5I4Ldu98k0KvGXRfJYh+jjE8ocCSL/dxTGs1s=",
+        "lastModified": 1774534244,
+        "narHash": "sha256-WnmXKsbkwokDdrdI1XwRWH4RYYalOVKgV/hYQmL3/TE=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "bc357c75e3142a31b849ba49c5299fb52c61cf59",
+        "rev": "86014e836ca6f4a04d59b85111d39660bdda01cd",
         "type": "github"
       },
       "original": {
@@ -590,11 +569,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1774310655,
-        "narHash": "sha256-wKLJ5XMA1x3rcJOckqp0VC6QkJ9IKJwANG37VMbYxvw=",
+        "lastModified": 1774483626,
+        "narHash": "sha256-8VAX9GXNfv4eBj0qBEf/Rc2/E6G0SBEpuo2A5plw34I=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "0fcef258e524f08cdcaaa163c37f14b892f6fd88",
+        "rev": "5deaa19e80e1c0695f7fa8a16e13a704fd08f96e",
         "type": "github"
       },
       "original": {
@@ -606,11 +585,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1774309203,
-        "narHash": "sha256-iCxl6+jjAXSLmmoYjbgO6k2/hm/a2EVxMW44oCA1GWs=",
+        "lastModified": 1774472446,
+        "narHash": "sha256-Hp4A0llEmBvvNuw5uKOz+BA86X7TmXZ1vUK0StiMdVs=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "1de1c08210076edbdc23fba86d9ffff25b54cbd8",
+        "rev": "c9e961994b16ed841be43541ef550bf3d3f043ec",
         "type": "github"
       },
       "original": {
@@ -640,30 +619,24 @@
       "locked": {
         "lastModified": 1759862545,
         "narHash": "sha256-EjLsIG+DISG6Z3FRd41A9xAotkix0RU/l/iGiEuqD3w=",
-        "owner": "NixOS",
-        "repo": "nix",
-        "rev": "559061bf5a83513644dc4970490bc8798239a6a9",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nix/559061bf5a83513644dc4970490bc8798239a6a9"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nix/559061bf5a83513644dc4970490bc8798239a6a9"
       }
     },
     "nix-filter": {
       "locked": {
         "lastModified": 1757882181,
         "narHash": "sha256-+cCxYIh2UNalTz364p+QYmWHs0P+6wDhiWR4jDIKQIU=",
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "rev": "59c44d1909c72441144b93cf0f054be7fe764de5",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/nix-filter/59c44d1909c72441144b93cf0f054be7fe764de5"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "nix-filter",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/nix-filter/59c44d1909c72441144b93cf0f054be7fe764de5"
       }
     },
     "nix-gl-host": {
@@ -671,14 +644,15 @@
         "nixpkgs": [
           "paragon",
           "nixpkgs-unstable"
-        ]
+        ],
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1760531344,
-        "narHash": "sha256-LY3GfLLiYx7XYhE0FB8zEaotgSS5VJ1IdWDXCCVNOv0=",
+        "lastModified": 1774468275,
+        "narHash": "sha256-2DI4aIE8AL9Y4tirXbY04ZFQ/QHwYV5zpdpxBbNjZQk=",
         "ref": "paragon",
-        "rev": "44f4f6aa8bfd723e5ed251199c60d1fc16fa3407",
-        "revCount": 68,
+        "rev": "62f485af7915964438c61b7719788d131234aeb7",
+        "revCount": 91,
         "type": "git",
         "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nix-gl-host.git"
       },
@@ -686,6 +660,28 @@
         "ref": "paragon",
         "type": "git",
         "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nix-gl-host.git"
+      }
+    },
+    "nix-parsec": {
+      "inputs": {
+        "nixpkgs": [
+          "paragon",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769003913,
+        "narHash": "sha256-LyqDfDxvI0UWr3uKQdKbrL8QsiNhxAEFtQZjQNNn+DQ=",
+        "ref": "paragon",
+        "rev": "6b05c97668440beffe3493d55c21003528e72c45",
+        "revCount": 68,
+        "type": "git",
+        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nix-parsec.git"
+      },
+      "original": {
+        "ref": "paragon",
+        "type": "git",
+        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nix-parsec.git"
       }
     },
     "nix-platforms-aarch64": {
@@ -706,11 +702,11 @@
     },
     "nix-platforms-x86": {
       "locked": {
-        "lastModified": 1749213964,
-        "narHash": "sha256-7OurVnaJ9iQ1BJkRiX/6sw1PlhEvaJt8AP5iyY6hfAQ=",
+        "lastModified": 1773305215,
+        "narHash": "sha256-FBU55wGmP8KCkNK1kO4a+8ZL/XYGM70BviVEu34hLdM=",
         "ref": "x86_64",
-        "rev": "5bf80bc64e65c40cb7f976db80e35fe3c25ef8d9",
-        "revCount": 1,
+        "rev": "ca48368fce37fd88d2baaa5f86259a6580976658",
+        "revCount": 3,
         "type": "git",
         "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/devops-squad/nix-platforms.git"
       },
@@ -738,15 +734,12 @@
       "locked": {
         "lastModified": 1759278978,
         "narHash": "sha256-fVEQYlXgS5t1HsCQU40SJKE3+RfgywhzVHm5zBgC3Do=",
-        "owner": "utdemir",
-        "repo": "nix-tree",
-        "rev": "120a2aa654260bea4f7d21b34e11001d48c5e32c",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/utdemir/nix-tree/120a2aa654260bea4f7d21b34e11001d48c5e32c"
       },
       "original": {
-        "owner": "utdemir",
-        "repo": "nix-tree",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/utdemir/nix-tree/120a2aa654260bea4f7d21b34e11001d48c5e32c"
       }
     },
     "nixago": {
@@ -764,15 +757,12 @@
       "locked": {
         "lastModified": 1746801636,
         "narHash": "sha256-dlcKfIXp/eqFHzFm+DzseXAWWlpVwyk9cTvCKGtVKkw=",
-        "owner": "nix-community",
-        "repo": "nixago",
-        "rev": "8cc33f973ab3a891d8a41391e73ef451a783960b",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixago/8cc33f973ab3a891d8a41391e73ef451a783960b"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixago",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixago/8cc33f973ab3a891d8a41391e73ef451a783960b"
       }
     },
     "nixago-exts": {
@@ -910,31 +900,24 @@
       "locked": {
         "lastModified": 1751903740,
         "narHash": "sha256-PeSkNMvkpEvts+9DjFiop1iT2JuBpyknmBUs0Un0a4I=",
-        "owner": "nix-community",
-        "repo": "nixos-generators",
-        "rev": "032decf9db65efed428afd2fa39d80f7089085eb",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixos-generators/032decf9db65efed428afd2fa39d80f7089085eb"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixos-generators",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixos-generators/032decf9db65efed428afd2fa39d80f7089085eb"
       }
     },
     "nixos-hardware": {
       "locked": {
         "lastModified": 1759582739,
         "narHash": "sha256-spZegilADH0q5OngM86u6NmXxduCNv5eX9vCiUPhOYc=",
-        "owner": "NixOS",
-        "repo": "nixos-hardware",
-        "rev": "3441b5242af7577230a78ffb03542add264179ab",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixos-hardware/3441b5242af7577230a78ffb03542add264179ab"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
-        "repo": "nixos-hardware",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixos-hardware/3441b5242af7577230a78ffb03542add264179ab"
       }
     },
     "nixpkgs": {
@@ -954,16 +937,12 @@
       "locked": {
         "lastModified": 1650926264,
         "narHash": "sha256-G0PhlGyw/zkLJrb3PAnGPZm6Zsi6X+nAstORhOdcKFU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "20c060c763107b735f4635faa7722de02f461006",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/20c060c763107b735f4635faa7722de02f461006"
       },
       "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "20c060c763107b735f4635faa7722de02f461006",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/20c060c763107b735f4635faa7722de02f461006"
       }
     },
     "nixpkgs-23-11": {
@@ -1002,16 +981,12 @@
       "locked": {
         "lastModified": 1759735786,
         "narHash": "sha256-a0+h02lyP2KwSNrZz4wLJTu9ikujNsTWIC874Bv7IJ0=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "20c4598c84a671783f741e02bf05cbfaf4907cff",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/20c4598c84a671783f741e02bf05cbfaf4907cff"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/20c4598c84a671783f741e02bf05cbfaf4907cff"
       }
     },
     "nixpkgs-lib": {
@@ -1033,15 +1008,12 @@
       "locked": {
         "lastModified": 1754788789,
         "narHash": "sha256-x2rJ+Ovzq0sCMpgfgGaaqgBSwY+LST+WbZ6TytnT9Rk=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "a73b9c743612e4244d865a2fdee11865283c04e6",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixpkgs.lib/a73b9c743612e4244d865a2fdee11865283c04e6"
       },
       "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-community/nixpkgs.lib/a73b9c743612e4244d865a2fdee11865283c04e6"
       }
     },
     "nixpkgs-regression": {
@@ -1078,11 +1050,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1774243609,
-        "narHash": "sha256-6sB2IYqXYwoQS11Ev0u3b0lpAleTpvNv5iv4iqiCCR8=",
+        "lastModified": 1774273680,
+        "narHash": "sha256-a++tZ1RQsDb1I0NHrFwdGuRlR5TORvCEUksM459wKUA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4724d5647207377bede08da3212f809cbd94a648",
+        "rev": "fdc7b8f7b30fdbedec91b71ed82f36e1637483ed",
         "type": "github"
       },
       "original": {
@@ -1109,11 +1081,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1774106199,
-        "narHash": "sha256-US5Tda2sKmjrg2lNHQL3jRQ6p96cgfWh3J1QBliQ8Ws=",
+        "lastModified": 1774386573,
+        "narHash": "sha256-4hAV26quOxdC6iyG7kYaZcM3VOskcPUrdCQd/nx8obc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "6c9a78c09ff4d6c21d0319114873508a6ec01655",
+        "rev": "46db2e09e1d3f113a13c0d7b81e2f221c63b8ce9",
         "type": "github"
       },
       "original": {
@@ -1157,15 +1129,12 @@
       "locked": {
         "lastModified": 1758352462,
         "narHash": "sha256-WsQb7grsm5IlPPGftzlaM41QtGRo/8NU53n9OwJMxdo=",
-        "owner": "berberman",
-        "repo": "nvfetcher",
-        "rev": "c0b235b4476c968c3683485610e1ea7f024cef9e",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/berberman/nvfetcher/c0b235b4476c968c3683485610e1ea7f024cef9e"
       },
       "original": {
-        "owner": "berberman",
-        "repo": "nvfetcher",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/berberman/nvfetcher/c0b235b4476c968c3683485610e1ea7f024cef9e"
       }
     },
     "paragon": {
@@ -1183,6 +1152,7 @@
         "nix": "nix",
         "nix-filter": "nix-filter",
         "nix-gl-host": "nix-gl-host",
+        "nix-parsec": "nix-parsec",
         "nix-platforms-aarch64": "nix-platforms-aarch64",
         "nix-platforms-x86": "nix-platforms-x86",
         "nix-tree": "nix-tree",
@@ -1204,15 +1174,15 @@
         "sbomnix": "sbomnix",
         "sops-nix": "sops-nix",
         "systems": "systems_3",
-        "treefmt-nix": "treefmt-nix",
+        "treefmt-nix": "treefmt-nix_2",
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1762154650,
-        "narHash": "sha256-iRMcZ564/zJ5hgUh5iUz9N61fPzLk88UXnZZD5Zd0gc=",
+        "lastModified": 1774524843,
+        "narHash": "sha256-fCacnd5g5kKDpv03Zxe50RNP1ZQ+/YmOYpQkf8RiacM=",
         "ref": "main",
-        "rev": "87f46ad5ce8d891d2c859e0fedf967a2cf3d8182",
-        "revCount": 15332,
+        "rev": "2b6a663aeb20fafbd60b80a7bd26f08361705f18",
+        "revCount": 18861,
         "type": "git",
         "url": "ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon"
       },
@@ -1236,15 +1206,12 @@
       "locked": {
         "lastModified": 1706694632,
         "narHash": "sha256-ytyTwNPiUR8aq74QlxFI+Wv3MyvXz5POO1xZxQIoi0c=",
-        "owner": "nzbr",
-        "repo": "pnpm2nix-nzbr",
-        "rev": "0366b7344171accc2522525710e52a8abbf03579",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nzbr/pnpm2nix-nzbr/0366b7344171accc2522525710e52a8abbf03579"
       },
       "original": {
-        "owner": "nzbr",
-        "repo": "pnpm2nix-nzbr",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nzbr/pnpm2nix-nzbr/0366b7344171accc2522525710e52a8abbf03579"
       }
     },
     "pyproject-build-systems": {
@@ -1265,15 +1232,12 @@
       "locked": {
         "lastModified": 1759113590,
         "narHash": "sha256-fgxP2RCN4cg0jYiMYoETYc7TZ2JjgyvJa2y9l8oSUFE=",
-        "owner": "pyproject-nix",
-        "repo": "build-system-pkgs",
-        "rev": "dbfc0483b5952c6b86e36f8b3afeb9dde30ea4b5",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/build-system-pkgs/dbfc0483b5952c6b86e36f8b3afeb9dde30ea4b5"
       },
       "original": {
-        "owner": "pyproject-nix",
-        "repo": "build-system-pkgs",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/build-system-pkgs/dbfc0483b5952c6b86e36f8b3afeb9dde30ea4b5"
       }
     },
     "pyproject-nix": {
@@ -1286,15 +1250,12 @@
       "locked": {
         "lastModified": 1759739877,
         "narHash": "sha256-XfcxM4nzSuuRmFGiy/MhGwYf9EennQ2+0jjR2aJqtKE=",
-        "owner": "pyproject-nix",
-        "repo": "pyproject.nix",
-        "rev": "966e0961f9670f847439ba90dc25ffaa112d8803",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/pyproject.nix/966e0961f9670f847439ba90dc25ffaa112d8803"
       },
       "original": {
-        "owner": "pyproject-nix",
-        "repo": "pyproject.nix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/pyproject.nix/966e0961f9670f847439ba90dc25ffaa112d8803"
       }
     },
     "root": {
@@ -1333,15 +1294,12 @@
       "locked": {
         "lastModified": 1759320609,
         "narHash": "sha256-qv9o75hNR34aS9XATDNyAbfhP3itXHKFU+osgNMjTaQ=",
-        "owner": "tiiuae",
-        "repo": "sbomnix",
-        "rev": "0e41f23ab6c11ccc0c95bb19a6ec0bf29fbe04da",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/tiiuae/sbomnix/0e41f23ab6c11ccc0c95bb19a6ec0bf29fbe04da"
       },
       "original": {
-        "owner": "tiiuae",
-        "repo": "sbomnix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/tiiuae/sbomnix/0e41f23ab6c11ccc0c95bb19a6ec0bf29fbe04da"
       }
     },
     "sops-nix": {
@@ -1354,15 +1312,12 @@
       "locked": {
         "lastModified": 1759635238,
         "narHash": "sha256-UvzKi02LMFP74csFfwLPAZ0mrE7k6EiYaKecplyX9Qk=",
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "rev": "6e5a38e08a2c31ae687504196a230ae00ea95133",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/Mic92/sops-nix/6e5a38e08a2c31ae687504196a230ae00ea95133"
       },
       "original": {
-        "owner": "Mic92",
-        "repo": "sops-nix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/Mic92/sops-nix/6e5a38e08a2c31ae687504196a230ae00ea95133"
       }
     },
     "systems": {
@@ -1400,18 +1355,37 @@
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-systems/default/da67096a3b9bf56a91d16901293e51ba5b49a27e"
       },
       "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/nix-systems/default/da67096a3b9bf56a91d16901293e51ba5b49a27e"
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "paragon",
+          "nix-gl-host",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769353635,
+        "narHash": "sha256-J0G1ACrUK29M0THPAsz429eZX07GmR9Bs/b0pB3N0dQ=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "f46bb205f239b415309f58166f8df6919fa88377",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "paragon",
@@ -1421,15 +1395,12 @@
       "locked": {
         "lastModified": 1758728421,
         "narHash": "sha256-ySNJ008muQAds2JemiyrWYbwbG+V7S5wg3ZVKGHSFu8=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "5eda4ee8121f97b218f7cc73f5172098d458f1d1",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/treefmt-nix/5eda4ee8121f97b218f7cc73f5172098d458f1d1"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/numtide/treefmt-nix/5eda4ee8121f97b218f7cc73f5172098d458f1d1"
       }
     },
     "uv2nix": {
@@ -1446,15 +1417,12 @@
       "locked": {
         "lastModified": 1759825870,
         "narHash": "sha256-xETGwO6FV2Z3N+mif1xFetpi7/r5eoYelEitx/oOnyQ=",
-        "owner": "pyproject-nix",
-        "repo": "uv2nix",
-        "rev": "316166d5ae690fa52d9b57bc4e651aa49f04c899",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/uv2nix/316166d5ae690fa52d9b57bc4e651aa49f04c899"
       },
       "original": {
-        "owner": "pyproject-nix",
-        "repo": "uv2nix",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/pyproject-nix/uv2nix/316166d5ae690fa52d9b57bc4e651aa49f04c899"
       }
     },
     "zig": {
