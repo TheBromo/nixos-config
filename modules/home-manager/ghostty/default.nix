@@ -64,7 +64,7 @@
 
           font-family = [
             "TX-02"
-            "Apple Color Emoji"
+            "Fluent Emoji Color"
           ];
           font-size = 13;
           font-feature = "-calt, -liga, -dlig";

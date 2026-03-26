@@ -26,6 +26,7 @@
         self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.ghostty
+        self.homeModules.fluentui-emoji
         self.homeModules.claude
       ];
 
