@@ -69,3 +69,6 @@ nix build .#packages.x86_64-linux.tree-sitter-cli
 - **Git crypt**: Protects encrypted files in the repo
 - **Neovim config**: Cloned via home activation hook from a separate repo, not managed inline
 - **MCP servers**: Terraform and Atlassian servers configured in the claude module
+
+## Hints
+- When adding new .nix files you need to `git add` before they are available to nix
