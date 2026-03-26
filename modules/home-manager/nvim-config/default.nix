@@ -17,7 +17,7 @@
 
         # nix
         pkgs.nixfmt
-        pkgs.nixd
+        pkgs.nil
 
         # web
         pkgs.typescript-language-server
