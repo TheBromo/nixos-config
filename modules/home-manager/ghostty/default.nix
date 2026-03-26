@@ -1,38 +1,62 @@
 { ... }:
 {
-  flake.homeModules.ghostty =
+  flake.lib.ghosttyModule =
+    { isDarwin ? false }:
     {
       config,
       pkgs,
       inputs,
+      lib,
       ...
     }:
     {
-      xdg.desktopEntries.ghostty = {
-        name = "Ghostty";
-        genericName = "Terminal Emulator";
-        exec = "${
-          config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-        }/bin/ghostty";
-        icon = "${
-          inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-        }/share/icons/hicolor/256x256/apps/com.mitchellh.ghostty.png";
-        terminal = false;
-        type = "Application";
-        categories = [
-          "System"
-          "TerminalEmulator"
-        ];
-        settings.StartupWMClass = "com.mitchellh.ghostty";
+      xdg.desktopEntries = lib.mkIf (!isDarwin) {
+        ghostty = {
+          name = "Ghostty";
+          genericName = "Terminal Emulator";
+          exec = "${
+            config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+          }/bin/ghostty";
+          icon = "${
+            inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
+          }/share/icons/hicolor/256x256/apps/com.mitchellh.ghostty.png";
+          terminal = false;
+          type = "Application";
+          categories = [
+            "System"
+            "TerminalEmulator"
+          ];
+          settings.StartupWMClass = "com.mitchellh.ghostty";
+        };
       };
 
+      home.activation.linkGhosttyConfig = lib.mkIf isDarwin (
+        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+          ghostty_dir="$HOME/Library/Application Support/com.mitchellh.ghostty"
+          mkdir -p "$ghostty_dir"
+          if [ ! -L "$ghostty_dir/config" ]; then
+            rm -f "$ghostty_dir/config"
+          fi
+          ln -sf "$HOME/.config/ghostty/config" "$ghostty_dir/config"
+
+          # Link custom themes
+          if [ -d "$HOME/.config/ghostty/themes" ]; then
+            if [ ! -L "$ghostty_dir/themes" ]; then
+              rm -rf "$ghostty_dir/themes"
+            fi
+            ln -sf "$HOME/.config/ghostty/themes" "$ghostty_dir/themes"
+          fi
+        ''
+      );
+
       programs.ghostty = {
-        package = (
-          config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default
-        );
+        package =
+          if isDarwin then
+            null
+          else
+            (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default);
         enable = true;
         enableZshIntegration = true;
-        installVimSyntax = true;
         themes.monokai-pro = {
           palette = [
             "0=#121212"

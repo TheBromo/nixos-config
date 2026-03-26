@@ -25,7 +25,7 @@
         self.homeModules.wsswitch
         self.homeModules.tmux
         self.homeModules.nvimConfig
-        self.homeModules.ghostty
+        (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.fluentui-emoji
         self.homeModules.claude
       ];

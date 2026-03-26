@@ -26,7 +26,7 @@
         self.homeModules.dvt
         self.homeModules.dvd
         self.homeModules.wsswitch
-        self.homeModules.ghostty
+        (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.helium
         self.homeModules.fluentui-emoji
         self.homeModules.TX-02

@@ -24,6 +24,7 @@
         self.homeModules.dvd
         self.homeModules.wsswitch
         self.homeModules.tmux
+        (self.lib.ghosttyModule { isDarwin = true; })
         self.homeModules.nvimConfig
       ];
 
