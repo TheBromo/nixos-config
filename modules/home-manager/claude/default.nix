@@ -1,7 +1,28 @@
 { ... }:
 {
   flake.homeModules.claude =
-    { ... }:
+    { pkgs, ... }:
+    let
+      dynamicMcpConfig = pkgs.writeText "dynamic-mcp.json" (builtins.toJSON {
+        mcpServers = {
+          terraform = {
+            description = "Terraform infrastructure management and HCL configuration";
+            command = "docker";
+            args = [
+              "run"
+              "-i"
+              "--rm"
+              "hashicorp/terraform-mcp-server"
+            ];
+          };
+          atlassian = {
+            description = "Atlassian Jira and Confluence integration for issue tracking and documentation";
+            type = "http";
+            url = "https://mcp.atlassian.com/v1/mcp";
+          };
+        };
+      });
+    in
     {
       programs.claude-code = {
         enable = true;
@@ -103,9 +124,7 @@
           };
 
           enabledMcpjsonServers = [
-            # "dynamic-mcp" #TODO: correctly setup
-            "atlassian"
-            "terraform"
+            "dynamic-mcp"
           ];
           enabledPlugins = {
             "code-review@claude-code-plugins" = true;
@@ -123,24 +142,13 @@
         };
 
         mcpServers = {
-          # dynamic-mcp = {
-          #   type = "stdio";
-          #   command = "dmcp";
-          #   args = [ "${config.home.homeDirectory}/.config/dynamic-mcp/config.json" ];
-          #   env = { };
-          # };
-          terraform = {
-            command = "docker";
+          dynamic-mcp = {
+            type = "stdio";
+            command = "uvx";
             args = [
-              "run"
-              "-i"
-              "--rm"
-              "hashicorp/terraform-mcp-server"
+              "dmcp"
+              "${dynamicMcpConfig}"
             ];
-          };
-          atlassian = {
-            type = "http";
-            url = "https://mcp.atlassian.com/v1/mcp";
           };
         };
 
