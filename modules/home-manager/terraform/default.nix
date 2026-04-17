@@ -9,6 +9,7 @@
         pkgs.azure-cli
         pkgs.opentofu
         pkgs.just
+        pkgs.age
       ];
 
       programs.zsh.initContent = ''

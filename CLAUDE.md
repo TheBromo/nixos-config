@@ -70,5 +70,24 @@ nix build .#packages.x86_64-linux.tree-sitter-cli
 - **Neovim config**: Cloned via home activation hook from a separate repo, not managed inline
 - **MCP servers**: Terraform and Atlassian servers configured in the claude module
 
+## Adding a GitHub AppImage Package
+
+To add a new AppImage-based package as a home-manager module:
+
+1. Find the AppImage asset URL from the GitHub release:
+   ```bash
+   gh release view <tag> --repo <owner>/<repo> --json assets --jq '.assets[] | .name + " " + .url'
+   ```
+2. Prefetch the AppImage and convert the hash to SRI format:
+   ```bash
+   nix-prefetch-url "<appimage-url>" --type sha256
+   nix hash convert --to sri --hash-algo sha256 <hash-from-above>
+   ```
+3. Create `modules/home-manager/<name>/default.nix` following the AppImage module pattern (see `helium` or `t3code` for reference). Use `pkgs.appimageTools.wrapType2` and `config.lib.nixGL.wrap` for GUI apps that need OpenGL.
+4. `git add` the new file, then verify: `nix eval .#homeModules.<name> --apply 'x: "ok"'`
+5. Add `self.homeModules.<name>` to the host's imports.
+
+To update an existing AppImage module version, set the hash to `""`, change the version, build, and copy the correct hash from the error output.
+
 ## Hints
 - When adding new .nix files you need to `git add` before they are available to nix

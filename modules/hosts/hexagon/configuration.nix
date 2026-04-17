@@ -33,6 +33,7 @@
         self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.claude
+        self.homeModules.t3code
         self.homeModules.timewarriorAuto
       ];
 
