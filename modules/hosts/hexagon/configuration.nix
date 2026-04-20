@@ -27,6 +27,7 @@
         self.homeModules.dvd
         self.homeModules.wsswitch
         (self.lib.ghosttyModule { isDarwin = false; })
+        self.homeModules.slack
         self.homeModules.helium
         self.homeModules.fluentui-emoji
         self.homeModules.TX-02

@@ -1,13 +1,13 @@
 { ... }:
 {
   flake.homeModules.go =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
 
       home.packages = [
         pkgs.go
         pkgs.gopls
-        pkgs.gotools
+        (lib.lowPrio pkgs.gotools)
       ];
 
       programs.zsh.initContent = ''
