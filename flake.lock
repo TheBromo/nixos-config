@@ -1,39 +1,5 @@
 {
   "nodes": {
-    "bombon": {
-      "inputs": {
-        "flake-parts": [
-          "paragon",
-          "flake-parts"
-        ],
-        "nixpkgs": [
-          "paragon",
-          "nixpkgs"
-        ],
-        "pre-commit-hooks-nix": [
-          "paragon",
-          "git-hooks"
-        ],
-        "systems": [
-          "paragon",
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1733383260,
-        "narHash": "sha256-FXa1oSUuNujqdR4NPWHVawLNOnND/kihCyvNJIyGrwo=",
-        "ref": "paragon",
-        "rev": "d7a73a79e1e76e73711f255a67e3a24aadad323a",
-        "revCount": 380,
-        "type": "git",
-        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/bombon.git"
-      },
-      "original": {
-        "ref": "paragon",
-        "type": "git",
-        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/bombon.git"
-      }
-    },
     "cachix": {
       "inputs": {
         "devenv": [
@@ -371,11 +337,11 @@
         "zon2nix": "zon2nix"
       },
       "locked": {
-        "lastModified": 1776637286,
-        "narHash": "sha256-dnk4veKoZpWQPnwTaCtpfaE4WQi0tg1JSpM4/P/Rfe0=",
+        "lastModified": 1776742448,
+        "narHash": "sha256-w2HOwWzOakqzByil3N+bFBr+3w4t+2WvvM616Bh2ai8=",
         "owner": "ghostty-org",
         "repo": "ghostty",
-        "rev": "dcc39dcd401975ee77a642fa15ba7bb9f6d85b96",
+        "rev": "3a1482d1a2794801b4ac9a168da21a4d7dc0cfda",
         "type": "github"
       },
       "original": {
@@ -512,11 +478,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1776661682,
-        "narHash": "sha256-X32LTSDqUdVqMy85WYdRgyt0I75wc4Lhi9j+lrCDR8w=",
+        "lastModified": 1776721614,
+        "narHash": "sha256-zGuW7C4tsScib2560yE5VV6lY/MdRs30aU9cbg3RP+U=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4bfce11ea820df0359f73736fd59c7e8f53641a6",
+        "rev": "c555a4a34a260493be5adb795c54e013c58f2d34",
         "type": "github"
       },
       "original": {
@@ -569,11 +535,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1776643520,
-        "narHash": "sha256-O6lIvHkvuYNG7WovtyOGu+Z1vYkr/DB2YDF6PchsT/A=",
+        "lastModified": 1776729909,
+        "narHash": "sha256-wGu/N42PJqrj8ju9GoXdppg4rwaKzZqdAjsgxJbCvfY=",
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
-        "rev": "4a27c9c5416c624fc35ec0607a9f7ddeb59e7c99",
+        "rev": "ff21a18bde28b4c8ca0bc1f9a5b7186a1b89a3d1",
         "type": "github"
       },
       "original": {
@@ -585,11 +551,11 @@
     "neovim-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1776639951,
-        "narHash": "sha256-R/STk7D50lC0W6DTu/L+U3IYbd/IJFgikGdwrHbJXU4=",
+        "lastModified": 1776727374,
+        "narHash": "sha256-iP5SviNXW5W+ay4ZmwjDFsfQjfM+fYlUxRlLPHjpwWI=",
         "owner": "neovim",
         "repo": "neovim",
-        "rev": "5f6abd34f5c12534df0d79ee3507d40106ad505d",
+        "rev": "901b3f0c394a53961781ebeee682e64ad690a242",
         "type": "github"
       },
       "original": {
@@ -648,11 +614,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1774468275,
-        "narHash": "sha256-2DI4aIE8AL9Y4tirXbY04ZFQ/QHwYV5zpdpxBbNjZQk=",
+        "lastModified": 1775036336,
+        "narHash": "sha256-T2DkjoQ3wVm42t5C1xK8HqsLpd5daw7Wdx7cBgKoir4=",
         "ref": "paragon",
-        "rev": "62f485af7915964438c61b7719788d131234aeb7",
-        "revCount": 91,
+        "rev": "1853c126f076a85253d83f40511d8f87a63eae95",
+        "revCount": 92,
         "type": "git",
         "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nix-gl-host.git"
       },
@@ -714,32 +680,6 @@
         "ref": "x86_64",
         "type": "git",
         "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/devops-squad/nix-platforms.git"
-      }
-    },
-    "nix-tree": {
-      "inputs": {
-        "flake-compat": [
-          "paragon",
-          "flake-compat"
-        ],
-        "flake-utils": [
-          "paragon",
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "paragon",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1759278978,
-        "narHash": "sha256-fVEQYlXgS5t1HsCQU40SJKE3+RfgywhzVHm5zBgC3Do=",
-        "type": "tarball",
-        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/utdemir/nix-tree/120a2aa654260bea4f7d21b34e11001d48c5e32c"
-      },
-      "original": {
-        "type": "tarball",
-        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/utdemir/nix-tree/120a2aa654260bea4f7d21b34e11001d48c5e32c"
       }
     },
     "nixago": {
@@ -1034,18 +974,14 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1759733170,
-        "narHash": "sha256-TXnlsVb5Z8HXZ6mZoeOAIwxmvGHp1g4Dw89eLvIwKVI=",
-        "ref": "nixos-unstable",
-        "rev": "8913c168d1c56dc49a7718685968f38752171c3b",
-        "revCount": 873256,
-        "type": "git",
-        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nixpkgs.git"
+        "lastModified": 1774344467,
+        "narHash": "sha256-3MCVAvkNPXMHlhtK3OnDvbV4rgp7wci7e2NPEthNrL4=",
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/44cf8e66f93c9cb03abc3e2a0ad08cdc60fa8eda"
       },
       "original": {
-        "ref": "nixos-unstable",
-        "type": "git",
-        "url": "https://gitlab.com/hexagon-gl/hubrobotics/paragon/software-squad/nixpkgs.git"
+        "type": "tarball",
+        "url": "https://artifactory.hexagon.com/artifactory/api/vcs/downloadCommit/hrv01-github-proxy/NixOS/nixpkgs/44cf8e66f93c9cb03abc3e2a0ad08cdc60fa8eda"
       }
     },
     "nixpkgs_2": {
@@ -1081,11 +1017,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1776169885,
-        "narHash": "sha256-l/iNYDZ4bGOAFQY2q8y5OAfBBtrDAaPuRQqWaFHVRXM=",
+        "lastModified": 1776548001,
+        "narHash": "sha256-ZSK0NL4a1BwVbbTBoSnWgbJy9HeZFXLYQizjb2DPF24=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "4bd9165a9165d7b5e33ae57f3eecbcb28fb231c9",
+        "rev": "b12141ef619e0a9c1c84dc8c684040326f27cdcc",
         "type": "github"
       },
       "original": {
@@ -1139,7 +1075,6 @@
     },
     "paragon": {
       "inputs": {
-        "bombon": "bombon",
         "cachix": "cachix",
         "deploy-rs": "deploy-rs",
         "devenv": "devenv",
@@ -1155,7 +1090,6 @@
         "nix-parsec": "nix-parsec",
         "nix-platforms-aarch64": "nix-platforms-aarch64",
         "nix-platforms-x86": "nix-platforms-x86",
-        "nix-tree": "nix-tree",
         "nixago": "nixago",
         "nixos-generators": "nixos-generators",
         "nixos-hardware": "nixos-hardware",
@@ -1178,11 +1112,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1774524843,
-        "narHash": "sha256-fCacnd5g5kKDpv03Zxe50RNP1ZQ+/YmOYpQkf8RiacM=",
+        "lastModified": 1776768731,
+        "narHash": "sha256-4tSXmBqZWDfzXjQThJjBX2jfJ5doRbn87QECb3Z3LaM=",
         "ref": "main",
-        "rev": "2b6a663aeb20fafbd60b80a7bd26f08361705f18",
-        "revCount": 18861,
+        "rev": "e64d5354bf536755e6a5bf2bbb2c55152d5cddec",
+        "revCount": 19374,
         "type": "git",
         "url": "ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon"
       },
@@ -1485,11 +1419,11 @@
         "zig": "zig_2"
       },
       "locked": {
-        "lastModified": 1776269939,
-        "narHash": "sha256-tOGsI1d1Xk1PYapQJ/ByG0utbWXJasIna/fUib+/b5A=",
+        "lastModified": 1776613749,
+        "narHash": "sha256-9TgoEDSagvvG59NSYvE6WUDrkyJuf0PyVLFKRSySs7M=",
         "owner": "jcollie",
         "repo": "zon2nix",
-        "rev": "cc467a77c2ebcd9aab84024196abfc37eaf1007d",
+        "rev": "7eacc96583245cfdb04edb31183d9e60eacca51d",
         "type": "github"
       },
       "original": {

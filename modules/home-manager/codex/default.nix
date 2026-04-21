@@ -26,6 +26,11 @@
         trust_level = "trusted"
         [projects."/Users/manuel/Development"]
         trust_level = "trusted"
+
+
+        [mcp_servers.swiss_caselaw]
+        enabled = true
+        url = "https://mcp.opencaselaw.ch/sse"
       '';
     };
 }
