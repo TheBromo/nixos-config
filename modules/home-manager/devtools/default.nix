@@ -8,6 +8,8 @@
         pkgs.gcc
         pkgs.nix-output-monitor
         pkgs.nixfmt
+        pkgs.devenv
+        pkgs.nixVersions.latest
 
         pkgs.jq
         pkgs.yq

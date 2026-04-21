@@ -5,6 +5,14 @@
     {
       nixpkgs.config.allowUnfree = true;
 
+      xdg.configFile."nixpkgs/config.nix".text = ''
+        {
+          permittedInsecurePackages = [
+            "freeimage-3.18.0-unstable-2024-04-18"
+          ];
+        }
+      '';
+
       imports = [
         (self.lib.gitModule {
           userName = "Manuel Strenge";
@@ -30,10 +38,12 @@
         self.homeModules.slack
         self.homeModules.helium
         self.homeModules.fluentui-emoji
+        self.homeModules.appleCursor
         self.homeModules.TX-02
         self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.claude
+        self.homeModules.codex
         self.homeModules.t3code
         self.homeModules.timewarriorAuto
       ];

@@ -26,6 +26,7 @@
         self.homeModules.nvimConfig
         (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.claude
+        self.homeModules.codex
       ];
 
       home = {

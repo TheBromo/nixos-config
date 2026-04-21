@@ -1,0 +1,31 @@
+{ ... }:
+{
+  flake.homeModules.codex =
+    { ... }:
+    {
+      home.file.".codex/config.toml".text = ''
+        model = "gpt-5.4"
+        model_reasoning_effort = "high"
+
+        tool_output_token_limit = 25000
+        # Leave room for native compaction near the 272–273k context window.
+        # Formula: 273000 - (tool_output_token_limit + 15000)
+        # With tool_output_token_limit=25000 ⇒ 273000 - (25000 + 15000) = 233000
+        model_auto_compact_token_limit = 233000
+
+        [features]
+        ghost_commit = false
+        unified_exec = true
+        # apply_patch_freeform = true
+        skills = true
+        shell_snapshot = true
+
+        [projects."/home/strenge/Development"]
+        trust_level = "trusted"
+        [projects."/home/strenge/.config/nvim"]
+        trust_level = "trusted"
+        [projects."/Users/manuel/Development"]
+        trust_level = "trusted"
+      '';
+    };
+}

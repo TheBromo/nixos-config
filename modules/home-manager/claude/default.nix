@@ -112,7 +112,6 @@
       };
     in
     {
-      home.packages = [ pkgs.claude-code ];
 
       home.file.".claude/settings.json".text = (builtins.toJSON settings) + "\n";
     };

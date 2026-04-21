@@ -19,6 +19,7 @@
         self.homeModules.wt
         self.homeModules.ros
         self.homeModules.claude
+        self.homeModules.codex
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd
