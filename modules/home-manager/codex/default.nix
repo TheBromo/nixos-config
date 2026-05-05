@@ -1,9 +1,9 @@
 { ... }:
 {
   flake.homeModules.codex =
-    { ... }:
-    {
-      home.file.".codex/config.toml".text = ''
+    { pkgs, lib, ... }:
+    let
+      configFile = pkgs.writeText "codex-config.toml" ''
         model = "gpt-5.4"
         model_reasoning_effort = "high"
 
@@ -31,6 +31,11 @@
         [mcp_servers.swiss_caselaw]
         enabled = true
         url = "https://mcp.opencaselaw.ch/sse"
+      '';
+    in
+    {
+      home.activation.installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        install -D -m 644 ${configFile} "$HOME/.codex/config.toml"
       '';
     };
 }

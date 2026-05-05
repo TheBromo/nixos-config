@@ -37,6 +37,7 @@
         (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.slack
         self.homeModules.helium
+        self.homeModules.headlamp
         self.homeModules.fluentui-emoji
         self.homeModules.appleCursor
         self.homeModules.TX-02
