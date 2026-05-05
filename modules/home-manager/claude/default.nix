@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   flake.homeModules.claude =
     { pkgs, lib, ... }:
@@ -110,10 +110,9 @@
           "lua-lsp@claude-code-lsps" = true;
         };
       };
-      settingsFile = pkgs.writeText "claude-settings.json" ((builtins.toJSON settings) + "\n");
+      settingsFile = builtins.toFile "claude-settings.json" ((builtins.toJSON settings) + "\n");
     in
     {
-
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         install -D -m 644 ${settingsFile} "$HOME/.claude/settings.json"
       '';
