@@ -18,10 +18,11 @@
         enable = true;
         lfs.enable = true;
 
-        signing = lib.mkIf signing {
+        signing = {
+          format = if signing then "ssh" else null;
+        } // lib.optionalAttrs signing {
           key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
           signByDefault = true;
-          format = "openpgp";
         };
 
         settings = {
