@@ -1,5 +1,5 @@
 SHELL := /bin/bash
-.PHONY: up zephyrus home
+.PHONY: up atlas zephyrus nixos home zhaw hexagon darwin
 
 # Update flake
 up:
@@ -8,6 +8,8 @@ atlas:
 	nixos-rebuild switch --flake .#atlas 2>&1 | nom
 zephyrus:
 	nixos-rebuild switch --flake .#zephyrus 2>&1 | nom
+nixos:
+	nixos-rebuild build --flake .#nixos 2>&1 | nom
 home:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel 2>&1 | nom
 zhaw:
