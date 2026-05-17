@@ -49,13 +49,19 @@
       environment.systemPackages = [
         pkgs.neovim
         pkgs.git
+        pkgs.codex
       ];
 
-      system.stateVersion = "25.05";
+      system.stateVersion = "26.05"; # Did you read the comment?
 
       hardware.graphics.enable = true;
 
       services.xserver.videoDrivers = [ "nvidia" ];
+      services.displayManager.gdm.wayland = true;
+      programs.xwayland.enable = true;
+      environment.sessionVariables = {
+        NIXOS_OZONE_WL = "0";
+      };
 
       hardware.nvidia = {
         modesetting.enable = true;
