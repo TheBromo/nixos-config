@@ -36,6 +36,9 @@
 
       services.printing.enable = true;
 
+      virtualisation.docker.enable = true;
+      users.users.manuel.extraGroups = [ "docker" ];
+
       services.pulseaudio.enable = false;
       security.rtkit.enable = true;
       services.pipewire = {
@@ -51,6 +54,7 @@
         pkgs.neovim
         pkgs.git
         pkgs.codex
+        pkgs.claude-code
       ];
 
       system.stateVersion = "26.05"; # Did you read the comment?
