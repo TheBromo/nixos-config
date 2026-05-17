@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.nixosConfiguration =
+  flake.nixosModules.artemisConfiguration =
     { config, pkgs, ... }:
     {
       imports = [
@@ -9,7 +9,7 @@
         self.nixosModules.gnome
         self.nixosModules.fonts
         self.nixosModules.tailscale
-        self.nixosModules.nixosHardware
+        self.nixosModules.artemisHardware
         self.nixosModules.manuelUser
       ];
 
@@ -21,7 +21,7 @@
       boot.loader.systemd-boot.enable = true;
       boot.loader.efi.canTouchEfiVariables = true;
 
-      networking.hostName = "nixos";
+      networking.hostName = "artemis";
       networking.networkmanager.enable = true;
 
       time.timeZone = "Europe/Zurich";

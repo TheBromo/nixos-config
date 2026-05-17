@@ -1,6 +1,6 @@
 { ... }:
 {
-  flake.nixosModules.nixosHardware =
+  flake.nixosModules.artemisHardware =
     {
       config,
       lib,
