@@ -1,7 +1,11 @@
 { self, ... }:
 {
   flake.nixosModules.artemisConfiguration =
-    { config, pkgs, ... }:
+    {
+      config,
+      pkgs,
+      ...
+    }:
     {
       imports = [
         self.nixosModules.base
@@ -33,6 +37,21 @@
         layout = "us";
         variant = "";
       };
+
+      home-manager.users.manuel =
+        { lib, ... }:
+        {
+          dconf = {
+            enable = true;
+            settings = {
+              "org/gnome/desktop/session".idle-delay = lib.hm.gvariant.mkUint32 0;
+              "org/gnome/settings-daemon/plugins/power" = {
+                sleep-inactive-ac-type = "nothing";
+                sleep-inactive-ac-timeout = 0;
+              };
+            };
+          };
+        };
 
       services.printing.enable = true;
 
