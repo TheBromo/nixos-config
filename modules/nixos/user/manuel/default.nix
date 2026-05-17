@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 {
   flake.nixosModules.manuelUser =
-    { pkgs, ... }:
+    { ... }:
     {
       users.users.manuel = {
         isNormalUser = true;
@@ -9,9 +9,6 @@
         extraGroups = [
           "networkmanager"
           "wheel"
-        ];
-        packages = [
-          pkgs.google-chrome
         ];
       };
 

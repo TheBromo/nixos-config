@@ -9,6 +9,7 @@
         self.nixosModules.gnome
         self.nixosModules.fonts
         self.nixosModules.tailscale
+        self.nixosModules.chrome
         self.nixosModules.artemisHardware
         self.nixosModules.manuelUser
       ];
