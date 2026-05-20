@@ -9,7 +9,7 @@
         enableZshIntegration = true;
         settings = {
           format = "$character $directory";
-          right_format = "$cmd_duration$shlvl[$username@$hostname](cyan)";
+          right_format = "$cmd_duration$time$shlvl[$username@$hostname](cyan)";
           add_newline = false;
 
           character = {
@@ -42,6 +42,11 @@
 
           cmd_duration = {
             format = "[$duration](bold yellow) ";
+          };
+
+          time = {
+            disabled = false;
+            format = "[$time](bold blue) ";
           };
         };
       };
