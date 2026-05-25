@@ -9,6 +9,13 @@
       ...
     }:
     {
+      xdg.dataFile = {
+        "nvim/site/parser".source =
+          "${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}/parser";
+        "nvim/site/queries".source =
+          "${pkgs.vimPlugins.nvim-treesitter.withAllGrammars}/queries";
+      };
+
       home.packages = [
         inputs.neovim-nightly-overlay.packages.${pkgs.stdenv.hostPlatform.system}.default
         self.packages.${pkgs.stdenv.hostPlatform.system}.tree-sitter-cli
