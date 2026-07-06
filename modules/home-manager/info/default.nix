@@ -4,14 +4,19 @@
     { pkgs, ... }:
     let
       info = pkgs.writeShellScriptBin "screenfetch" ''
-        . /etc/os-release
-
         ## INFO
         host="$(hostname)"
-        os="$PRETTY_NAME"
+        if [ -r /etc/os-release ]; then
+            . /etc/os-release
+            os="$PRETTY_NAME"
+        elif [ "$(uname -s)" = "Darwin" ]; then
+            os="$(sw_vers -productName) $(sw_vers -productVersion)"
+        else
+            os="$(uname -s) $(uname -r)"
+        fi
         kernel="$(uname -sr)"
         uptime="$(uptime | awk -F, '{sub(".*up ",x,$1);print $1}' | sed -e 's/^[ \t]*//')"
-        packages="$(ls -d -1 /nix/store/*/ | wc -l)"
+        packages="$(ls -d -1 /nix/store/*/ | wc -l | tr -d ' ')"
         shell="$(basename "''${SHELL}")"
 
         ## UI DETECTION
@@ -26,7 +31,10 @@
 
         ui='unknown'
         uitype='UI'
-        if [ -n "''${DE}" ]; then
+        if [ "$(uname -s)" = "Darwin" ]; then
+            ui='Aqua'
+            uitype='DE'
+        elif [ -n "''${DE}" ]; then
             ui="''${DE}"
             uitype='DE'
         elif [ -n "''${WM}" ]; then
@@ -50,7 +58,7 @@
         ## DEFINE COLORS
         if [ -x "$(command -v tput)" ]; then
             bold="$(tput bold 2> /dev/null)"
-            black="$(tput setaf 0 2> /dev/null)"
+            brblack="$(tput setaf 8 2> /dev/null)"
             red="$(tput setaf 1 2> /dev/null)"
             green="$(tput setaf 2 2> /dev/null)"
             yellow="$(tput setaf 3 2> /dev/null)"
@@ -64,11 +72,24 @@
         lc="''${reset}''${bold}"
         nc="''${reset}''${bold}"
         ic="''${reset}"
-        c0="''${reset}''${black}"
+        c0="''${reset}''${brblack}"
         c1="''${reset}''${white}"
         c2="''${reset}''${yellow}"
 
         ## OUTPUT
+        if [ "$(uname -s)" = "Darwin" ]; then
+        cat <<FETCH
+
+''${green}       .:'    ''${nc}''${USER}''${ic}@''${nc}''${host}''${reset}
+''${green}    __:'__    ''${lc}OS:        ''${ic}''${os}''${reset}
+''${c0} .'\`__\`-'__\`\`. ''${lc}KERNEL:    ''${ic}''${kernel}''${reset}
+''${c0}:__________.-' ''${lc}UPTIME:    ''${ic}''${uptime}''${reset}
+''${c0}:_________:    ''${lc}PACKAGES:  ''${ic}''${packages}''${reset}
+''${c0} :_________\`-; ''${lc}SHELL:     ''${ic}''${shell}''${reset}
+''${c0}  \`.__.-.__.'  ''${lc}''${uitype}:        ''${ic}''${ui}''${reset}
+
+FETCH
+        else
         cat <<FETCH
 
 ''${c0}      ___     ''${nc}''${USER}''${ic}@''${nc}''${host}''${reset}
@@ -80,6 +101,7 @@
 ''${c2}  \/''${c0}-____''${c2}\/''${reset}   ''${lc}''${uitype}:        ''${ic}''${ui}''${reset}
 
 FETCH
+        fi
       '';
     in
     {

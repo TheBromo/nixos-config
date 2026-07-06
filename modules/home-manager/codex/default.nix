@@ -1,7 +1,7 @@
-{ lib, ... }:
+{ self, lib, ... }:
 {
   flake.homeModules.codex =
-    { lib, ... }:
+    { pkgs, lib, ... }:
     let
       configFile = builtins.toFile "codex-config.toml" ''
         model = "gpt-5.5"
@@ -60,6 +60,11 @@
     {
       home.activation.installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         install -D -m 644 ${configFile} "$HOME/.codex/config.toml"
+      '';
+
+      home.activation.installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "$HOME/.codex/skills"
+        cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
       '';
     };
 }

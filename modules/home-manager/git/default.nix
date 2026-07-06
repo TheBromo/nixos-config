@@ -7,6 +7,7 @@
       signing ? true,
     }:
     {
+      config,
       pkgs,
       lib,
       ...
@@ -21,7 +22,7 @@
         signing = lib.mkIf signing {
           key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
           signByDefault = true;
-          format = "openpgp";
+          format = "ssh";
         };
 
         settings = {
@@ -30,8 +31,7 @@
             email = userEmail;
           };
           init.defaultBranch = "main";
-          pull.rebase = "true";
-          delta.enable = "true";
+          pull.rebase = true;
           column.ui = "auto";
           branch.sort = "-committerdate";
           tag.sort = "version:refname";
@@ -72,7 +72,6 @@
           };
 
           gpg = lib.mkIf signing {
-            format = "ssh";
             ssh = {
               program =
                 if pkgs.stdenv.isDarwin then
@@ -93,6 +92,18 @@
           credential."https://gitlab.com/".helper =
             "!f() { test \"$1\" = get && echo \"password=$(op read \"$PARAGON_GITLAB_USER_PAT_OP\")\"; }; f";
         };
+
+        includes = [
+          {
+            condition = "gitdir:${config.home.homeDirectory}/Development/nixos-config/";
+            contents.user.email = "manuel.strenge-ext@hexagon.com";
+          }
+        ];
+      };
+
+      programs.delta = {
+        enable = true;
+        enableGitIntegration = true;
       };
 
       programs.gpg = {

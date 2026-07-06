@@ -25,6 +25,7 @@
         self.homeModules.dvd
         self.homeModules.wsswitch
         self.homeModules.tmux
+        self.homeModules.terraform
         (self.lib.ghosttyModule { isDarwin = true; })
         self.homeModules.nvimConfig
       ];
@@ -34,10 +35,11 @@
         homeDirectory = "/Users/manuel";
         stateVersion = "24.11";
         sessionVariables = {
-          SHELL = pkgs.zsh;
+          SHELL = "${pkgs.zsh}/bin/zsh";
         };
         packages = [
           pkgs.git-crypt
+          pkgs.glab
         ];
       };
 

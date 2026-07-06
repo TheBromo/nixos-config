@@ -10,8 +10,6 @@ make home        # Switch home-manager for "manuel" (Linux)
 make zhaw        # Switch home-manager for "zhaw" (Linux)
 make hexagon     # Switch home-manager for "hexagon" (Linux, --impure)
 make darwin      # Switch home-manager for "manuel-darwin" (macOS)
-make atlas       # NixOS system rebuild (atlas host)
-make zephyrus    # NixOS system rebuild (zephyrus host)
 ```
 
 ## Testing with Nix

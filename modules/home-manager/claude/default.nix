@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ self, lib, ... }:
 {
   flake.homeModules.claude =
     { pkgs, lib, ... }:
@@ -35,7 +35,7 @@
             "Grep"
             "LS"
             "MultiEdit"
-            "Read(:/nix/store)"
+            "Read(//nix/store/**)"
             "WebFetch(domain:docs.anthropic.com)"
             "WebFetch(domain:gohugo.io)"
             "WebFetch(domain:just.systems)"
@@ -115,6 +115,11 @@
     {
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         install -D -m 644 ${settingsFile} "$HOME/.claude/settings.json"
+      '';
+
+      home.activation.installClaudeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p "$HOME/.claude/skills"
+        cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }

@@ -71,6 +71,8 @@
         packages = [
           pkgs.git-crypt
           pkgs.wl-clipboard
+
+          pkgs.glab
         ];
       };
 

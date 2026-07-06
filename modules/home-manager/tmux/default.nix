@@ -6,7 +6,8 @@
       programs.tmux = {
         enable = true;
         baseIndex = 1;
-        secureSocket = true;
+        # /run/user/$UID does not exist on darwin, which breaks socket creation
+        secureSocket = pkgs.stdenv.isLinux;
         mouse = true;
         keyMode = "vi";
         clock24 = true;

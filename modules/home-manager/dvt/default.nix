@@ -5,7 +5,7 @@
     let
       githash = "959eff5d7eee92131e2bfcbe2bf86ab8c809974c";
       dvt = pkgs.writeShellScriptBin "dvt" ''
-        if [ -z $1 ]; then
+        if [ -z "$1" ]; then
           echo "no template specified"
           exit 1
         fi

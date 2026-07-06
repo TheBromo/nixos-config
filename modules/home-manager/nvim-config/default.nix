@@ -44,7 +44,7 @@
       home.activation = {
         configureNvim = lib.mkAfter ''
           mkdir -p ~/.config/nvim
-          if [ -z "$(ls -A ~/.config/nvim)" ] || [ ! -d ~/.config/nvim/.git ]; then
+          if [ -z "$(ls -A ~/.config/nvim)" ]; then
             ${pkgs.git}/bin/git clone https://github.com/TheBromo/neovim-config.git ~/.config/nvim
           else
             echo "Neovim configuration already exists. Skipping clone."
