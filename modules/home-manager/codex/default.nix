@@ -65,6 +65,7 @@
       home.activation.installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.codex/skills"
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
+        cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.codex/skills/"
       '';
     };
 }

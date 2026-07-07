@@ -120,6 +120,7 @@
       home.activation.installClaudeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.claude/skills"
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }
