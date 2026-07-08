@@ -10,6 +10,7 @@
       };
       paths = {
         go = "skills/go";
+        nix = "skills/nix";
       };
       cps = pkgs.lib.concatStringsSep "\n" (
         pkgs.lib.mapAttrsToList (name: p: "cp -r ${src}/${p} $out/${name}") paths
