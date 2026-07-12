@@ -28,6 +28,7 @@
         self.homeModules.terraform
         (self.lib.ghosttyModule { isDarwin = true; })
         self.homeModules.nvimConfig
+        self.homeModules.zedCyberdream
       ];
 
       home = {
