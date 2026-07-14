@@ -12,10 +12,10 @@
       ...
     }:
     let
-      version = "0.41.0";
+      version = "0.43.0";
       src = pkgs.fetchurl {
         url = "https://github.com/kubernetes-sigs/headlamp/releases/download/v${version}/Headlamp-${version}-linux-x64.AppImage";
-        hash = "sha256-SdadGirmfSfj1gmbxc5IKRdwnHqkI4keSE0BlkKGW4c=";
+        hash = "sha256-oXH0Jcc7aLehE3CIp4UWhurTskrbFM5gd7A04cHMEQw=";
       };
       headlamp-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "headlamp";

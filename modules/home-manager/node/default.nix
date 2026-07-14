@@ -5,7 +5,7 @@
     {
       home.packages = [
         pkgs.bun
-        pkgs.nodejs_25
+        pkgs.nodejs_26
       ];
 
       programs.zsh.initContent = ''

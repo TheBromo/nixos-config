@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:github.com)",
+      "Bash(nix flake *)",
+      "Bash(nix profile *)",
+      "Bash(mkdir -p /home/strenge/Development/nixos-config/modules/home-manager/_skills/trigger-changed-ci-jobs/scripts)",
+      "Bash(cp /home/strenge/Development/paragon/.claude/skills/trigger-changed-ci-jobs/SKILL.md /home/strenge/Development/nixos-config/modules/home-manager/_skills/trigger-changed-ci-jobs/SKILL.md)",
+      "Bash(cp /home/strenge/Development/paragon/.claude/skills/trigger-changed-ci-jobs/scripts/extract-changed-jobs.py /home/strenge/Development/nixos-config/modules/home-manager/_skills/trigger-changed-ci-jobs/scripts/extract-changed-jobs.py)",
+      "Bash(cp /home/strenge/Development/paragon/.claude/skills/trigger-changed-ci-jobs/scripts/trigger-changed-jobs.bash /home/strenge/Development/nixos-config/modules/home-manager/_skills/trigger-changed-ci-jobs/scripts/trigger-changed-jobs.bash)"
+    ]
+  }
+}
