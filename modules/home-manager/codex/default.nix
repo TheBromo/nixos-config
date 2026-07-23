@@ -6,6 +6,8 @@
       configFile = builtins.toFile "codex-config.toml" ''
         model = "gpt-5.5"
         model_reasoning_effort = "high"
+        approval_policy = "never"
+        sandbox_mode = "danger-full-access"
 
         tool_output_token_limit = 25000
         # Leave room for native compaction near the 272–273k context window.

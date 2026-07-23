@@ -14,52 +14,8 @@
         };
 
         permissions = {
-          allow = [
-            "Bash(nixf-diagnose *)"
-            "Bash(git branch *)"
-            "Bash(git diff *)"
-            "Bash(git log *)"
-            "Bash(git merge-base *)"
-            "Bash(git status)"
-            "Bash(glab *)"
-            "Bash(just *)"
-            "Bash(nix eval *)"
-            "Bash(nix build *)"
-            "Bash(nix-build *)"
-            "Bash(nix-shell *)"
-            "Bash(nixfmt *)"
-            "Bash(pre-commit run *)"
-            "Bash(statix *)"
-            "Edit"
-            "Glob"
-            "Grep"
-            "LS"
-            "MultiEdit"
-            "Read(//nix/store/**)"
-            "WebFetch(domain:docs.anthropic.com)"
-            "WebFetch(domain:gohugo.io)"
-            "WebFetch(domain:just.systems)"
-            "WebFetch(domain:nixos.org)"
-            "WebFetch(domain:nixos.wiki)"
-            "WebSearch"
-          ];
-          deny = [
-            "Bash(rm -rf *)"
-            "Bash(curl *)"
-            "Bash(sudo *)"
-            "Bash(ls *)"
-            "Bash(grep *)"
-            "Bash(touch *)"
-            "Read(.env)"
-            "Read(.env.*)"
-            "Read(secrets/**)"
-            "Write(secrets/**)"
-          ];
-          ask = [
-            "Bash(git push *)"
-            "Bash(rm -f *)"
-          ];
-          defaultMode = "default";
+          defaultMode = "bypassPermissions";
+          skipDangerousModePermissionPrompt = true;
         };
 
         model = "opus";
