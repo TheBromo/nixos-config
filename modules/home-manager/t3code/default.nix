@@ -9,13 +9,14 @@
     {
       config,
       pkgs,
+      lib,
       ...
     }:
     let
-      version = "0.0.20";
+      version = "0.0.31";
       src = pkgs.fetchurl {
         url = "https://github.com/pingdotgg/t3code/releases/download/v${version}/T3-Code-${version}-x86_64.AppImage";
-        hash = "sha256-glYnF8UA5s4rrpUJuvk4HlQtyMikbckIkmMIhnJugO4=";
+        hash = "sha256-AqTkoSKeQwmql3L9F5SbD1XyqeFyqe11ciq9Tp04Zyw=";
       };
       t3code-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "t3code";
