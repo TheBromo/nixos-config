@@ -20,11 +20,11 @@
         self.homeModules.ros
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.herdr
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd
         self.homeModules.wsswitch
-        self.homeModules.tmux
         self.homeModules.terraform
         (self.lib.ghosttyModule { isDarwin = true; })
         self.homeModules.nvimConfig

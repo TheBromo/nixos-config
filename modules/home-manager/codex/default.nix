@@ -1,11 +1,11 @@
-{ self, lib, ... }:
+{ self, ... }:
 {
   flake.homeModules.codex =
     { pkgs, lib, ... }:
     let
       configFile = builtins.toFile "codex-config.toml" ''
-        model = "gpt-5.5"
-        model_reasoning_effort = "high"
+        model = "gpt-5.6-sol"
+        model_reasoning_effort = "medium"
         approval_policy = "never"
         sandbox_mode = "danger-full-access"
 
@@ -17,6 +17,7 @@
 
         [features]
         ghost_commit = false
+        hooks = true
         unified_exec = true
         plugins = true
         # apply_patch_freeform = true
@@ -47,6 +48,13 @@
         [projects."/Users/manuel/Development/caveman"]
         trust_level = "trusted"
 
+        [hooks.state]
+
+        [hooks.state."/home/strenge/.codex/hooks.json:session_start:0:0"]
+        trusted_hash = "sha256:bcf9397a6a66095da2fd157b8bf4949f51db7169f205a9b854c1fa9e27efcf92"
+
+        [hooks.state."/Users/manuel/.codex/hooks.json:session_start:0:0"]
+        trusted_hash = "sha256:eddb0845a0762a0214ac8b2039f6636d3ced0654966a4586511e031cf1278509"
 
         [mcp_servers.swiss_caselaw]
         enabled = true

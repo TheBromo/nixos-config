@@ -23,12 +23,12 @@
         self.homeModules.dvt
         self.homeModules.dvd
         self.homeModules.wsswitch
-        self.homeModules.tmux
         self.homeModules.nvimConfig
         (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.fluentui-emoji
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.herdr
       ];
 
       home = {

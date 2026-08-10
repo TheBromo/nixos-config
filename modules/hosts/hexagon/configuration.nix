@@ -41,10 +41,10 @@
         self.homeModules.fluentui-emoji
         self.homeModules.appleCursor
         self.homeModules.TX-02
-        self.homeModules.tmux
         self.homeModules.nvimConfig
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.herdr
         self.homeModules.t3code
         self.homeModules.timewarriorAuto
       ];
