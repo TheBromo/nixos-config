@@ -10,9 +10,12 @@ _: {
       herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
       toml = pkgs.formats.toml { };
       herdrConfig = toml.generate "herdr-config.toml" {
-        keys.next_tab = "prefix+p";
-        keys.prefix = "ctrl+a";
-        keys.previous_tab = "prefix+n";
+        keys = {
+          new_worktree = "prefix+shift+g";
+          next_tab = "prefix+p";
+          prefix = "ctrl+a";
+          previous_tab = "prefix+n";
+        };
         terminal.default_shell = lib.getExe pkgs.zsh;
         theme.name = "vesper";
       };
