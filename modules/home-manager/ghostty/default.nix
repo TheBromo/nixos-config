@@ -1,7 +1,9 @@
 { ... }:
 {
   flake.lib.ghosttyModule =
-    { isDarwin ? false }:
+    {
+      isDarwin ? false,
+    }:
     {
       config,
       pkgs,
@@ -57,41 +59,51 @@
             (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default);
         enable = true;
         enableZshIntegration = true;
-        themes.monokai-pro = {
+        themes.cyberdream = {
           palette = [
-            "0=#121212"
-            "1=#ff6188"
-            "2=#a9dc76"
-            "3=#ffd866"
-            "4=#fc9867"
-            "5=#ab9df2"
-            "6=#78dce8"
-            "7=#fcfcfa"
-            "8=#727072"
-            "9=#ff6188"
-            "10=#a9dc76"
-            "11=#ffd866"
-            "12=#fc9867"
-            "13=#ab9df2"
-            "14=#78dce8"
-            "15=#fcfcfa"
+            "0=#16181a"
+            "1=#ff6e5e"
+            "2=#5eff6c"
+            "3=#f1ff5e"
+            "4=#5ea1ff"
+            "5=#bd5eff"
+            "6=#5ef1ff"
+            "7=#ffffff"
+            "8=#6b7078"
+            "9=#ff6e5e"
+            "10=#5eff6c"
+            "11=#f1ff5e"
+            "12=#5ea1ff"
+            "13=#bd5eff"
+            "14=#5ef1ff"
+            "15=#ffffff"
           ];
-          background = "#080808";
-          foreground = "#fcfcfa";
-          cursor-color = "#c1c0c0";
-          cursor-text = "#8e8d8d";
-          selection-background = "#5b595c";
-          selection-foreground = "#fcfcfa";
+          background = "#16181a";
+          foreground = "#ffffff";
+          cursor-color = "#ffffff";
+          cursor-text = "#16181a";
+          selection-background = "#3c4048";
+          selection-foreground = "#ffffff";
         };
         settings = {
-          theme = "monokai-pro";
+          theme = "cyberdream";
 
           font-family = [
             "TX-02"
             "Fluent Emoji Color"
           ];
+          font-style = "Semilight";
+
+          font-family-bold = "TX-02";
+          font-style-bold = "Bold";
+
           font-size = 13;
           font-feature = "-calt, -liga, -dlig";
+          adjust-underline-position = 2;
+          adjust-underline-thickness = "7%";
+
+          window-padding-x = "2,0";
+          window-padding-y = "2,0";
 
           shell-integration = "zsh";
           command = "zsh";
@@ -100,6 +112,9 @@
 
           keybind = [
           ];
+        }
+        // lib.optionalAttrs isDarwin {
+          macos-titlebar-style = "hidden";
         };
       };
     };

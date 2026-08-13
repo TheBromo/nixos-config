@@ -27,6 +27,7 @@
         self.homeModules.wsswitch
         self.homeModules.terraform
         (self.lib.ghosttyModule { isDarwin = true; })
+        self.homeModules.TX-02
         self.homeModules.nvimConfig
         self.homeModules.zedCyberdream
       ];
