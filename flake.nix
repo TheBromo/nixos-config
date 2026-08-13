@@ -15,10 +15,10 @@
     ghostty.url = "github:ghostty-org/ghostty";
     herdr.url = "github:herdrdev/herdr/v0.8.0";
 
-    paragon = {
-      url = "git+ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon?ref=main";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # paragon = {
+    #   url = "git+ssh://git@gitlab.com/hexagon-gl/hubrobotics/paragon/paragon?ref=main";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs =

@@ -67,7 +67,9 @@
         enabled = true
       '';
     in
-    {
+    lib.mkIf pkgs.stdenv.isLinux {
+      home.packages = [ pkgs.codex ];
+
       home.activation.installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         install -D -m 644 ${configFile} "$HOME/.codex/config.toml"
       '';

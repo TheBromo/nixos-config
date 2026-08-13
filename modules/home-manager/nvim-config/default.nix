@@ -58,14 +58,6 @@
           vim = "nvim";
           vi = "nvim";
         };
-        initContent = ''
-          reopen_nvim() {
-              fg
-          }
-
-          zle -N reopen_nvim
-          bindkey '^Z' reopen_nvim
-        '';
       };
     };
 }

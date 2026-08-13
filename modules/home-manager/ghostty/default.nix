@@ -61,7 +61,7 @@
         enableZshIntegration = true;
         themes.cyberdream = {
           palette = [
-            "0=#16181a"
+            "0=#080808"
             "1=#ff6e5e"
             "2=#5eff6c"
             "3=#f1ff5e"
@@ -78,12 +78,12 @@
             "14=#5ef1ff"
             "15=#ffffff"
           ];
-          background = "#16181a";
-          foreground = "#ffffff";
-          cursor-color = "#ffffff";
-          cursor-text = "#16181a";
-          selection-background = "#3c4048";
-          selection-foreground = "#ffffff";
+          background = "#080808";
+          foreground = "#fcfcfa";
+          cursor-color = "#c1c0c0";
+          cursor-text = "#8e8d8d";
+          selection-background = "#5b595c";
+          selection-foreground = "#fcfcfa";
         };
         settings = {
           theme = "cyberdream";
@@ -92,7 +92,7 @@
             "TX-02"
             "Fluent Emoji Color"
           ];
-          font-style = "Semilight";
+          font-style = "Light";
 
           font-family-bold = "TX-02";
           font-style-bold = "Bold";
@@ -114,7 +114,7 @@
           ];
         }
         // lib.optionalAttrs isDarwin {
-          macos-titlebar-style = "hidden";
+          macos-titlebar-style = "tabs";
         };
       };
     };

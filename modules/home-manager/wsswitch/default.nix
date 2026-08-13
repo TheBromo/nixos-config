@@ -182,6 +182,12 @@ _: {
             exit 1
           fi
 
+          attach_if_outside_herdr() {
+            if [[ -z "''${HERDR_PANE_ID:-}" ]]; then
+              exec ${lib.getExe herdr}
+            fi
+          }
+
           selected=$(${lib.getExe' pkgs.coreutils "realpath"} "$selected")
           snapshot=$(${lib.getExe herdr} api snapshot)
           workspace_id=$(
@@ -191,13 +197,16 @@ _: {
           )
 
           if [[ -n "$workspace_id" ]]; then
-            exec ${lib.getExe herdr} workspace focus "$workspace_id"
+            ${lib.getExe herdr} workspace focus "$workspace_id" >/dev/null
+            attach_if_outside_herdr
+            exit 0
           fi
 
           workspace=$(${lib.getExe herdr} workspace create --cwd "$selected" --focus)
           workspace_id=$(${lib.getExe pkgs.jq} -er '.result.workspace.workspace_id' <<<"$workspace")
           shell_tab_id=$(${lib.getExe pkgs.jq} -er '.result.tab.tab_id' <<<"$workspace")
           ${lib.getExe bootstrapWorkspace} "$selected" "$workspace_id" "$shell_tab_id"
+          attach_if_outside_herdr
         '';
       };
       wsworktree = pkgs.writeShellApplication {
@@ -353,7 +362,8 @@ _: {
 
       programs.zsh.initContent = lib.mkAfter ''
         function herdr_ws_switch() {
-          ${lib.getExe wsswitch} >/dev/null
+          zle -I
+          ${lib.getExe wsswitch}
           zle reset-prompt
         }
 

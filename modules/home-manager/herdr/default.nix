@@ -25,17 +25,17 @@ _: {
             blue = "#5ea1ff";
             green = "#5eff6c";
             mauve = "#bd5eff";
-            overlay0 = "#6b7078";
-            overlay1 = "#ffffff";
-            panel_bg = "#16181a";
+            overlay0 = "#8e8d8d";
+            overlay1 = "#c1c0c0";
+            panel_bg = "#080808";
             peach = "#ffbd5e";
             red = "#ff6e5e";
-            subtext0 = "#ffffff";
-            surface0 = "#3c4048";
-            surface1 = "#3c4048";
-            surface_dim = "#16181a";
+            subtext0 = "#c1c0c0";
+            surface0 = "#5b595c";
+            surface1 = "#5b595c";
+            surface_dim = "#080808";
             teal = "#5ef1ff";
-            text = "#ffffff";
+            text = "#fcfcfa";
             yellow = "#f1ff5e";
           };
         };
@@ -48,6 +48,7 @@ _: {
       home = {
         packages = [
           herdr
+          pkgs.pi-coding-agent
           pkgs.python3
         ];
 
@@ -55,11 +56,15 @@ _: {
           installHerdrIntegrations =
             lib.hm.dag.entryAfter
               [
+                "installPackages"
                 "installClaudeSettings"
                 "installCodexConfig"
               ]
               ''
-                ${lib.getExe herdr} integration install opencode
+                if [[ -d "$HOME/.config/opencode" ]]; then
+                  ${lib.getExe herdr} integration install opencode
+                fi
+                mkdir -p "$HOME/.pi/agent/extensions"
                 ${lib.getExe herdr} integration install pi
                 ${lib.getExe herdr} integration install claude
                 ${lib.getExe herdr} integration install codex
