@@ -13,6 +13,13 @@
       ...
     }:
     {
+      home.file.".gitignore".text = ''
+        **/.claude/settings.local.json
+        .devenv
+        .direnv
+        node_modules
+      '';
+
       programs.gh.enable = true;
 
       programs.git = {

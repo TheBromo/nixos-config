@@ -188,8 +188,39 @@ _: {
             fi
           }
 
+          start_herdr_server() {
+            ${lib.getExe' pkgs.coreutils "nohup"} \
+              ${lib.getExe' pkgs.coreutils "env"} -u HERDR_STARTUP_CWD \
+              ${lib.getExe herdr} server >/dev/null 2>&1 &
+            local server_pid=$!
+
+            for (( attempt = 0; attempt < 150; attempt++ )); do
+              if snapshot=$(${lib.getExe herdr} api snapshot 2>/dev/null); then
+                return 0
+              fi
+              if ! kill -0 "$server_pid" 2>/dev/null; then
+                wait "$server_pid" || true
+                printf 'Error: failed to start the Herdr server.\n' >&2
+                return 1
+              fi
+              ${lib.getExe' pkgs.coreutils "sleep"} 0.1
+            done
+
+            printf 'Error: timed out waiting for the Herdr server.\n' >&2
+            return 1
+          }
+
           selected=$(${lib.getExe' pkgs.coreutils "realpath"} "$selected")
-          snapshot=$(${lib.getExe herdr} api snapshot)
+          if ! snapshot=$(${lib.getExe herdr} api snapshot 2>&1); then
+            error_code=$(
+              ${lib.getExe pkgs.jq} -r '.error.code // ""' <<<"$snapshot" 2>/dev/null || true
+            )
+            if [[ "$error_code" != server_not_running ]] || [[ -n "''${HERDR_PANE_ID:-}" ]]; then
+              printf '%s\n' "$snapshot" >&2
+              exit 1
+            fi
+            start_herdr_server
+          fi
           workspace_id=$(
             ${lib.getExe pkgs.jq} -r --arg cwd "$selected" \
               '[.result.snapshot.panes[] | select(.cwd == $cwd) | .workspace_id][0] // ""' \
