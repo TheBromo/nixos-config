@@ -67,7 +67,7 @@
         enabled = true
       '';
     in
-    lib.mkIf pkgs.stdenv.isLinux {
+    lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
       home.packages = [ pkgs.codex ];
 
       home.activation.installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

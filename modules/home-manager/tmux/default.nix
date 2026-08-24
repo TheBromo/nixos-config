@@ -7,7 +7,7 @@
         enable = true;
         baseIndex = 1;
         # /run/user/$UID does not exist on darwin, which breaks socket creation
-        secureSocket = pkgs.stdenv.isLinux;
+        secureSocket = pkgs.stdenv.hostPlatform.isLinux;
         mouse = true;
         keyMode = "vi";
         clock24 = true;

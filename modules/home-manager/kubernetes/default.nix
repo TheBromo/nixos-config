@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.homeModules.kubernetes =
-    { pkgs, ... }:
+    { lib, pkgs, ... }:
     {
 
       home.packages = [
@@ -11,7 +11,7 @@
         pkgs.kubectl-neat
         pkgs.kubectl-example
         pkgs.kind
-        pkgs.minikube
+        (lib.lowPrio pkgs.minikube)
         pkgs.cilium-cli
         pkgs.kubernetes-helm
       ];

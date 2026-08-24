@@ -8,6 +8,7 @@
     in
     {
       home.pointerCursor = {
+        enable = true;
         name = cursorTheme;
         package = pkgs.apple-cursor;
         size = cursorSize;

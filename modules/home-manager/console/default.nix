@@ -48,6 +48,9 @@
       };
     in
     {
+      # Work around nixpkgs #485682 until options documentation preserves store context.
+      manual.manpages.enable = false;
+
       home.sessionVariables.RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/ripgrep/config";
 
       xdg.configFile."ripgrep/config".text = ''
