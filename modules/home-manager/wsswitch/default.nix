@@ -424,5 +424,27 @@ _: {
         bindkey -M viins '^T' herdr_ws_worktree
         bindkey -M vicmd '^T' herdr_ws_worktree
       '';
+
+      programs.bash.initExtra = lib.mkAfter ''
+        function herdr_ws_switch() {
+          ${lib.getExe wsswitch}
+        }
+
+        function herdr_ws_worktree() {
+          local branch="$READLINE_LINE"
+
+          if [[ -z "$branch" ]]; then
+            read -e -r -p 'Branch: ' branch
+          fi
+
+          if [[ -n "$branch" ]] && ${lib.getExe wsworktree} "$branch" >/dev/null; then
+            READLINE_LINE=
+            READLINE_POINT=0
+          fi
+        }
+
+        bind -x '"\C-f":herdr_ws_switch'
+        bind -x '"\C-t":herdr_ws_worktree'
+      '';
     };
 }

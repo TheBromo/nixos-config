@@ -1,5 +1,4 @@
-{ ... }:
-{
+_: {
   flake.homeModules.helium =
     {
       config,
@@ -7,15 +6,15 @@
       ...
     }:
     let
-      version = "0.10.7.1";
+      version = "0.15.7.1";
       src = pkgs.fetchurl {
         url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-        hash = "sha256-+vmxXcg8TkR/GAiHKnjq4b04bGtQzErfJkOb4P4nZUk=";
+        hash = "sha256-+zGEGfhIiZWE8mUYb3HrkoM7reFBMdfXlgw3KWT0T98=";
       };
       helium-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "helium";
         inherit version src;
-        extraPkgs = pkgs: [ ];
+        extraPkgs = _: [ ];
       };
       helium = config.lib.nixGL.wrap helium-unwrapped;
     in

@@ -53,11 +53,9 @@
         '';
       };
 
-      programs.zsh = {
-        shellAliases = {
-          vim = "nvim";
-          vi = "nvim";
-        };
+      home.shellAliases = {
+        vi = "nvim";
+        vim = "nvim";
       };
     };
 }

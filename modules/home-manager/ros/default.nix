@@ -3,8 +3,6 @@
   flake.homeModules.ros =
     { ... }:
     {
-      programs.zsh.initContent = ''
-        export ROS_DOMAIN_ID=0
-      '';
+      home.sessionVariables.ROS_DOMAIN_ID = "0";
     };
 }

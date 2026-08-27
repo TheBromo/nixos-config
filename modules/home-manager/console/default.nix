@@ -51,7 +51,23 @@
       # Work around nixpkgs #485682 until options documentation preserves store context.
       manual.manpages.enable = false;
 
-      home.sessionVariables.RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/ripgrep/config";
+      home = {
+        sessionPath = lib.mkBefore [
+          "$HOME/.opencode/bin"
+          "$HOME/.local/bin"
+        ];
+        sessionVariables = {
+          FZF_ALT_C_COMMAND = lib.getExe ripgrepDirectories;
+          FZF_CTRL_T_COMMAND = ripgrepFileCommand;
+          FZF_DEFAULT_COMMAND = ripgrepFileCommand;
+          RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/ripgrep/config";
+        };
+        shellAliases = {
+          l = "ls -CF";
+          la = "ls -A";
+          ll = "ls -alF";
+        };
+      };
 
       xdg.configFile."ripgrep/config".text = ''
         --glob=!**/.devenv
@@ -68,6 +84,7 @@
 
       programs.fzf = {
         enable = true;
+        enableBashIntegration = true;
         enableZshIntegration = true;
         defaultCommand = ripgrepFileCommand;
         fileWidget.command = ripgrepFileCommand;
@@ -75,27 +92,20 @@
         historyWidget.command = "";
       };
 
+      programs.bash = {
+        enable = true;
+        enableCompletion = true;
+      };
+
       programs.zsh = {
         enable = true;
         enableCompletion = true;
         autosuggestion.enable = false;
-        syntaxHighlighting.enable = true;
-        defaultKeymap = "viins";
-
-        shellAliases = {
-          ll = "ls -alF";
-          la = "ls -A";
-          l = "ls -CF";
+        syntaxHighlighting = {
+          enable = true;
+          styles.comment = "fg=#8e8d8d";
         };
-
-        initContent = ''
-          export FZF_ALT_C_COMMAND=${lib.escapeShellArg (lib.getExe ripgrepDirectories)}
-          export FZF_CTRL_T_COMMAND=${lib.escapeShellArg ripgrepFileCommand}
-          export FZF_DEFAULT_COMMAND=${lib.escapeShellArg ripgrepFileCommand}
-
-          export PATH="$HOME/.local/bin:$PATH"
-          export PATH=$HOME/.opencode/bin:$PATH
-        '';
+        defaultKeymap = "viins";
       };
     };
 }

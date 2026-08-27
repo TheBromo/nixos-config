@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+.SHELLFLAGS := -eu -o pipefail -c
 .PHONY: up home zhaw hexagon darwin
 
 # Update flake
@@ -12,4 +13,3 @@ hexagon:
 	nix run nixpkgs#home-manager -- switch --impure --flake .#hexagon 2>&1 | nom
 darwin:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel-darwin 2>&1 | nom
-

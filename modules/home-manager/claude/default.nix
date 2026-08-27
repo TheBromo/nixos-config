@@ -1,10 +1,9 @@
-{ self, lib, ... }:
+{ self, ... }:
 {
   flake.homeModules.claude =
     { pkgs, lib, ... }:
     let
       settings = {
-        "$schema" = "https://json.schemastore.org/claude-code-settings.json";
         hasCompletedProjectOnboarding = true;
         hasCompletedOnboarding = true;
 
@@ -47,11 +46,43 @@
           "lua-lsp@claude-code-lsps" = true;
         };
       };
-      settingsFile = builtins.toFile "claude-settings.json" ((builtins.toJSON settings) + "\n");
+      settingsFile = (pkgs.formats.json { }).generate "claude-settings.json" (
+        settings
+        // {
+          "$schema" = "https://json.schemastore.org/claude-code-settings.json";
+        }
+      );
+      installClaudeSettings = pkgs.writeShellApplication {
+        name = "install-claude-settings";
+        text = ''
+          config_dir="''${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
+          config_path="$config_dir/settings.json"
+          mkdir -p "$config_dir"
+
+          temporary_file=$(mktemp "$config_dir/.settings.json.XXXXXX")
+          trap 'rm -f -- "$temporary_file"' EXIT
+
+          if [[ -e "$config_path" ]]; then
+            ${lib.getExe pkgs.jq} -s '.[0] * .[1]' \
+              "$config_path" ${lib.escapeShellArg settingsFile} > "$temporary_file"
+          else
+            ${lib.getExe' pkgs.coreutils "cp"} ${lib.escapeShellArg settingsFile} "$temporary_file"
+          fi
+
+          chmod 600 "$temporary_file"
+          mv -f "$temporary_file" "$config_path"
+          trap - EXIT
+        '';
+      };
     in
     {
+      programs.claude-code = {
+        enable = true;
+        package = null;
+      };
+
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        install -D -m 644 ${settingsFile} "$HOME/.claude/settings.json"
+        ${lib.getExe installClaudeSettings}
       '';
 
       home.activation.installClaudeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''

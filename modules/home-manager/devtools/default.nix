@@ -31,5 +31,12 @@
         pkgs.gettext
 
       ];
+
+      programs.bash.initExtra = ''
+        export DEVENV_SHELL_TYPE=bash
+      '';
+      programs.zsh.initContent = ''
+        export DEVENV_SHELL_TYPE=zsh
+      '';
     };
 }

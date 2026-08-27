@@ -16,14 +16,13 @@
         pkgs.kubernetes-helm
       ];
 
-      programs.zsh = {
-        shellAliases = {
-          k = "kubectl";
-        };
+      home.shellAliases.k = "kubectl";
 
-        initContent = ''
-          source <(kubectl completion zsh)
-        '';
-      };
+      programs.bash.initExtra = ''
+        source <(kubectl completion bash)
+      '';
+      programs.zsh.initContent = ''
+        source <(kubectl completion zsh)
+      '';
     };
 }

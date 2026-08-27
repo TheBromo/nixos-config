@@ -44,6 +44,7 @@
         self.homeModules.nvimConfig
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.mcp
         self.homeModules.herdr
         self.homeModules.t3code
         self.homeModules.timewarriorAuto

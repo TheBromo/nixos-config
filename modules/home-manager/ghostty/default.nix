@@ -58,6 +58,7 @@
           else
             (config.lib.nixGL.wrap inputs.ghostty.packages.${pkgs.stdenv.hostPlatform.system}.default);
         enable = true;
+        enableBashIntegration = true;
         enableZshIntegration = true;
         themes.cyberdream = {
           palette = [
