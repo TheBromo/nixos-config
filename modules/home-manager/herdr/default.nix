@@ -41,6 +41,14 @@ _: {
         };
         ui.agent_panel_sort = "spaces";
       };
+      installHerdrIntegrations = pkgs.writeShellApplication {
+        name = "install-herdr-integrations";
+        runtimeInputs = [
+          herdr
+          pkgs.coreutils
+        ];
+        text = builtins.readFile ./install-herdr-integrations.sh;
+      };
     in
     {
       xdg.configFile."herdr/config.toml".source = herdrConfig;
@@ -61,13 +69,7 @@ _: {
                 "installCodexConfig"
               ]
               ''
-                if [[ -d "$HOME/.config/opencode" ]]; then
-                  ${lib.getExe herdr} integration install opencode
-                fi
-                mkdir -p "$HOME/.pi/agent/extensions"
-                ${lib.getExe herdr} integration install pi
-                ${lib.getExe herdr} integration install claude
-                ${lib.getExe herdr} integration install codex
+                ${lib.getExe installHerdrIntegrations}
               '';
         };
       };

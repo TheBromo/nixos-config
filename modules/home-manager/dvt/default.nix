@@ -3,7 +3,7 @@
   flake.homeModules.dvt =
     { pkgs, ... }:
     let
-      githash = "959eff5d7eee92131e2bfcbe2bf86ab8c809974c";
+      githash = "6a7eefd8fd910a831de525811393e499bc06dfa1";
       dvt = pkgs.writeShellScriptBin "dvt" ''
         if [ -z "$1" ]; then
           echo "no template specified"

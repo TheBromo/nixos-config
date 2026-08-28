@@ -5,7 +5,7 @@
     let
       src = pkgs.fetchgit {
         url = "https://forgejo.www.stefanjunker.de/steveej/dotagents.git";
-        rev = "b6565cf1f294fc8aee08ffd5e4ce17d932b725c1";
+        rev = "1a187d6f44a34c26f16e961647e4e2f683414bf8";
         hash = "sha256-ykJ0vmrHhVFTMuZ47mfrFJJEwzEovZY7/BGbKPtKJOA=";
       };
       paths = {
