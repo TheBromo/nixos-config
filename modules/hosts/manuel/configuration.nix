@@ -17,7 +17,6 @@
         self.homeModules.direnv
         self.homeModules.bat
         self.homeModules.wt
-        self.homeModules.ros
         self.homeModules.terraform
         self.homeModules.info
         self.homeModules.dvt

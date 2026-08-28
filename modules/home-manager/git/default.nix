@@ -7,7 +7,6 @@
       signing ? true,
     }:
     {
-      config,
       pkgs,
       lib,
       ...
@@ -98,12 +97,6 @@
           credential."https://gitlab.com/".helper =
             "!f() { test \"$1\" = get && echo \"password=$(op read \"$PARAGON_GITLAB_USER_PAT_OP\")\"; }; f";
         };
-
-        includes = [
-          {
-            condition = "gitdir:${config.home.homeDirectory}/Development/nixos-config/";
-          }
-        ];
       };
 
       programs.delta = {

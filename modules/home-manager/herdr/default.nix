@@ -8,10 +8,55 @@ _: {
     }:
     let
       herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      herdrNvimNav = pkgs.stdenv.mkDerivation {
+        pname = "herdr-nvim-nav";
+        version = "1.0.0";
+        src = inputs.herdr-nvim-nav;
+
+        installPhase = ''
+          runHook preInstall
+
+          mkdir -p $out
+          install -m755 herdr-nvim-nav $out/herdr-nvim-nav
+          install -m644 herdr-plugin.toml $out/herdr-plugin.toml
+
+          runHook postInstall
+        '';
+      };
       toml = pkgs.formats.toml { };
       herdrConfig = toml.generate "herdr-config.toml" {
         experimental.kitty_graphics = true;
         keys = {
+          command = [
+            {
+              key = "ctrl+h";
+              type = "plugin_action";
+              command = "herdr-nvim-nav.left";
+              description = "Navigate left across Neovim windows and Herdr panes";
+            }
+            {
+              key = "ctrl+j";
+              type = "plugin_action";
+              command = "herdr-nvim-nav.down";
+              description = "Navigate down across Neovim windows and Herdr panes";
+            }
+            {
+              key = "ctrl+k";
+              type = "plugin_action";
+              command = "herdr-nvim-nav.up";
+              description = "Navigate up across Neovim windows and Herdr panes";
+            }
+            {
+              key = "ctrl+l";
+              type = "plugin_action";
+              command = "herdr-nvim-nav.right";
+              description = "Navigate right across Neovim windows and Herdr panes";
+            }
+          ];
+          navigate_pane_left = "ctrl+h";
+          navigate_pane_right = "ctrl+l";
+          navigate_workspace_down = "ctrl+j";
+          navigate_workspace_up = "ctrl+k";
           new_worktree = "prefix+shift+g";
           next_tab = "prefix+p";
           prefix = "ctrl+space";
@@ -70,6 +115,15 @@ _: {
               ]
               ''
                 ${lib.getExe installHerdrIntegrations}
+              '';
+          linkHerdrNvimNavPlugin =
+            lib.hm.dag.entryAfter
+              [
+                "writeBoundary"
+                "installHerdrIntegrations"
+              ]
+              ''
+                ${lib.getExe herdr} plugin link ${herdrNvimNav} >/dev/null
               '';
         };
       };

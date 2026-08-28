@@ -14,6 +14,11 @@
     neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
     ghostty.url = "github:ghostty-org/ghostty";
     herdr.url = "github:herdrdev/herdr/v0.8.0";
+    herdr-nvim-nav = {
+      # v1.0.0
+      url = "git+https://github.com/aimdevlee/herdr-nvim-nav.git?rev=ec047fd6d8d0269d54a34e9405af28d8aad4c8f0&shallow=1";
+      flake = false;
+    };
   };
 
   outputs =
