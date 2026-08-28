@@ -31,13 +31,20 @@
         # kubernetes
         pkgs.kube-linter
         pkgs.yamlfmt
+
         # neovim
         pkgs.lua-language-server
+
         # cpp
         pkgs.llvmPackages_21.clang-tools
 
-        pkgs.vscode-langservers-extracted
+        # system verilog
+        pkgs.verible
+        pkgs.svls
+
         pkgs.gopls
+
+        pkgs.vscode-langservers-extracted
         pkgs.terraform-ls
       ];
 
