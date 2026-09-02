@@ -58,11 +58,10 @@ nix build .#packages.x86_64-linux.tree-sitter-cli
 
 **Four hosts**: `manuel` (personal Linux), `zhaw` (university Linux), `hexagon` (work Linux, containerized with nixGL), `manuel-darwin` (personal macOS).
 
-**Custom library**: `self.lib.gitModule` is a parameterized factory for git configuration supporting multiple identities, optional commit signing, and 1Password SSH signing.
+**Custom library**: `self.lib.gitModule` is a parameterized factory for git configuration supporting multiple identities.
 
 ## Key Integration Points
 
-- **1Password CLI (`op`)**: Used for git commit signing, terraform secrets, SSH agent
 - **nixGL**: Wraps GUI applications on the hexagon host (non-NixOS container environment)
 - **Git crypt**: Protects encrypted files in the repo
 - **Neovim config**: Cloned via home activation hook from a separate repo, not managed inline

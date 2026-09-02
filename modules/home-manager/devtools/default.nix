@@ -17,7 +17,10 @@
         pkgs.unzip
         pkgs.openssl
 
-        pkgs.rustup
+        pkgs.cargo
+        pkgs.clippy
+        pkgs.rustc
+        pkgs.rustfmt
         pkgs.zig
 
         pkgs.gnumake

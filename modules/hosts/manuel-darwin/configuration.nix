@@ -2,6 +2,15 @@
 {
   flake.homeModules.manuelDarwinConfiguration =
     { pkgs, ... }:
+    let
+      chipmindPython = pkgs.runCommand "chipmind-python" { } ''
+        mkdir -p "$out/bin"
+        ln -s ${pkgs.python312}/bin/python3.12 "$out/bin/python3.12"
+      '';
+      dockerCredentialDesktop = pkgs.writeShellScriptBin "docker-credential-desktop" ''
+        exec /Applications/Docker.app/Contents/Resources/bin/docker-credential-desktop "$@"
+      '';
+    in
     {
       nixpkgs.config.allowUnfree = true;
 
@@ -17,7 +26,7 @@
         self.homeModules.direnv
         self.homeModules.bat
         self.homeModules.wt
-        self.homeModules.ros
+        self.homeModules.tmux
         self.homeModules.claude
         self.homeModules.codex
         self.homeModules.herdr
@@ -40,8 +49,12 @@
           SHELL = "${pkgs.zsh}/bin/zsh";
         };
         packages = [
+          pkgs.docker-client
+          dockerCredentialDesktop
+          pkgs.git-lfs
           pkgs.git-crypt
-          pkgs.glab
+          pkgs.openvscode-server
+          chipmindPython
         ];
       };
 
