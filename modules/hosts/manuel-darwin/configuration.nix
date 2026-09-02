@@ -55,6 +55,7 @@
           pkgs.git-crypt
           pkgs.openvscode-server
           chipmindPython
+          pkgs.poetry
         ];
       };
 
