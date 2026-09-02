@@ -23,14 +23,29 @@
         pkgs.typescript-language-server
         pkgs.prettierd
         pkgs.tailwindcss-language-server
+        pkgs.vscode-langservers-extracted
 
         # python
         pkgs.ty
         pkgs.ruff
 
+        # rust
+        pkgs.rust-analyzer
+
+        # shell
+        pkgs.bash-language-server
+
+        # containers
+        pkgs.docker-language-server
+
         # kubernetes
         pkgs.kube-linter
         pkgs.yamlfmt
+        pkgs.yaml-language-server
+
+        # documentation and configuration
+        pkgs.marksman
+        pkgs.taplo
 
         # neovim
         pkgs.lua-language-server
@@ -44,7 +59,6 @@
 
         pkgs.gopls
 
-        pkgs.vscode-langservers-extracted
         pkgs.terraform-ls
       ];
 
