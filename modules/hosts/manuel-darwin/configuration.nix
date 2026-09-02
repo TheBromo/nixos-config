@@ -1,7 +1,7 @@
 { self, ... }:
 {
   flake.homeModules.manuelDarwinConfiguration =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       nixpkgs.config.allowUnfree = true;
 
@@ -38,7 +38,7 @@
         homeDirectory = "/Users/manuel";
         stateVersion = "24.11";
         sessionVariables = {
-          SHELL = "${pkgs.zsh}/bin/zsh";
+          SHELL = lib.getExe pkgs.zsh;
         };
       };
 
