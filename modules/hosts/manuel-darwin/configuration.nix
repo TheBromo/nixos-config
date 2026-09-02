@@ -47,6 +47,7 @@
         stateVersion = "24.11";
         sessionVariables = {
           SHELL = "${pkgs.zsh}/bin/zsh";
+          DOCKER_HOST = "unix:///Users/manuel/.docker/run/docker.sock";
         };
         packages = [
           pkgs.docker-client
