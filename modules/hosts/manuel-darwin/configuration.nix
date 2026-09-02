@@ -2,20 +2,12 @@
 {
   flake.homeModules.manuelDarwinConfiguration =
     { pkgs, ... }:
-    let
-      chipmindPython = pkgs.runCommand "chipmind-python" { } ''
-        mkdir -p "$out/bin"
-        ln -s ${pkgs.python312}/bin/python3.12 "$out/bin/python3.12"
-      '';
-      dockerCredentialDesktop = pkgs.writeShellScriptBin "docker-credential-desktop" ''
-        exec /Applications/Docker.app/Contents/Resources/bin/docker-credential-desktop "$@"
-      '';
-    in
     {
       nixpkgs.config.allowUnfree = true;
 
       imports = [
         (self.lib.gitModule { })
+        self.homeModules.darwinTools
         self.homeModules.devtools
         self.homeModules.console
         self.homeModules.kubernetes
@@ -47,17 +39,7 @@
         stateVersion = "24.11";
         sessionVariables = {
           SHELL = "${pkgs.zsh}/bin/zsh";
-          DOCKER_HOST = "unix:///Users/manuel/.docker/run/docker.sock";
         };
-        packages = [
-          pkgs.docker-client
-          dockerCredentialDesktop
-          pkgs.git-lfs
-          pkgs.git-crypt
-          pkgs.openvscode-server
-          chipmindPython
-          pkgs.poetry
-        ];
       };
 
       programs.home-manager.enable = true;
