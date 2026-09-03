@@ -61,6 +61,7 @@
           FZF_CTRL_T_COMMAND = ripgrepFileCommand;
           FZF_DEFAULT_COMMAND = ripgrepFileCommand;
           RIPGREP_CONFIG_PATH = "${config.xdg.configHome}/ripgrep/config";
+          AWS_PROFILE = "default";
         };
         shellAliases = {
           l = "ls -CF";
