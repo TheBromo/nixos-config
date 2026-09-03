@@ -93,7 +93,7 @@
             "TX-02"
             "Fluent Emoji Color"
           ];
-          font-style = "Light";
+          font-style = "SemiLight";
 
           font-family-bold = "TX-02";
           font-style-bold = "Bold";
