@@ -10,6 +10,12 @@
         env = {
           CLAUDE_CODE_ENABLE_TELEMETRY = "1";
           BASH_DEFAULT_TIMEOUT_MS = "300000";
+
+          # Authenticate against Amazon Bedrock instead of the Anthropic API,
+          # using the ambient AWS credentials (AWS_PROFILE from the console
+          # module).
+          CLAUDE_CODE_USE_BEDROCK = "1";
+          AWS_REGION = "us-east-1";
         };
 
         permissions = {
@@ -17,7 +23,7 @@
           skipDangerousModePermissionPrompt = true;
         };
 
-        model = "opus";
+        model = "opus[1m]";
         extraKnownMarketplaces = {
           caveman = {
             source = {
