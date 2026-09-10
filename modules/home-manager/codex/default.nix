@@ -9,7 +9,7 @@
     }:
     let
       baseSettings = {
-        model = "gpt-5.6-sol";
+        model = "gpt-6-astra";
         model_reasoning_effort = "medium";
         approval_policy = "never";
         sandbox_mode = "danger-full-access";
@@ -61,6 +61,16 @@
         mcp_servers.swiss_caselaw = {
           enabled = true;
           url = "https://mcp.opencaselaw.ch/sse";
+        };
+
+        mcp_servers.chrome-devtools = {
+          command = lib.getExe' pkgs.nodejs_26 "npx";
+          args = [
+            "-y"
+            "chrome-devtools-mcp@latest"
+            "--isolated"
+          ];
+          startup_timeout_sec = 60;
         };
 
         plugins = {
@@ -135,6 +145,7 @@
             cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.codex/skills/"
           '';
         };
       };

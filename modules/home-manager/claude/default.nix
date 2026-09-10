@@ -79,6 +79,14 @@
       programs.claude-code = {
         enable = true;
         package = null;
+        mcpServers.chrome-devtools = {
+          command = lib.getExe' pkgs.nodejs_26 "npx";
+          args = [
+            "-y"
+            "chrome-devtools-mcp@latest"
+            "--isolated"
+          ];
+        };
       };
 
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -90,6 +98,7 @@
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }
