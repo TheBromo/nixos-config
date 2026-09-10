@@ -133,13 +133,15 @@
         '';
       };
     in
-    lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    {
       home = {
-        packages = [ pkgs.codex ];
+        packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.codex ];
         activation = {
-          installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-            ${lib.getExe installCodexConfig}
-          '';
+          installCodexConfig = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
+            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+              ${lib.getExe installCodexConfig}
+            ''
+          );
           installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             mkdir -p "$HOME/.codex/skills"
             cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
@@ -148,6 +150,7 @@
             cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.codex/skills/"
           '';
         };
       };
