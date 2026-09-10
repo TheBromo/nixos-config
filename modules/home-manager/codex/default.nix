@@ -147,6 +147,7 @@
             cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.codex/skills/"
           '';
         };
       };
