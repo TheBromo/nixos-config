@@ -99,6 +99,7 @@
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }
