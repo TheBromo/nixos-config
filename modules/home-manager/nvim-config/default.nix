@@ -20,7 +20,7 @@
         pkgs.nil
 
         # web
-        pkgs.typescript-go
+        pkgs.typescript
         pkgs.prettierd
         pkgs.tailwindcss-language-server
         pkgs.vscode-langservers-extracted
