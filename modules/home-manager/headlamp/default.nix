@@ -20,7 +20,7 @@
       headlamp-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "headlamp";
         inherit version src;
-        extraPkgs = pkgs: [ ];
+        extraPkgs = _: [ ];
       };
       headlamp = config.lib.nixGL.wrap headlamp-unwrapped;
     in

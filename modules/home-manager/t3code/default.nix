@@ -9,7 +9,6 @@
     {
       config,
       pkgs,
-      lib,
       ...
     }:
     let
@@ -21,7 +20,7 @@
       t3code-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "t3code";
         inherit version src;
-        extraPkgs = pkgs: [ ];
+        extraPkgs = _: [ ];
       };
       t3code = config.lib.nixGL.wrap t3code-unwrapped;
       icon = pkgs.fetchurl {
