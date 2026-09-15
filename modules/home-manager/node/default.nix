@@ -21,6 +21,12 @@
         };
       };
 
+      programs.npm = {
+        enable = true;
+        package = null;
+        settings.prefix = "\${HOME}/.local";
+      };
+
       programs.bash.initExtra = nvmInit;
       programs.zsh.initContent = nvmInit;
     };
