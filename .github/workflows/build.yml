@@ -1,0 +1,97 @@
+name: Build
+on:
+  push:
+    branches: [main]
+  schedule:
+    # nightly, so the cache stays warm for the current nixpkgs-unstable
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+concurrency:
+  # a full closure is ~8.6 GiB per host, so never keep two runs alive
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  # The host list and its target systems come from the flake, so adding a host
+  # needs no change here.
+  discover:
+    name: discover hosts
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.hosts.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+      - id: hosts
+        run: |
+          systems=$(nix eval --json .#homeConfigurations --apply \
+            'cfgs: builtins.mapAttrs (_: c: c.pkgs.stdenv.hostPlatform.system) cfgs')
+          echo "target systems: $systems"
+          matrix=$(jq -cn --argjson s "$systems" '
+            {
+              include: [
+                $s | to_entries[] | {
+                  host: .key,
+                  system: .value,
+                  runner: (
+                    {
+                      "x86_64-linux": "ubuntu-latest",
+                      "aarch64-linux": "ubuntu-24.04-arm",
+                      "aarch64-darwin": "macos-15"
+                    }[.value] // error("no runner for system \(.value)")
+                  ),
+                }
+              ]
+            }')
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+  build:
+    name: ${{ matrix.host }} (${{ matrix.system }})
+    needs: discover
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.discover.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # A hosted runner has less free disk than the closure needs.
+      - if: runner.os == 'Linux'
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be # v1.3.1
+        with:
+          tool-cache: true
+          large-packages: false
+          swap-storage: false
+      - if: runner.os == 'macOS'
+        name: Free disk space
+        run: |
+          sudo rm -rf /Users/runner/Library/Android \
+            /Applications/Xcode_*.app \
+            "$HOME/Library/Developer/CoreSimulator/Caches" || true
+          df -h /
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://thebromo.cachix.org https://nix-community.cachix.org https://ghostty.cachix.org
+            extra-trusted-public-keys = thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns=
+      # Pushes everything this job builds to the cache, so a local `make home`
+      # or `make darwin` downloads instead of compiling.
+      - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
+        with:
+          name: thebromo
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      # The TX-02 font is built from secrets/TX-02.tar.xz, which is git-crypt
+      # encrypted. From here on the workspace holds plaintext secrets: never
+      # upload an artifact and never echo a file from secrets/.
+      - name: Unlock git-crypt
+        env:
+          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
+        run: |
+          key="$RUNNER_TEMP/git-crypt.key"
+          printf '%s' "$GIT_CRYPT_KEY" | base64 -d > "$key"
+          nix run nixpkgs#git-crypt -- unlock "$key"
+          rm -f "$key"
+      - name: Build activation package
+        run: |
+          nix build ".#homeConfigurations.${{ matrix.host }}.activationPackage" \
+            --no-link --print-out-paths --print-build-logs

@@ -16,6 +16,7 @@
       home = {
         sessionVariables.DOCKER_HOST = dockerHost;
         packages = [
+          pkgs._1password-cli
           pkgs.awscli2
           pkgs.docker-client
           dockerCredentialDesktop
