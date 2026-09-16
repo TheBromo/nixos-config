@@ -176,7 +176,7 @@ On the Linux host the same applies through the system configuration's `nix.setti
 
 ## 4. Secrets and settings
 
-Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps=`). The name is hardcoded in `build.yml`, `ci.yml` and `modules/home-manager/nix-settings`; only the write token is a secret.
+Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8=`). The name is hardcoded in `build.yml`, `ci.yml` and `modules/home-manager/nix-settings`; only the write token is a secret.
 
 The `llm-agents.nix` input brings a second cache, `https://cache.numtide.com` (key `niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=`), which is why that input has no `nixpkgs.follows`: its packages are only substitutable when built against upstream's own nixpkgs. It is configured in `modules/home-manager/nix-settings` and in `ci.yml`'s `build-own` job, and deliberately **not** in `build.yml`. The three `extra_nix_config` blocks are duplicated on purpose — the divergence is the safety property, so do not factor them into a shared action.
 

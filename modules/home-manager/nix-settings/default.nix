@@ -23,7 +23,7 @@
           "https://cache.numtide.com"
         ];
         extra-trusted-public-keys = [
-          "thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps="
+          "thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8="
           "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
           "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
           "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
