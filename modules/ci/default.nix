@@ -1,6 +1,7 @@
-# Build targets for CI: the same host closures, minus everything whose source is
-# git-crypt encrypted. CI has no key, and the resulting closure is pushed to a
-# public binary cache, so licensed content must stay out of it.
+# Build targets for CI: the same host closures, minus everything whose licence
+# forbids republication — the git-crypt encrypted font and the prebuilt
+# claude-code binary. The closure is pushed to a public binary cache, and CI has
+# no git-crypt key anyway.
 #
 #   nix build .#packages.<system>.ci-<host>
 { self, lib, ... }:
@@ -12,7 +13,7 @@
         name: homeConfiguration:
         lib.nameValuePair "ci-${name}"
           (homeConfiguration.extendModules {
-            modules = [ { custom.tx02.enable = false; } ];
+            modules = [ { custom.nonRedistributable.enable = false; } ];
           }).activationPackage
       ) (lib.filterAttrs (_: cfg: cfg.pkgs.stdenv.hostPlatform.system == system) self.homeConfigurations);
     };

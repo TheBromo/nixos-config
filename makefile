@@ -1,10 +1,13 @@
 SHELL := /bin/bash
 .SHELLFLAGS := -eu -o pipefail -c
-.PHONY: up home zhaw hexagon darwin
+.PHONY: up up-agents home zhaw hexagon darwin
 
 # Update flake
 up:
 	nix flake update 2>&1 | nom
+# Bump only the agent packages, between the weekly update pull requests
+up-agents:
+	nix flake update llm-agents 2>&1 | nom
 home:
 	nix run nixpkgs#home-manager -- switch --flake .#manuel 2>&1 | nom
 zhaw:

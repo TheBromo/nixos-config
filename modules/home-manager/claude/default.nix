@@ -1,8 +1,15 @@
 { self, ... }:
 {
   flake.homeModules.claude =
-    { pkgs, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     let
+      llmAgents = self.lib.llmAgents pkgs;
+
       settings = {
         hasCompletedProjectOnboarding = true;
         hasCompletedOnboarding = true;
@@ -80,11 +87,34 @@
           trap - EXIT
         '';
       };
+
+      checkStrayAgents = pkgs.writeShellApplication {
+        name = "check-stray-agent-binaries";
+        text = ''
+          for stray in \
+            "$HOME/.local/bin/claude" \
+            "$HOME/.local/share/claude" \
+            "$HOME/.local/bin/codex" \
+            "$HOME/.codex/packages"
+          do
+            if [[ -e "$stray" ]]; then
+              echo "warning: $stray is left over from a native installer." >&2
+              echo "         Whether it shadows the nix-provided binary depends on when" >&2
+              echo "         /etc/zshrc re-prepends ~/.nix-profile/bin, so remove it once" >&2
+              echo "         the nix-provided version has proven itself." >&2
+            fi
+          done
+        '';
+      };
     in
     {
       programs.claude-code = {
         enable = true;
-        package = null;
+        # meta.license.redistributable = false, so `null` is what keeps this out
+        # of the CI closure. Not lib.mkIf: the option default is
+        # pkgs.claude-code, which is equally non-redistributable, so a false
+        # mkIf would silently swap one restricted binary for another.
+        package = if config.custom.nonRedistributable.enable then llmAgents.claude-code else null;
         mcpServers.chrome-devtools = {
           command = lib.getExe' pkgs.nodejs_26 "npx";
           args = [
@@ -99,6 +129,15 @@
         ${lib.getExe installClaudeSettings}
       '';
 
+      # Warn only. The native installs must stay on disk during the trial period
+      # so that a rollback still leaves a working claude.
+      home.activation.checkStrayAgentBinaries = lib.hm.dag.entryAfter [ "installPackages" ] ''
+        ${lib.getExe checkStrayAgents} || true
+      '';
+
+      # Never set programs.claude-code.skills to a path: home-manager would turn
+      # ~/.claude/skills into a recursive home.file source, and
+      # check-link-targets would then refuse to clobber the copies made below.
       home.activation.installClaudeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.claude/skills"
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.claude/skills/"

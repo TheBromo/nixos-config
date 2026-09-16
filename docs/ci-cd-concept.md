@@ -104,8 +104,11 @@ Steps per matrix entry, `fail-fast: false` so one broken host does not hide the 
 
 1. Free disk space — `jlumbroso/free-disk-space` on Linux, pruning the Android SDK, extra Xcode versions and simulator caches on macOS. Required because of the 8.6 GiB closure.
 2. Install Nix with the extra substituters `thebromo`, `nix-community` and `ghostty`, so Neovim nightly, Ghostty and herdr are downloaded instead of compiled.
-3. `cachix/cachix-action` with cache `thebromo` and `CACHIX_AUTH_TOKEN`; its post step pushes everything the job built.
-4. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
+3. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
+4. Verify: `nix path-info -r` over the result must not match `-claude-code-[0-9]`, `-TX-02$` or `-1password-cli-[0-9]`.
+5. Push exactly that closure: `nix run --inputs-from . nixpkgs#cachix -- push thebromo "$out"`, with `CACHIX_AUTH_TOKEN` in the environment.
+
+`cachix/cachix-action` is deliberately **not** used. Its post step pushes whatever ended up in the store, and GitHub runs post steps even after a step has failed — so a failing verification would not have prevented the upload. Building first, verifying, then pushing the one approved path makes the gate real. (Raised as a P1 in the review of PR #12.)
 
 ### The `ci-<host>` variant
 
@@ -113,14 +116,26 @@ Steps per matrix entry, `fail-fast: false` so one broken host does not hide the 
 
 ```nix
 (homeConfiguration.extendModules {
-  modules = [ { custom.tx02.enable = false; } ];
+  modules = [ { custom.nonRedistributable.enable = false; } ];
 }).activationPackage
 ```
 
-So CI builds the identical closure except for the git-crypt encrypted font. Two reasons, and the second one is the important one:
+So CI builds the identical closure minus everything whose licence forbids republication. Three things hang off that one flag today: the git-crypt encrypted `TX-02` font, the `claude-code` binary from the `llm-agents.nix` input, and `1password-cli`.
 
-- CI has no key, so a `TX-02` build would fail.
-- The closure is pushed to a *public* Cachix cache. Building the font in CI would republish content whose licence forbids exactly that.
+Two reasons, and the second one is the important one:
+
+- CI has no git-crypt key, so a `TX-02` build would fail.
+- The closure is pushed to a *public* Cachix cache. Pushing any of the three would republish content whose licence forbids exactly that.
+
+`modules/home-manager/non-redistributable` also asserts that, whenever the flag is `false`, no `home.packages` entry has a `meta.license` with `redistributable = false`. That assertion is not decoration: it caught `1password-cli` on its first evaluation, which had already been pushed to the public cache by the first `build.yml` run.
+
+Three independent layers, because each one alone has a hole:
+
+1. `custom.nonRedistributable.enable = false` keeps the paths out of the `ci-<host>` closure, and the assertion in `modules/home-manager/non-redistributable` fails evaluation if a `home.packages` entry slips through. It only sees top-level entries, not transitive dependencies.
+2. `build.yml` pushes exactly the one verified store path instead of letting `cachix-action` push the store diff, so a *transitive* restricted path is caught by the `nix path-info -r` grep before anything is uploaded.
+3. `build.yml` omits the `cache.numtide.com` substituter, so the restricted agent binaries cannot even be fetched into that job's store.
+
+Layer 3 matters because the old `cachix-action` setup pushed every path the job produced, substituted ones included — measured on run 35069655787: 363 paths pushed, 34 of them from upstream substituters.
 
 Verified locally: the `ci-manuel-darwin` closure has 0 references to `TX-02`, the full `home-manuel-darwin` closure has 1; both are 8.6 GiB, so nothing else changes. No workflow decrypts anything, and the `GIT_CRYPT_KEY` secret has been deleted from the repository again.
 
@@ -170,7 +185,11 @@ On the Linux host the same applies through the system configuration's `nix.setti
 
 ## 4. Secrets and settings
 
-Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps=`). The name is hardcoded in `build.yml`, `ci.yml` and `modules/home-manager/nix-settings`; only the write token is a secret.
+Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8=`). The name is hardcoded in `build.yml`, `ci.yml` and `modules/home-manager/nix-settings`; only the write token is a secret.
+
+The `llm-agents.nix` input brings a second cache, `https://cache.numtide.com` (key `niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=`), which is why that input has no `nixpkgs.follows`: its packages are only substitutable when built against upstream's own nixpkgs. It is configured in `modules/home-manager/nix-settings` and in `ci.yml`'s `build-own` job, and deliberately **not** in `build.yml`. The three `extra_nix_config` blocks are duplicated on purpose — the divergence is the safety property, so do not factor them into a shared action.
+
+Price of that omission: the one unrestricted `llm-agents` package in the host closure, `pi`, is an npm build, so `build.yml` compiles it instead of substituting it — measured at roughly 30 s per host. `pi` is also not bit-reproducible (`nix build --rebuild` reports differing output), so the same store path can hold a numtide-built and a `thebromo`-built copy. Both are valid builds of the same input-addressed derivation, so this is a curiosity rather than a problem.
 
 | Name | Purpose | Needed by |
 | --- | --- | --- |
@@ -216,9 +235,10 @@ Done:
 7. Merged the pipeline to `main`. `ci.yml` green there (four jobs, 3m34s).
 8. Removed the git-crypt dependency from CI: `custom.tx02.enable`, `modules/ci` with the `ci-<host>` variant, and the `GIT_CRYPT_KEY` secret deleted again. The first `build.yml` run had failed in the unlock step, which is now gone entirely.
 
+9. Verified the whole pipeline on `main`. `build.yml` run 35069655787: `manuel-darwin` 25m35s, `manuel` 28m20s, both success, both closures pushed. Spot checks against `https://thebromo.cachix.org`: the two `home-manager-generation` roots and `tree-sitter-cli` answer `200`, the `TX-02` path answers `404` — the licensed font is not in the public cache.
+
 Open:
 
-9. Watch the first `build.yml` run through to a cache push.
 10. Mark `secrets-guard`, `checks` and `build-own` as required status checks for `main`.
 11. Expose the AppImage derivations as `perSystem.packages.*` and add them to `build-own` (§1), so their hashes are verified without a full closure build.
 12. Clean up: remove the `zhaw`/`hexagon` targets from `makefile` and the four-host claim in `CLAUDE.md`, or restore the missing host modules.
@@ -236,7 +256,7 @@ Caught:
 
 Not caught:
 
-- The `TX-02` font derivation, on purpose: its source is encrypted and must not land in a public cache.
+- The `TX-02` font derivation and `1password-cli`, on purpose: they must not land in a public cache. `claude-code` is in the same category but `ci.yml`'s `build-own` realises it — on Linux only, since that job runs on `ubuntu-latest`.
 - Runtime behaviour after activation (does the shell actually start, is the font really visible). CI builds a closure, it does not use a desktop.
 - Anything about the `nvim-config` activation hook, which clones an external repository at switch time.
 - nixGL-wrapped GUI applications; they need a real GPU, and no host currently imports them.

@@ -48,7 +48,7 @@ jobs:
           extra_nix_config: |
             accept-flake-config = true
             extra-substituters = https://thebromo.cachix.org https://nix-community.cachix.org
-            extra-trusted-public-keys = thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+            extra-trusted-public-keys = thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
       - name: Evaluate all outputs
         run: nix flake check --no-build --all-systems --show-trace
       - name: Formatting
@@ -75,8 +75,13 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            extra-substituters = https://thebromo.cachix.org
-            extra-trusted-public-keys = thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps=
+            extra-substituters = https://thebromo.cachix.org https://cache.numtide.com
+            extra-trusted-public-keys = thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8= niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=
       # Downloaded once build.yml has pushed it, built from source otherwise.
       - name: tree-sitter-cli
         run: nix build .#packages.x86_64-linux.tree-sitter-cli --no-link --print-build-logs
+      # claude-code has meta.license.redistributable = false, so it may only be
+      # realised in a job that pushes nothing. This job has no cachix-action;
+      # build.yml does. Do not move this step there.
+      - name: llm-agents claude-code
+        run: nix build .#packages.x86_64-linux.claude-code --no-link --print-build-logs

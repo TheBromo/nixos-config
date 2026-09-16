@@ -8,6 +8,10 @@ _: {
     }:
     let
       herdr = inputs.herdr.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      # Same 0.85.1 as nixpkgs pi-coding-agent today, but llm-agents.nix tracks
+      # releases several times a day. MIT and redistributable, so unlike
+      # claude-code it needs no custom.nonRedistributable gate.
+      pi = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi;
       herdrNvimNav = pkgs.stdenv.mkDerivation {
         pname = "herdr-nvim-nav";
         version = "1.0.0";
@@ -101,7 +105,7 @@ _: {
       home = {
         packages = [
           herdr
-          pkgs.pi-coding-agent
+          pi
           pkgs.python3
         ];
 

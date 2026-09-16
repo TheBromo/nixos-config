@@ -1,7 +1,12 @@
 { ... }:
 {
   flake.homeModules.darwinTools =
-    { config, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       dockerHost = "unix://${config.home.homeDirectory}/.docker/run/docker.sock";
       chipmindPython = pkgs.runCommand "chipmind-python" { } ''
@@ -16,7 +21,6 @@
       home = {
         sessionVariables.DOCKER_HOST = dockerHost;
         packages = [
-          pkgs._1password-cli
           pkgs.awscli2
           pkgs.docker-client
           dockerCredentialDesktop
@@ -25,7 +29,10 @@
           pkgs.openvscode-server
           chipmindPython
           pkgs.poetry
-        ];
+        ]
+        # meta.license.redistributable = false, so it must not reach the public
+        # cache that .github/workflows/build.yml fills.
+        ++ lib.optional config.custom.nonRedistributable.enable pkgs._1password-cli;
       };
 
       # hm-session-vars.sh is deliberately sourced only once. After a Home
