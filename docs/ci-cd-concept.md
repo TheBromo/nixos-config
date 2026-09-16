@@ -216,9 +216,10 @@ Done:
 7. Merged the pipeline to `main`. `ci.yml` green there (four jobs, 3m34s).
 8. Removed the git-crypt dependency from CI: `custom.tx02.enable`, `modules/ci` with the `ci-<host>` variant, and the `GIT_CRYPT_KEY` secret deleted again. The first `build.yml` run had failed in the unlock step, which is now gone entirely.
 
+9. Verified the whole pipeline on `main`. `build.yml` run 35069655787: `manuel-darwin` 25m35s, `manuel` 28m20s, both success, both closures pushed. Spot checks against `https://thebromo.cachix.org`: the two `home-manager-generation` roots and `tree-sitter-cli` answer `200`, the `TX-02` path answers `404` — the licensed font is not in the public cache.
+
 Open:
 
-9. Watch the first `build.yml` run through to a cache push.
 10. Mark `secrets-guard`, `checks` and `build-own` as required status checks for `main`.
 11. Expose the AppImage derivations as `perSystem.packages.*` and add them to `build-own` (§1), so their hashes are verified without a full closure build.
 12. Clean up: remove the `zhaw`/`hexagon` targets from `makefile` and the four-host claim in `CLAUDE.md`, or restore the missing host modules.
