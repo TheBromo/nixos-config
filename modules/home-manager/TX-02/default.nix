@@ -1,7 +1,16 @@
+# The font source lives in secrets/, git-crypt encrypted, because its licence
+# does not permit publication and this repository is public. CI therefore never
+# decrypts it: `custom.tx02.enable = false` drops the font from the closure that
+# .github/workflows/build.yml builds and pushes to the public cache.
 { self, ... }:
 {
   flake.homeModules.TX-02 =
-    { pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       tx-02 = pkgs.stdenvNoCC.mkDerivation {
         name = "TX-02";
@@ -20,8 +29,14 @@
       };
     in
     {
-      home.packages = [
-        tx-02
-      ];
+      options.custom.tx02.enable = lib.mkEnableOption "the TX-02 font from secrets/" // {
+        default = true;
+      };
+
+      config = lib.mkIf config.custom.tx02.enable {
+        home.packages = [
+          tx-02
+        ];
+      };
     };
 }
