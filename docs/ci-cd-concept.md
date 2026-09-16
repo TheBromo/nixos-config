@@ -104,8 +104,11 @@ Steps per matrix entry, `fail-fast: false` so one broken host does not hide the 
 
 1. Free disk space — `jlumbroso/free-disk-space` on Linux, pruning the Android SDK, extra Xcode versions and simulator caches on macOS. Required because of the 8.6 GiB closure.
 2. Install Nix with the extra substituters `thebromo`, `nix-community` and `ghostty`, so Neovim nightly, Ghostty and herdr are downloaded instead of compiled.
-3. `cachix/cachix-action` with cache `thebromo` and `CACHIX_AUTH_TOKEN`; its post step pushes everything the job built.
-4. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
+3. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
+4. Verify: `nix path-info -r` over the result must not match `-claude-code-[0-9]`, `-TX-02$` or `-1password-cli-[0-9]`.
+5. Push exactly that closure: `nix run --inputs-from . nixpkgs#cachix -- push thebromo "$out"`, with `CACHIX_AUTH_TOKEN` in the environment.
+
+`cachix/cachix-action` is deliberately **not** used. Its post step pushes whatever ended up in the store, and GitHub runs post steps even after a step has failed — so a failing verification would not have prevented the upload. Building first, verifying, then pushing the one approved path makes the gate real. (Raised as a P1 in the review of PR #12.)
 
 ### The `ci-<host>` variant
 
@@ -126,7 +129,13 @@ Two reasons, and the second one is the important one:
 
 `modules/home-manager/non-redistributable` also asserts that, whenever the flag is `false`, no `home.packages` entry has a `meta.license` with `redistributable = false`. That assertion is not decoration: it caught `1password-cli` on its first evaluation, which had already been pushed to the public cache by the first `build.yml` run.
 
-The mechanism has to be "never enters the store", not "not in the final closure": cachix pushes every path the job produced, substituted ones included. Measured on run 35069655787 — 363 paths pushed, 34 of them from upstream substituters. Hence `build.yml` also deliberately omits the `cache.numtide.com` substituter, and a post-build step greps the closure for the restricted names.
+Three independent layers, because each one alone has a hole:
+
+1. `custom.nonRedistributable.enable = false` keeps the paths out of the `ci-<host>` closure, and the assertion in `modules/home-manager/non-redistributable` fails evaluation if a `home.packages` entry slips through. It only sees top-level entries, not transitive dependencies.
+2. `build.yml` pushes exactly the one verified store path instead of letting `cachix-action` push the store diff, so a *transitive* restricted path is caught by the `nix path-info -r` grep before anything is uploaded.
+3. `build.yml` omits the `cache.numtide.com` substituter, so the restricted agent binaries cannot even be fetched into that job's store.
+
+Layer 3 matters because the old `cachix-action` setup pushed every path the job produced, substituted ones included — measured on run 35069655787: 363 paths pushed, 34 of them from upstream substituters.
 
 Verified locally: the `ci-manuel-darwin` closure has 0 references to `TX-02`, the full `home-manuel-darwin` closure has 1; both are 8.6 GiB, so nothing else changes. No workflow decrypts anything, and the `GIT_CRYPT_KEY` secret has been deleted from the repository again.
 

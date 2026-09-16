@@ -80,15 +80,14 @@ jobs:
             # job pushes nothing.
             extra-substituters = https://thebromo.cachix.org https://nix-community.cachix.org https://ghostty.cachix.org
             extra-trusted-public-keys = thebromo.cachix.org-1:AeGbfUhNKrV+Zccnn038ZlJC0TKB8q8ijmps8LlA9M8= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns=
-      # Pushes everything this job builds to the cache, so a local `make home`
-      # or `make darwin` downloads instead of compiling.
-      - uses: cachix/cachix-action@38b082610b782e7e93e209c35fd730d399dee866 # v17
-        with:
-          name: thebromo
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       # ci-<host> is the host closure without anything whose licence forbids
       # republication: the git-crypt encrypted font (CI holds no key anyway), the
       # claude-code binary and 1password-cli.
+      #
+      # Note the ordering: build, verify, then push. cachix/cachix-action is
+      # deliberately not used, because its post step pushes whatever landed in
+      # the store and GitHub runs post steps even after a step failed — so a
+      # failing verification would not have stopped the upload.
       - name: Build activation package
         id: build
         run: |
@@ -102,7 +101,16 @@ jobs:
           bad=$(nix path-info -r "${{ steps.build.outputs.out }}" \
             | grep -E -- '-claude-code-[0-9]|-TX-02$|-1password-cli-[0-9]' || true)
           if [ -n "$bad" ]; then
-            echo "::error::licence-restricted path in the closure that gets pushed:"
+            echo "::error::licence-restricted path in the verified closure:"
             echo "$bad"
             exit 1
           fi
+      # Pushes exactly the closure verified above, so a local `make home` or
+      # `make darwin` downloads instead of compiling. --inputs-from . pins cachix
+      # to the nixpkgs in flake.lock.
+      - name: Push the verified closure
+        env:
+          CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+        run: |
+          nix run --inputs-from . nixpkgs#cachix -- \
+            push thebromo "${{ steps.build.outputs.out }}"
