@@ -1,0 +1,79 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  # Runs first and without any secret: the repository is public, so a plaintext
+  # file under secrets/ must never reach a commit.
+  secrets-guard:
+    name: secrets stay encrypted
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Verify git-crypt headers
+        run: |
+          status=0
+          # The git-crypt key itself must never be committed, not even encrypted.
+          if [ -n "$(git ls-files secret-key)" ]; then
+            echo "::error file=secret-key::the git-crypt key is committed"
+            status=1
+          fi
+          while IFS= read -r -d '' file; do
+            if [ "$(head -c 9 "$file" | tr -d '\0')" != "GITCRYPT" ]; then
+              echo "::error file=$file::file is not git-crypt encrypted"
+              status=1
+            fi
+          done < <(git ls-files -z secrets)
+          if [ "$status" -eq 0 ]; then
+            echo "checked $(git ls-files secrets | wc -l) encrypted files"
+          fi
+          exit $status
+  # Evaluates the whole flake for every system, including the Darwin host, and
+  # builds the two cheap lint checks. --no-build is deliberate: building the
+  # host closures would mean ~8.6 GiB per host, which belongs in build.yml.
+  checks:
+    name: lint and evaluate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://thebromo.cachix.org https://nix-community.cachix.org
+            extra-trusted-public-keys = thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+      - name: Evaluate all outputs
+        run: nix flake check --no-build --all-systems --show-trace
+      - name: Formatting
+        run: nix build .#checks.x86_64-linux.treefmt --no-link --print-build-logs
+      - name: statix and deadnix
+        run: nix build .#checks.x86_64-linux.lint --no-link --print-build-logs
+  lock:
+    name: flake.lock health
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: DeterminateSystems/flake-checker-action@786422608c7bded2bbc9741ad9f91356842bf520 # v14
+        with:
+          fail-mode: false
+  # Builds the derivations that no upstream cache can supply, because their
+  # source or hash is defined in this repository. These are the ones that break
+  # after a version bump with a stale hash.
+  build-own:
+    name: build own packages
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+      - name: tree-sitter-cli
+        run: nix build .#packages.x86_64-linux.tree-sitter-cli --no-link --print-build-logs

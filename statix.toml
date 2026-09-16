@@ -1,0 +1,8 @@
+disabled = [
+  # `{ ... }:` is the idiomatic signature for a module, even when no argument is
+  # used. Rewriting it to `_:` would hide that the file is a module.
+  "empty_pattern",
+  # Assigning `programs.a` and `programs.b` in separate lines keeps related
+  # options next to each other; the module system merges them anyway.
+  "repeated_keys",
+]

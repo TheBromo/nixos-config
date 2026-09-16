@@ -7,6 +7,7 @@
 
       imports = [
         (self.lib.gitModule { })
+        self.homeModules.nixSettings
         self.homeModules.darwinTools
         self.homeModules.devtools
         self.homeModules.console

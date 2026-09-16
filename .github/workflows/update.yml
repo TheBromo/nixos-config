@@ -1,0 +1,70 @@
+name: Update flake inputs
+on:
+  schedule:
+    # Mondays 04:00 UTC, before the nightly build.yml run of the same week
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    name: open update pull request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: cachix/install-nix-action@13d8dd58da0234aa297dedd986986ccb8e7f3e24 # v31.11.1
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-substituters = https://thebromo.cachix.org https://nix-community.cachix.org
+            extra-trusted-public-keys = thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+      - name: Update flake.lock
+        id: update
+        run: |
+          nix flake update 2>&1 | tee "$RUNNER_TEMP/update.log"
+          if git diff --quiet -- flake.lock; then
+            echo "flake.lock unchanged"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      # A pull request opened with GITHUB_TOKEN does not trigger ci.yml, so the
+      # same checks run here. Building the host closures stays in build.yml.
+      - name: Evaluate and lint
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          nix flake check --no-build --all-systems --show-trace
+          nix build .#checks.x86_64-linux.treefmt .#checks.x86_64-linux.lint \
+            --no-link --print-build-logs
+      - name: Assemble pull request body
+        if: steps.update.outputs.changed == 'true'
+        run: |
+          # the backticks below are markdown, not command substitution
+          # shellcheck disable=SC2016
+          {
+            echo 'Automated `nix flake update`.'
+            echo
+            echo '```'
+            # everything from the first "• Updated input" bullet on, which
+            # includes the old and new revision of each input
+            sed -n '/^•/,$p' "$RUNNER_TEMP/update.log" | grep . \
+              || echo 'no input revision logged'
+            echo '```'
+            echo
+            echo 'Evaluation and lint already ran in the update job, because a pull'
+            echo 'request opened by GITHUB_TOKEN does not start CI. Push an empty'
+            echo 'commit to this branch to get the CI run recorded on the pull request.'
+          } > "$RUNNER_TEMP/body.md"
+      - if: steps.update.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          branch: chore/update-flake-inputs
+          delete-branch: true
+          add-paths: flake.lock
+          commit-message: "chore(deps): update flake inputs"
+          title: "chore(deps): update flake inputs"
+          body-path: ${{ runner.temp }}/body.md
