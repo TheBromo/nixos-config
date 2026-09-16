@@ -80,18 +80,10 @@ jobs:
         with:
           name: thebromo
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      # The TX-02 font is built from secrets/TX-02.tar.xz, which is git-crypt
-      # encrypted. From here on the workspace holds plaintext secrets: never
-      # upload an artifact and never echo a file from secrets/.
-      - name: Unlock git-crypt
-        env:
-          GIT_CRYPT_KEY: ${{ secrets.GIT_CRYPT_KEY }}
-        run: |
-          key="$RUNNER_TEMP/git-crypt.key"
-          printf '%s' "$GIT_CRYPT_KEY" | base64 -d > "$key"
-          nix run nixpkgs#git-crypt -- unlock "$key"
-          rm -f "$key"
+      # ci-<host> is the host closure without the git-crypt encrypted parts. CI
+      # holds no key, and this job pushes to a public cache, so licensed content
+      # must never enter the build.
       - name: Build activation package
         run: |
-          nix build ".#homeConfigurations.${{ matrix.host }}.activationPackage" \
+          nix build ".#packages.${{ matrix.system }}.ci-${{ matrix.host }}" \
             --no-link --print-out-paths --print-build-logs

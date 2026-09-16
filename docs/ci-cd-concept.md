@@ -13,11 +13,11 @@ These shape the design and are worth keeping in mind before changing anything.
 | `homeConfigurations` is not a standard flake output, but home-manager's `flakeModule` registers a check for it, so the installed Nix does report `homeConfigurations.<name> (build skipped)`. Relying on that alone is fragile, and it does not give the configurations a stable check name. | The configurations are additionally re-exported as `checks.<system>.home-<name>` (§2.1), which pins the names CI depends on. |
 | Cross-system *evaluation* works. Evaluating `homeConfigurations.manuel` (x86_64-linux) on an aarch64-darwin machine succeeds and returns a `.drv` path. | One cheap Linux job can evaluate *both* hosts. A macOS runner is only needed for actually *building* the Darwin closure. |
 | The closure of `manuel-darwin` is **8.6 GiB** (the Neovim module pulls in a large set of language servers, LLVM clang-tools, rust-analyzer, …). | A full closure build does not fit comfortably on a default hosted runner (~14 GiB free on macOS, ~21 GiB on Ubuntu after cleanup). Full builds need a disk-cleanup step and should not run on every push. |
-| `modules/home-manager/TX-02/default.nix` uses `src = "${self}/secrets/TX-02.tar.xz"`, and `secrets/**` is git-crypt encrypted. | Without the git-crypt key, the *evaluation* still succeeds but the *build* fails while unpacking. Full builds require a `GIT_CRYPT_KEY` secret. Pull requests from forks never get secrets, so they must stay eval-only. |
+| `modules/home-manager/TX-02/default.nix` uses `src = "${self}/secrets/TX-02.tar.xz"`. The content under `secrets/**` is git-crypt encrypted because its licence forbids publication and this repository is public. | CI never gets the key. The font is behind `custom.tx02.enable` (default `true`), and CI builds the `ci-<host>` variant with it set to `false`. Evaluation is unaffected — it never reads the file content — so the encrypted tree still evaluates fine. |
 | Own derivations that upstream caches cannot provide: `packages.tree-sitter-cli` (Rust build with a custom `src`), the `TX-02` font, and the AppImage modules (`helium`, `t3code`, `headlamp`). | These are the parts that are actually *our* code and worth building on every PR — they are small compared to the full closure. |
-| Only `tree-sitter-cli` is exposed as a flake package. `TX-02` and the AppImage derivations are defined inside module `let` bindings, and no current host imports `helium`, `t3code`, `headlamp`, or `slack`. | To build them in CI, they must first be exposed as `perSystem.packages.*` (the module then consumes `self.packages.<system>.<name>`, exactly like `nvim-config` already does with `tree-sitter-cli`). Without that refactor, nothing verifies their hashes — and the unused AppImage modules are never built at all. |
+| Only `tree-sitter-cli` is exposed as a flake package. The AppImage derivations are defined inside module `let` bindings, and no current host imports `helium`, `t3code`, `headlamp`, or `slack`. | To build them in CI, they must first be exposed as `perSystem.packages.*` (the module then consumes `self.packages.<system>.<name>`, exactly like `nvim-config` already does with `tree-sitter-cli`). Without that refactor, nothing verifies their hashes — and the unused AppImage modules are never built at all. `TX-02` stays out of CI on purpose, see the row above. |
 | Inputs `neovim-nightly-overlay`, `ghostty`, and `herdr` build from source unless their upstream binary caches are configured. | Add the `nix-community` and `ghostty` substituters to the CI Nix config, otherwise a full build compiles Zig and Rust from scratch. |
-| The repository is public and git-crypt protected. | A guard job must verify that everything under `secrets/**` is still encrypted in the commit, *before* any unlock step. Never upload the workspace as an artifact after unlocking. |
+| The repository is public and git-crypt protected. | A guard job verifies that everything under `secrets/**` is still encrypted in the commit. No workflow ever decrypts, and no workflow holds the key. |
 | `makefile` still has `zhaw` and `hexagon` targets, but `modules/hosts/` only contains `manuel` and `manuel-darwin`. `CLAUDE.md` documents four hosts. | The host list must come from one place. Deriving the CI matrix from `nix eval .#homeConfigurations --apply builtins.attrNames` keeps CI correct automatically and makes the stale targets visible. |
 
 ## 2. Repository-side prerequisites (implemented)
@@ -78,7 +78,7 @@ Fast feedback, no secrets, four parallel jobs on `ubuntu-latest`. `permissions: 
 1. **`secrets-guard`** — asserts that every tracked path under `secrets/` starts with the magic bytes `\0GITCRYPT`, and that `secret-key` (the git-crypt key itself) is not tracked at all. Runs without any secret and needs no Nix. Verified both ways against a keyless clone: 56 encrypted files pass, a planted plaintext file fails.
 2. **`checks`** — `nix flake check --no-build --all-systems --show-trace`, then `nix build` of `checks.x86_64-linux.treefmt` and `checks.x86_64-linux.lint`. The evaluation covers both hosts, including the Darwin one, thanks to cross-system evaluation. `--no-build` is deliberate: building the host closures would mean 8.6 GiB per host and belongs in Layer 2.
 3. **`lock`** — `DeterminateSystems/flake-checker-action` with `fail-mode: false`, warning when `flake.lock` drifts too far behind or points at an unsupported branch.
-4. **`build-own`** — `nix build .#packages.x86_64-linux.<name>` for every derivation that upstream caches cannot supply. Today that is only `tree-sitter-cli`; after the refactor described in §1 it also covers `TX-02` and the AppImage packages. Small, fast, and it catches the failure mode this repository actually hits: a stale AppImage or `fetchCargoVendor` hash after a version bump. Once `TX-02` is part of this job it needs the git-crypt key, so it must then be skipped for fork pull requests (`if: github.event.pull_request.head.repo.full_name == github.repository`).
+4. **`build-own`** — `nix build .#packages.x86_64-linux.<name>` for every derivation that upstream caches cannot supply. Today that is only `tree-sitter-cli`; after the refactor described in §1 it also covers the AppImage packages, but never `TX-02`. Small, fast, and it catches the failure mode this repository actually hits: a stale AppImage or `fetchCargoVendor` hash after a version bump. It reads from the `thebromo` cache but does not push, so it needs no secret and works on fork pull requests too.
 
 All actions are pinned to commit SHAs with the tag in a trailing comment.
 
@@ -105,10 +105,24 @@ Steps per matrix entry, `fail-fast: false` so one broken host does not hide the 
 1. Free disk space — `jlumbroso/free-disk-space` on Linux, pruning the Android SDK, extra Xcode versions and simulator caches on macOS. Required because of the 8.6 GiB closure.
 2. Install Nix with the extra substituters `thebromo`, `nix-community` and `ghostty`, so Neovim nightly, Ghostty and herdr are downloaded instead of compiled.
 3. `cachix/cachix-action` with cache `thebromo` and `CACHIX_AUTH_TOKEN`; its post step pushes everything the job built.
-4. Unlock git-crypt from the `GIT_CRYPT_KEY` secret (base64 of `.git/git-crypt/keys/default`), writing the key to `$RUNNER_TEMP` and deleting it right after.
-5. `nix build .#homeConfigurations.<host>.activationPackage --no-link --print-out-paths --print-build-logs`.
+4. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
 
-Note: never upload build artifacts or the workspace after step 4 — the workspace contains decrypted secrets at that point.
+### The `ci-<host>` variant
+
+`modules/ci/default.nix` derives one package per host from the host's own configuration:
+
+```nix
+(homeConfiguration.extendModules {
+  modules = [ { custom.tx02.enable = false; } ];
+}).activationPackage
+```
+
+So CI builds the identical closure except for the git-crypt encrypted font. Two reasons, and the second one is the important one:
+
+- CI has no key, so a `TX-02` build would fail.
+- The closure is pushed to a *public* Cachix cache. Building the font in CI would republish content whose licence forbids exactly that.
+
+Verified locally: the `ci-manuel-darwin` closure has 0 references to `TX-02`, the full `home-manuel-darwin` closure has 1; both are 8.6 GiB, so nothing else changes. No workflow decrypts anything, and the `GIT_CRYPT_KEY` secret has been deleted from the repository again.
 
 The consuming side is `modules/home-manager/nix-settings`, imported by both hosts: it writes the three substituters and their public keys to `~/.config/nix/nix.conf`. A daemon install only honours a user-level substituter when the user is in `trusted-users`; otherwise Nix ignores it with a warning and the switch simply builds locally as before.
 
@@ -161,23 +175,22 @@ Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:Brqme/xyjfgPo1
 | Name | Purpose | Needed by |
 | --- | --- | --- |
 | `CACHIX_AUTH_TOKEN` | write access to the `thebromo` cache. Stored in 1Password at `op://Personal/2wlifmtivuwbnvxvaf2gkwrqye/credential` | Layer 2 |
-| `GIT_CRYPT_KEY` | base64 of `.git/git-crypt/keys/default`, for the `TX-02` font source | Layer 2, and Layer 1 `build-own` once `TX-02` is part of it |
 
-Set them with:
+That is the only secret. Set it with:
 
 ```bash
 op read "op://Personal/2wlifmtivuwbnvxvaf2gkwrqye/credential" \
   | gh secret set CACHIX_AUTH_TOKEN --repo TheBromo/nixos-config
-base64 -i .git/git-crypt/keys/default \
-  | gh secret set GIT_CRYPT_KEY --repo TheBromo/nixos-config
 ```
+
+The git-crypt key is deliberately *not* in the Actions secret store: in a public repository anyone who can push a workflow could read it, and no workflow needs it (see the `ci-<host>` variant in §3).
 
 Notes:
 
 - `GITHUB_TOKEN` with `contents: write` and `pull-requests: write` is enough for Layer 3; no PAT is needed unless the update PR should itself trigger workflows.
 - Both workflows use `permissions: contents: read` and a `concurrency` group, so superseded pushes do not keep two 8.6 GiB builds alive.
 - Every action is pinned to a commit SHA — this repository holds the keys to the personal environment.
-- `GIT_CRYPT_KEY` is the symmetric key for *all* files under `secrets/`. It lives in the Actions secret store of a public repository, so anyone who can push a workflow to `main` can read it. That is the price for building `TX-02` in CI; the alternative is to drop the `TX-02` module from the CI build and accept an untested font derivation.
+- Consequence of keeping the key out of CI: the `TX-02` derivation is never built by any workflow. It is covered only by a local `nix flake check` or an actual switch.
 
 ## 5. Alternative: Cachix vs. GitHub Actions cache
 
@@ -198,23 +211,24 @@ Done:
 3. Added `ci.yml` (Layer 1).
 4. Added `build.yml` (Layer 2) against the existing `thebromo` cache, plus `modules/home-manager/nix-settings` on both hosts so the laptops consume it.
 
-5. Set the two Actions secrets (§4).
-6. Added `update.yml` (Layer 3), without auto-merge.
+5. Set `CACHIX_AUTH_TOKEN` (§4) and added `manuel` to `trusted-users`, so the substituters from `nix-settings` are actually honoured.
+6. Added `update.yml` (Layer 3), without auto-merge. Verified: the dispatched run updated 8 inputs, passed the in-job gates against the new lock, and opened PR #9.
+7. Merged the pipeline to `main`. `ci.yml` green there (four jobs, 3m34s).
+8. Removed the git-crypt dependency from CI: `custom.tx02.enable`, `modules/ci` with the `ci-<host>` variant, and the `GIT_CRYPT_KEY` secret deleted again. The first `build.yml` run had failed in the unlock step, which is now gone entirely.
 
 Open:
 
-7. Add `manuel` to `trusted-users` (§ Layer 3a) — until then the cache is written but not read locally.
-8. Enable *Allow GitHub Actions to create and approve pull requests* in the repository settings, for Layer 3.
-9. Let the workflows run once (`ci.yml` on a throwaway pull request, `build.yml` and `update.yml` via `workflow_dispatch`), then mark `secrets-guard`, `checks` and `build-own` as required status checks for `main`.
-10. Expose `TX-02` and the AppImage derivations as `perSystem.packages.*` and add them to `build-own` (§1), so their hashes are verified without a full closure build.
-11. Clean up: remove the `zhaw`/`hexagon` targets from `makefile` and the four-host claim in `CLAUDE.md`, or restore the missing host modules.
+9. Watch the first `build.yml` run through to a cache push.
+10. Mark `secrets-guard`, `checks` and `build-own` as required status checks for `main`.
+11. Expose the AppImage derivations as `perSystem.packages.*` and add them to `build-own` (§1), so their hashes are verified without a full closure build.
+12. Clean up: remove the `zhaw`/`hexagon` targets from `makefile` and the four-host claim in `CLAUDE.md`, or restore the missing host modules.
 
 ## 7. What this catches — and what it does not
 
 Caught:
 
 - Nix syntax errors, unknown home-manager options, type errors — Layer 1 `checks`.
-- Stale `fetchCargoVendor` hashes today, AppImage hashes after step 5 of §6 — Layer 1 `build-own`.
+- Stale `fetchCargoVendor` hashes today, AppImage hashes after step 11 of §6 — Layer 1 `build-own`.
 - Broken flake inputs after an update — Layer 3, which runs the Layer 1 gates itself.
 - Formatting drift, dead code, Nix anti-patterns, broken workflow YAML — Layer 1 `checks`.
 - Accidentally committed plaintext secrets, or a committed git-crypt key — Layer 1 `secrets-guard`.
@@ -222,6 +236,7 @@ Caught:
 
 Not caught:
 
+- The `TX-02` font derivation, on purpose: its source is encrypted and must not land in a public cache.
 - Runtime behaviour after activation (does the shell actually start, is the font really visible). CI builds a closure, it does not use a desktop.
 - Anything about the `nvim-config` activation hook, which clones an external repository at switch time.
 - nixGL-wrapped GUI applications; they need a real GPU, and no host currently imports them.
