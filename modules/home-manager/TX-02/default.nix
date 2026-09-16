@@ -18,6 +18,12 @@
         src = "${self}/secrets/TX-02.tar.xz";
         sourceRoot = ".";
 
+        # Makes the font visible to the assertion in
+        # modules/home-manager/non-redistributable.
+        meta.license = lib.licenses.unfree // {
+          redistributable = false;
+        };
+
         installPhase = ''
           runHook preInstall
 
@@ -30,7 +36,7 @@
     in
     {
       options.custom.tx02.enable = lib.mkEnableOption "the TX-02 font from secrets/" // {
-        default = true;
+        default = config.custom.nonRedistributable.enable;
       };
 
       config = lib.mkIf config.custom.tx02.enable {

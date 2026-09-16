@@ -7,6 +7,7 @@
 
       imports = [
         (self.lib.gitModule { signing = false; })
+        self.homeModules.nonRedistributable
         self.homeModules.nixSettings
         self.homeModules.devtools
         self.homeModules.console

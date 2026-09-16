@@ -113,14 +113,20 @@ Steps per matrix entry, `fail-fast: false` so one broken host does not hide the 
 
 ```nix
 (homeConfiguration.extendModules {
-  modules = [ { custom.tx02.enable = false; } ];
+  modules = [ { custom.nonRedistributable.enable = false; } ];
 }).activationPackage
 ```
 
-So CI builds the identical closure except for the git-crypt encrypted font. Two reasons, and the second one is the important one:
+So CI builds the identical closure minus everything whose licence forbids republication. Three things hang off that one flag today: the git-crypt encrypted `TX-02` font, the `claude-code` binary from the `llm-agents.nix` input, and `1password-cli`.
 
-- CI has no key, so a `TX-02` build would fail.
-- The closure is pushed to a *public* Cachix cache. Building the font in CI would republish content whose licence forbids exactly that.
+Two reasons, and the second one is the important one:
+
+- CI has no git-crypt key, so a `TX-02` build would fail.
+- The closure is pushed to a *public* Cachix cache. Pushing any of the three would republish content whose licence forbids exactly that.
+
+`modules/home-manager/non-redistributable` also asserts that, whenever the flag is `false`, no `home.packages` entry has a `meta.license` with `redistributable = false`. That assertion is not decoration: it caught `1password-cli` on its first evaluation, which had already been pushed to the public cache by the first `build.yml` run.
+
+The mechanism has to be "never enters the store", not "not in the final closure": cachix pushes every path the job produced, substituted ones included. Measured on run 35069655787 — 363 paths pushed, 34 of them from upstream substituters. Hence `build.yml` also deliberately omits the `cache.numtide.com` substituter, and a post-build step greps the closure for the restricted names.
 
 Verified locally: the `ci-manuel-darwin` closure has 0 references to `TX-02`, the full `home-manuel-darwin` closure has 1; both are 8.6 GiB, so nothing else changes. No workflow decrypts anything, and the `GIT_CRYPT_KEY` secret has been deleted from the repository again.
 
@@ -171,6 +177,8 @@ On the Linux host the same applies through the system configuration's `nix.setti
 ## 4. Secrets and settings
 
 Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:Brqme/xyjfgPo1plbGcsdKKPTTJy4i8xnkZ4AvN2Xps=`). The name is hardcoded in `build.yml`, `ci.yml` and `modules/home-manager/nix-settings`; only the write token is a secret.
+
+The `llm-agents.nix` input brings a second cache, `https://cache.numtide.com` (key `niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=`), which is why that input has no `nixpkgs.follows`: its packages are only substitutable when built against upstream's own nixpkgs. It is configured in `modules/home-manager/nix-settings` and in `ci.yml`'s `build-own` job, and deliberately **not** in `build.yml`. The three `extra_nix_config` blocks are duplicated on purpose — the divergence is the safety property, so do not factor them into a shared action.
 
 | Name | Purpose | Needed by |
 | --- | --- | --- |
@@ -237,7 +245,7 @@ Caught:
 
 Not caught:
 
-- The `TX-02` font derivation, on purpose: its source is encrypted and must not land in a public cache.
+- The `TX-02` font derivation and `1password-cli`, on purpose: they must not land in a public cache. `claude-code` is in the same category but `ci.yml`'s `build-own` realises it — on Linux only, since that job runs on `ubuntu-latest`.
 - Runtime behaviour after activation (does the shell actually start, is the font really visible). CI builds a closure, it does not use a desktop.
 - Anything about the `nvim-config` activation hook, which clones an external repository at switch time.
 - nixGL-wrapped GUI applications; they need a real GPU, and no host currently imports them.

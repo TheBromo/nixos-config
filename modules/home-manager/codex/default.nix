@@ -135,13 +135,13 @@
     in
     {
       home = {
-        packages = lib.optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.codex ];
+        # nixpkgs codex lists aarch64-darwin in meta.platforms; the former
+        # isLinux gate was about the native darwin installer, not the platform.
+        packages = [ pkgs.codex ];
         activation = {
-          installCodexConfig = lib.mkIf pkgs.stdenv.hostPlatform.isLinux (
-            lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-              ${lib.getExe installCodexConfig}
-            ''
-          );
+          installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+            ${lib.getExe installCodexConfig}
+          '';
           installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             mkdir -p "$HOME/.codex/skills"
             cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
