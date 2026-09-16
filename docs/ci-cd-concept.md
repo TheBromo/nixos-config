@@ -180,6 +180,8 @@ Cachix cache: `thebromo` (public, read key `thebromo.cachix.org-1:Brqme/xyjfgPo1
 
 The `llm-agents.nix` input brings a second cache, `https://cache.numtide.com` (key `niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=`), which is why that input has no `nixpkgs.follows`: its packages are only substitutable when built against upstream's own nixpkgs. It is configured in `modules/home-manager/nix-settings` and in `ci.yml`'s `build-own` job, and deliberately **not** in `build.yml`. The three `extra_nix_config` blocks are duplicated on purpose — the divergence is the safety property, so do not factor them into a shared action.
 
+Price of that omission: the one unrestricted `llm-agents` package in the host closure, `pi`, is an npm build, so `build.yml` compiles it instead of substituting it — measured at roughly 30 s per host. `pi` is also not bit-reproducible (`nix build --rebuild` reports differing output), so the same store path can hold a numtide-built and a `thebromo`-built copy. Both are valid builds of the same input-addressed derivation, so this is a curiosity rather than a problem.
+
 | Name | Purpose | Needed by |
 | --- | --- | --- |
 | `CACHIX_AUTH_TOKEN` | write access to the `thebromo` cache. Stored in 1Password at `op://Personal/2wlifmtivuwbnvxvaf2gkwrqye/credential` | Layer 2 |
