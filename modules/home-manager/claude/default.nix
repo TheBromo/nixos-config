@@ -95,7 +95,8 @@
             "$HOME/.local/bin/claude" \
             "$HOME/.local/share/claude" \
             "$HOME/.local/bin/codex" \
-            "$HOME/.codex/packages"
+            "$HOME/.codex/packages" \
+            "$HOME/.opencode/bin"
           do
             if [[ -e "$stray" ]]; then
               echo "warning: $stray is left over from a native installer." >&2

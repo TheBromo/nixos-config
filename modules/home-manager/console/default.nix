@@ -53,7 +53,6 @@
 
       home = {
         sessionPath = lib.mkBefore [
-          "$HOME/.opencode/bin"
           "$HOME/.local/bin"
         ];
         sessionVariables = {

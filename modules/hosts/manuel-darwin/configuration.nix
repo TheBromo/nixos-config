@@ -23,6 +23,7 @@
         self.homeModules.tmux
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.opencode
         self.homeModules.herdr
         self.homeModules.info
         self.homeModules.dvt

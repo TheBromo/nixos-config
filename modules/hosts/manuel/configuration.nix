@@ -30,6 +30,7 @@
         self.homeModules.TX-02
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.opencode
         self.homeModules.herdr
       ];
 

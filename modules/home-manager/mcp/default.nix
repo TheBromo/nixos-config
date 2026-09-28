@@ -24,6 +24,7 @@ _: {
           };
         };
         claude-code.enableMcpIntegration = true;
+        opencode.enableMcpIntegration = true;
       };
     };
 }
