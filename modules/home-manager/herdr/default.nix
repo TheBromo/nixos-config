@@ -29,6 +29,7 @@ _: {
       };
       toml = pkgs.formats.toml { };
       herdrConfig = toml.generate "herdr-config.toml" {
+        onboarding = false;
         experimental.kitty_graphics = true;
         keys = {
           command = [

@@ -9,7 +9,7 @@
     }:
     let
       baseSettings = {
-        model = "gpt-6-astra";
+        model = "gpt-6.1-sol";
         model_reasoning_effort = "medium";
         approval_policy = "never";
         sandbox_mode = "danger-full-access";
@@ -29,13 +29,9 @@
           shell_snapshot = true;
         };
 
+        # Caveman is installed as skills plus AGENTS.md (see the caveman
+        # module), not as a Codex plugin.
         marketplaces = {
-          caveman-repo = {
-            last_updated = "2026-04-24T14:28:50Z";
-            last_revision = "84cc3c14fa1e10182adaced856e003406ccd250d";
-            source_type = "git";
-            source = "https://github.com/JuliusBrussee/caveman.git";
-          };
           openai-bundled = {
             last_updated = "2026-04-24T14:32:32Z";
             source_type = "local";
@@ -74,7 +70,6 @@
         };
 
         plugins = {
-          "caveman@caveman-repo".enabled = true;
           "browser-use@openai-bundled".enabled = true;
         };
       };
@@ -121,7 +116,7 @@
             # The dollar-prefixed names below belong to yq, not the shell.
             # shellcheck disable=SC2016
             ${lib.getExe pkgs.yq-go} eval-all --input-format toml --output-format toml \
-              'select(fileIndex == 0) as $existing | select(fileIndex == 1) as $desired | ($existing * $desired) | .mcp_servers = $desired.mcp_servers' \
+              'select(fileIndex == 0) as $existing | select(fileIndex == 1) as $desired | ($existing * $desired) | .mcp_servers = $desired.mcp_servers | del(.marketplaces."caveman-repo") | del(.plugins."caveman@caveman-repo")' \
               "$config_path" ${lib.escapeShellArg configFile} > "$temporary_file"
           else
             ${lib.getExe' pkgs.coreutils "cp"} ${lib.escapeShellArg configFile} "$temporary_file"
@@ -144,15 +139,20 @@
           '';
           installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             mkdir -p "$HOME/.codex/skills"
+            rm -rf "$HOME/.codex/skills/cavecrew"
             cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.createGithubPrSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.codex/skills/"
           '';
         };
+        file.".codex/AGENTS.md".source = self.lib.cavemanRules pkgs;
       };
     };
 }

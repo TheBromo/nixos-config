@@ -26,8 +26,6 @@
           permission = "allow";
           autoupdate = false;
 
-          plugin = [ "${configDir}/plugins/caveman/plugin.js" ];
-
           mcp = {
             chrome-devtools = {
               type = "local";
@@ -46,20 +44,35 @@
         };
       };
 
+      # Not programs.opencode.context: it only accepts strings and literal
+      # paths, not a derivation. force: the caveman plugin installer left a
+      # plain AGENTS.md here.
+      xdg.configFile."opencode/AGENTS.md" = {
+        source = self.lib.cavemanRules pkgs;
+        force = true;
+      };
+
       # Never set programs.opencode.skills to a path: home-manager would link
       # ~/.config/opencode/skills, and check-link-targets would then refuse to
-      # clobber the copies made below. The caveman plugin must be a real copy
-      # too, because it finds its skills relative to its own resolved path.
+      # clobber the copies made below.
       home.activation.installOpencodeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        # Remove what the former caveman plugin install copied in. opencode
+        # loads everything under plugins/, so a stale copy would stay active.
+        rm -rf "${configDir}/plugins/caveman" "${configDir}/skills/cavecrew"
+        rm -f "${configDir}"/agents/cavecrew-{builder,investigator,reviewer}.md
+        rm -f "${configDir}"/commands/caveman{,-commit,-compress,-help,-review,-stats}.md
+
         mkdir -p "${configDir}/skills"
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "${configDir}/skills/"
+        cp -rf --no-preserve=mode ${self.lib.createGithubPrSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "${configDir}/skills/"
-        cp -rf --no-preserve=mode ${self.lib.cavemanOpencode pkgs}/. "${configDir}/"
+        cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "${configDir}/skills/"
+        cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "${configDir}/skills/"
       '';
     };
 }

@@ -34,6 +34,7 @@
         self.homeModules.TX-02
         self.homeModules.nvimConfig
         self.homeModules.zedCyberdream
+        self.homeModules.timewarrior
       ];
 
       home = {
@@ -41,8 +42,13 @@
         homeDirectory = "/Users/manuel";
         stateVersion = "24.11";
         sessionVariables = {
+          CC = "/usr/bin/cc";
           SHELL = lib.getExe pkgs.zsh;
         };
+        file.".cargo/config.toml".text = ''
+          [target.aarch64-apple-darwin]
+          linker = "/usr/bin/cc"
+        '';
       };
 
       programs.home-manager.enable = true;

@@ -31,22 +31,12 @@
         };
 
         model = "opus[1m]";
-        extraKnownMarketplaces = {
-          caveman = {
-            source = {
-              source = "github";
-              repo = "JuliusBrussee/caveman";
-            };
-          };
-        };
 
         enabledPlugins = {
           "code-review@claude-code-plugins" = true;
           "feature-dev@claude-code-plugins" = true;
           "frontend-design@claude-code-plugins" = true;
           "pr-review-toolkit@claude-code-plugins" = true;
-
-          "caveman@caveman" = true;
 
           "security-guidance@claude-code-plugins" = true;
 
@@ -76,7 +66,8 @@
           trap 'rm -f -- "$temporary_file"' EXIT
 
           if [[ -e "$config_path" ]]; then
-            ${lib.getExe pkgs.jq} -s '.[0] * .[1]' \
+            # Caveman used to be a plugin; the plain merge would keep it enabled.
+            ${lib.getExe pkgs.jq} -s '.[0] * .[1] | del(.enabledPlugins."caveman@caveman") | del(.extraKnownMarketplaces.caveman)' \
               "$config_path" ${lib.escapeShellArg settingsFile} > "$temporary_file"
           else
             ${lib.getExe' pkgs.coreutils "cp"} ${lib.escapeShellArg settingsFile} "$temporary_file"
@@ -126,6 +117,10 @@
         };
       };
 
+      # Not programs.claude-code.context: it only accepts strings and literal
+      # paths, not a derivation.
+      home.file.".claude/CLAUDE.md".source = self.lib.cavemanRules pkgs;
+
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ${lib.getExe installClaudeSettings}
       '';
@@ -141,13 +136,17 @@
       # check-link-targets would then refuse to clobber the copies made below.
       home.activation.installClaudeSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p "$HOME/.claude/skills"
+        rm -rf "$HOME/.claude/skills/cavecrew"
         cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.createGithubPrSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }

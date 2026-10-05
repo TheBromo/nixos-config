@@ -106,6 +106,13 @@
           styles.comment = "fg=#8e8d8d";
         };
         defaultKeymap = "viins";
+        # Non-interactive zsh (e.g. macOS Shortcuts, launchd, cron) only reads
+        # ~/.zshenv, so put the Nix profiles on PATH here as well.
+        envExtra = ''
+          if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+            . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+          fi
+        '';
       };
     };
 }
