@@ -76,7 +76,7 @@
     lib.mkMerge [
       { home.packages = [ pkgs.timewarrior ]; }
 
-      (lib.mkIf pkgs.stdenv.isDarwin {
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         home.packages = [ pkgs.swiftbar ];
 
         # Stable path so SwiftBar's PluginDirectory survives rebuilds.

@@ -90,6 +90,8 @@ _: {
           };
         };
         ui.agent_panel_sort = "spaces";
+        # Herdr is pinned through the flake input; skip the herdr.dev version check.
+        update.version_check = false;
       };
       installHerdrIntegrations = pkgs.writeShellApplication {
         name = "install-herdr-integrations";
