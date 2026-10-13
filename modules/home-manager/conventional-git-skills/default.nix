@@ -6,14 +6,14 @@
       commitsSrc = pkgs.fetchFromGitHub {
         owner = "dgalarza";
         repo = "claude-code-workflows";
-        rev = "df2f11ef8d990df22e7b528ca7f5c634943317b8";
-        hash = "sha256-hbip8Eg9tbkfCYTiAM40oUqd+LxLJx6MOQMN3D/zikM=";
+        rev = "464c7171f1a67aebf1527ae0f150829b66d8f784";
+        hash = "sha256-titaxsGJ/qdzM+wF4YNus7tcCiOYCX7yVljA0MWxsJA=";
       };
       branchSrc = pkgs.fetchFromGitHub {
         owner = "github";
         repo = "awesome-copilot";
-        rev = "f95f1b4c3b153984e3da2744cef395c2355d0a44";
-        hash = "sha256-E476CEZ6YkYbB2Hfe+jALg6nyBvQRTRuqzsUj5wIQrU=";
+        rev = "82701c24b99488536ca399ff4789a458b7a05db7";
+        hash = "sha256-JTjeYPsfQ+ICTSpok/1RjdNyy7D+D7IRUKd8HPmPJBw=";
       };
     in
     pkgs.runCommand "conventional-git-skills" { } ''

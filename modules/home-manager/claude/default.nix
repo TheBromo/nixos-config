@@ -17,12 +17,6 @@
         env = {
           CLAUDE_CODE_ENABLE_TELEMETRY = "1";
           BASH_DEFAULT_TIMEOUT_MS = "300000";
-
-          # Authenticate against Amazon Bedrock instead of the Anthropic API,
-          # using the ambient AWS credentials (AWS_PROFILE from the console
-          # module).
-          CLAUDE_CODE_USE_BEDROCK = "1";
-          AWS_REGION = "us-east-1";
         };
 
         permissions = {
@@ -67,7 +61,8 @@
 
           if [[ -e "$config_path" ]]; then
             # Caveman used to be a plugin; the plain merge would keep it enabled.
-            ${lib.getExe pkgs.jq} -s '.[0] * .[1] | del(.enabledPlugins."caveman@caveman") | del(.extraKnownMarketplaces.caveman)' \
+            # Remove the previous Bedrock environment overrides on activation.
+            ${lib.getExe pkgs.jq} -s '.[0] * .[1] | del(.enabledPlugins."caveman@caveman") | del(.extraKnownMarketplaces.caveman) | del(.env.CLAUDE_CODE_USE_BEDROCK, .env.AWS_REGION)' \
               "$config_path" ${lib.escapeShellArg settingsFile} > "$temporary_file"
           else
             ${lib.getExe' pkgs.coreutils "cp"} ${lib.escapeShellArg settingsFile} "$temporary_file"
@@ -117,10 +112,6 @@
         };
       };
 
-      # Not programs.claude-code.context: it only accepts strings and literal
-      # paths, not a derivation.
-      home.file.".claude/CLAUDE.md".source = self.lib.cavemanRules pkgs;
-
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ${lib.getExe installClaudeSettings}
       '';
@@ -145,6 +136,7 @@
         cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.claude/skills/"
       '';

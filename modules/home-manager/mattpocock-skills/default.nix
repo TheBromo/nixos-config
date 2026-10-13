@@ -6,29 +6,38 @@
       src = pkgs.fetchFromGitHub {
         owner = "mattpocock";
         repo = "skills";
-        rev = "6eeb81b5fcfeeb5bd531dd47ab2f9f2bbea27461";
-        hash = "sha256-6T0KwZcUIIbd6kpkQXPCnnJPVY2mEjxYjed4FjKnRAw=";
+        rev = "b0618bc436ad893b3c5e84e55fba86586d34a404";
+        hash = "sha256-1QwFBwG+gORvDvW4HM0LrZlHZKmKtWr7pUHU0MAXF2Y=";
       };
       paths = {
+        ask-matt = "engineering/ask-matt";
+        code-review = "engineering/code-review";
         codebase-design = "engineering/codebase-design";
         diagnosing-bugs = "engineering/diagnosing-bugs";
         domain-modeling = "engineering/domain-modeling";
         grill-me = "productivity/grill-me";
         grill-with-docs = "engineering/grill-with-docs";
         grilling = "productivity/grilling";
+        handoff = "productivity/handoff";
+        implement = "engineering/implement";
+        implement-spec = "engineering/implement-spec";
         improve-codebase-architecture = "engineering/improve-codebase-architecture";
+        pr = "engineering/pr";
         prototype = "engineering/prototype";
+        research = "engineering/research";
+        retro = "engineering/retro";
+        setup-matt-pocock-skills = "engineering/setup-matt-pocock-skills";
+        tdd = "engineering/tdd";
         teach = "productivity/teach";
-        to-issues = "engineering/to-issues";
-        to-prd = "engineering/to-prd";
+        to-questionnaire = "productivity/to-questionnaire";
+        to-tickets = "engineering/to-tickets";
+        to-spec = "engineering/to-spec";
         triage = "engineering/triage";
-        writing-great-skills = "productivity/writing-great-skills";
-        decision-mapping = "in-progress/decision-mapping";
+        wait-what = "productivity/wait-what";
+        wizard = "engineering/wizard";
+        writing-for-agents = "productivity/writing-for-agents";
+        wayfinder = "engineering/wayfinder";
         git-guardrails-claude-code = "misc/git-guardrails-claude-code";
-        obsidian-vault = "personal/obsidian-vault";
-        request-refactor-plan = "deprecated/request-refactor-plan";
-        resolving-merge-conflicts = "engineering/resolving-merge-conflicts";
-        review = "in-progress/review";
       };
       cps = pkgs.lib.concatStringsSep "\n" (
         pkgs.lib.mapAttrsToList (name: p: "cp -r ${src}/skills/${p} $out/${name}") paths

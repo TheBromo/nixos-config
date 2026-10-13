@@ -6,10 +6,10 @@ _: {
       ...
     }:
     let
-      version = "0.15.7.1";
+      version = "0.19.1.2";
       src = pkgs.fetchurl {
         url = "https://github.com/imputnet/helium-linux/releases/download/${version}/helium-${version}-x86_64.AppImage";
-        hash = "sha256-+zGEGfhIiZWE8mUYb3HrkoM7reFBMdfXlgw3KWT0T98=";
+        hash = "sha256-VVKaYqKprUeaynM2w+zVQjnND93Qj+5R0Am9OJnmdJ4=";
       };
       helium-unwrapped = pkgs.appimageTools.wrapType2 {
         pname = "helium";

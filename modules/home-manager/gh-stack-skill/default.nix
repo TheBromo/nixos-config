@@ -6,8 +6,8 @@
       src = pkgs.fetchFromGitHub {
         owner = "github";
         repo = "gh-stack";
-        rev = "2bd699a544a09cb5c45a013d03416e0894b0454e";
-        hash = "sha256-jwfqiCnCOOW0AKA52hbgvCCoLzfFX+QfM+vXABkzZgw=";
+        rev = "fc2b03d34528917574b41d4d749a477263a6afc5";
+        hash = "sha256-/TpZwsIvLczKzqCU+Ez/TGeGsXegUHSoQdXo/nLhC/o=";
       };
     in
     pkgs.runCommand "gh-stack-skill" { } ''

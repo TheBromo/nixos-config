@@ -6,8 +6,8 @@
       src = pkgs.fetchFromGitHub {
         owner = "anthropics";
         repo = "claude-code";
-        rev = "e62465d553ecbf1697219ffbb3c11b4fef14d5bf";
-        hash = "sha256-WmB2m1ZRmV8eB4iu+LNY7q5y2r/ecOR8WQzs/umhR3Y=";
+        rev = "e47cc82bdbd27b5f799acd5b05fd0c29d33bb48c";
+        hash = "sha256-sjF2i7gu2cDCz1jCLpvQeoV2VCNqpkKETZutQeW1DPo=";
       };
     in
     pkgs.runCommand "frontend-design-skill" { } ''

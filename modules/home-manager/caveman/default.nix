@@ -11,8 +11,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "JuliusBrussee";
       repo = "caveman";
-      rev = "2fd153c67988e980fb0b2455c90832159a6a5a25";
-      hash = "sha256-KFfU8LmNajKLZcOXOFisn4beTcg2YL+rpasr39UgSZE=";
+      rev = "2e08b9177c07bb7249a8a2d1a6758e5db281d002";
+      hash = "sha256-przOot/S0VLw2aP3tOdxF27mZHMp0NQhyTls0eDAjjs=";
     };
 
   # cavecrew is left out: it only delegates to the cavecrew-* subagents,
@@ -36,13 +36,4 @@ in
       done
     '';
 
-  flake.lib.cavemanRules =
-    pkgs:
-    pkgs.runCommand "caveman-rules.md" { } ''
-      {
-        echo '<!-- caveman-begin -->'
-        cat ${src pkgs}/src/rules/caveman-activate.md
-        echo '<!-- caveman-end -->'
-      } > $out
-    '';
 }

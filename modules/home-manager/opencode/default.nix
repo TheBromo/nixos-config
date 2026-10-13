@@ -44,14 +44,6 @@
         };
       };
 
-      # Not programs.opencode.context: it only accepts strings and literal
-      # paths, not a derivation. force: the caveman plugin installer left a
-      # plain AGENTS.md here.
-      xdg.configFile."opencode/AGENTS.md" = {
-        source = self.lib.cavemanRules pkgs;
-        force = true;
-      };
-
       # Never set programs.opencode.skills to a path: home-manager would link
       # ~/.config/opencode/skills, and check-link-targets would then refuse to
       # clobber the copies made below.
@@ -71,6 +63,7 @@
         cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "${configDir}/skills/"
+        cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "${configDir}/skills/"
       '';
