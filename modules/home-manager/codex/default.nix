@@ -149,6 +149,7 @@
             cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.deployMockupSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.codex/skills/"
           '';

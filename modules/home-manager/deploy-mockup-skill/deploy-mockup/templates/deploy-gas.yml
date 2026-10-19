@@ -1,0 +1,46 @@
+name: Deploy branch to Apps Script
+# Every branch gets its own permanent web app URL (see DEPLOY.md).
+# Pushes deploy the branch; deleting a branch archives its deployment.
+on:
+  push:
+    branches: ["**"]
+  delete:
+# All runs share one Apps Script project: push → version → deploy must not interleave.
+concurrency:
+  group: google-apps-script-deployment
+  cancel-in-progress: false
+jobs:
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: clasp credentials
+        run: printf '%s' "$CLASPRC_JSON" > ~/.clasprc.json
+        env:
+          CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+      - run: npm run deploy:gas
+  archive:
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - name: clasp credentials
+        run: printf '%s' "$CLASPRC_JSON" > ~/.clasprc.json
+        env:
+          CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+      - run: node scripts/cleanup-gas.mjs "$BRANCH"
+        env:
+          BRANCH: ${{ github.event.ref }}
