@@ -98,12 +98,12 @@ Pushing first and debugging remotely is slow, because every push costs a version
 
 ### 4. Choose who can open the URLs
 
-Honor the user's existing access choice; if none is specified, ask while preparing the local build and keep `MYSELF` until they choose.
+Honor the user's existing access choice; if none is specified, default to `DOMAIN` so users in their Workspace domain can open the URLs. Use this default without asking for an access choice.
 
 `webapp.access` in `gas/appsscript.json` takes one of:
 
-- `MYSELF`: the default, and the safest;
-- `DOMAIN`: the user's Workspace domain;
+- `DOMAIN`: the default, the user's Workspace domain;
+- `MYSELF`: only the deploying user;
 - `ANYONE`: any Google account;
 - `ANYONE_ANONYMOUS`: anyone with the link.
 
@@ -173,6 +173,6 @@ Tell the user:
 - the production URL;
 - which deploy paths were proven (create, then update with the same URL) and which weren't (a feature branch, CI);
 - the access setting in effect;
-- what's still needed from them: the access choice, the CI secret, a git remote.
+- what's still needed from them, such as the CI secret or a git remote.
 
 For provider behavior or changed CLI versions, check the primary references: [Apps Script deployments](https://developers.google.com/apps-script/concepts/deployments), [web app access](https://developers.google.com/apps-script/manifest/web-app-api-executable), [version limits](https://developers.google.com/apps-script/guides/versions), [clasp](https://github.com/google/clasp), and [GitHub concurrency](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).

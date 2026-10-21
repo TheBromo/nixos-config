@@ -1,0 +1,81 @@
+<div id="context-allocation">
+  <style>
+    #context-allocation { color: var(--foreground); }
+    #context-allocation .cw-header { padding-right: 90px; margin-bottom: 20px; }
+    #context-allocation .cw-map { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 24px; }
+    #context-allocation .cw-group { border-top: 1px solid var(--border); padding-top: 12px; min-width: 0; }
+    #context-allocation .cw-list { display: grid; gap: 8px; margin-top: 12px; }
+    #context-allocation .cw-item { display: grid; grid-template-columns: 6px minmax(0, 1fr); gap: 12px; align-items: stretch; }
+    #context-allocation .cw-mark { background: color-mix(in srgb, var(--viz-series-1) 55%, transparent); }
+    #context-allocation .cw-generated .cw-mark { background: color-mix(in srgb, var(--viz-series-2) 55%, transparent); }
+    #context-allocation .cw-remaining { margin-top: 24px; padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    #context-allocation .cw-detail { margin-top: 16px; min-height: 3em; overflow-wrap: anywhere; }
+    #context-allocation .cw-footer { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+    @media (max-width: 500px) { #context-allocation .cw-map { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+  <div class="cw-header">
+    <h2>One shared context budget</h2>
+    <span class="text-small text-muted">This session · schematic · token counts unavailable</span>
+  </div>
+  <div class="cw-map" role="group" aria-label="Context categories. Areas do not represent token proportions or message order.">
+    <section class="cw-group" aria-labelledby="cw-input">
+      <h3 id="cw-input">Input already supplied</h3>
+      <div class="cw-list">
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="rules" aria-pressed="true">System &amp; developer instructions</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="tools" aria-pressed="false">Tool definitions</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="catalog" aria-pressed="false">Skill catalog</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="environment" aria-pressed="false">Environment &amp; user request</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="history" aria-pressed="false">Conversation history</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="results" aria-pressed="false">Tool results &amp; opened content</button></div>
+      </div>
+    </section>
+    <section class="cw-group cw-generated" aria-labelledby="cw-generation">
+      <h3 id="cw-generation">Generation</h3>
+      <div class="cw-list">
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="reasoning" aria-pressed="false">Reasoning tokens</button></div>
+        <div class="cw-item"><span class="cw-mark" aria-hidden="true"></span><button class="btn" type="button" data-part="answer" aria-pressed="false">Answer &amp; tool calls</button></div>
+      </div>
+      <div class="cw-remaining">
+        <span>Remaining capacity</span><br>
+        <span class="text-small text-muted">Unknown for this session</span>
+      </div>
+    </section>
+  </div>
+  <div class="cw-detail" aria-live="polite" id="cw-detail">Instructions: persistent behavioral setup; exact token share unavailable.</div>
+  <div class="cw-footer text-small text-muted">
+    <span>Categories are analytical groupings, not fixed partitions.</span>
+    <span>Repository files enter context when read.</span>
+  </div>
+</div>
+<script>
+(() => {
+  const root = document.getElementById('context-allocation');
+  const detail = root.querySelector('#cw-detail');
+  const buttons = [...root.querySelectorAll('[data-part]')];
+  const descriptions = {
+    rules: 'Instructions: persistent behavioral setup; exact token share unavailable.',
+    tools: 'Tools: supplied schemas describe callable actions; tool availability alone does not load external data.',
+    catalog: 'Skills: names, descriptions, and paths are supplied up front; full guides add context when opened.',
+    environment: 'Task: your request plus the working directory, shell, date, timezone, and access settings.',
+    history: 'History: retained user and assistant messages; older material may be represented by a compaction summary.',
+    results: 'Opened content: skill guides, documentation, and command output added during this analysis; large results can outweigh the request.',
+    reasoning: 'Reasoning: internal generation can consume context budget; no per-category usage is exposed here.',
+    answer: 'Output: generated answer text and tool calls use tokens; retained output becomes history on later turns.'
+  };
+  function select(part) {
+    const key = Object.hasOwn(descriptions, part) ? part : 'rules';
+    buttons.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.part === key)));
+    detail.textContent = descriptions[key];
+    return key;
+  }
+  select(window.openai?.widgetState?.modelContent?.selectedCategory);
+  buttons.forEach(button => button.addEventListener('click', () => {
+    const selectedCategory = select(button.dataset.part);
+    window.openai?.setWidgetState?.({modelContent: {selectedCategory}, privateContent: null})?.catch(() => {});
+  }));
+  window.addEventListener('openai:set_globals', event => {
+    const saved = event.detail?.globals?.widgetState;
+    if (saved) select(saved.modelContent?.selectedCategory);
+  });
+})();
+</script>

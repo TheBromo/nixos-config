@@ -59,12 +59,10 @@
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "${configDir}/skills/"
-        cp -rf --no-preserve=mode ${self.lib.createGithubPrSkill pkgs}/. "${configDir}/skills/"
-        cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "${configDir}/skills/"
+        cp -rf --no-preserve=mode ${self.lib.customCodingSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "${configDir}/skills/"
-        cp -rf --no-preserve=mode ${self.lib.deployMockupSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "${configDir}/skills/"
       '';

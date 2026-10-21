@@ -132,12 +132,10 @@
         cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.claude/skills/"
-        cp -rf --no-preserve=mode ${self.lib.createGithubPrSkill pkgs}/. "$HOME/.claude/skills/"
-        cp -rf --no-preserve=mode ${self.lib.chipmindDebugSkill pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.customCodingSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.claude/skills/"
-        cp -rf --no-preserve=mode ${self.lib.deployMockupSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.claude/skills/"
       '';
