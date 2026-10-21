@@ -70,21 +70,21 @@
             "5=#bd5eff"
             "6=#5ef1ff"
             "7=#ffffff"
-            "8=#6b7078"
+            "8=#1e2124"
             "9=#ff6e5e"
             "10=#5eff6c"
             "11=#f1ff5e"
             "12=#5ea1ff"
             "13=#bd5eff"
             "14=#5ef1ff"
-            "15=#ffffff"
+            "15=#7b8496"
           ];
           background = "#080808";
-          foreground = "#fcfcfa";
-          cursor-color = "#c1c0c0";
-          cursor-text = "#8e8d8d";
-          selection-background = "#5b595c";
-          selection-foreground = "#fcfcfa";
+          foreground = "#ffffff";
+          cursor-color = "#ffffff";
+          cursor-text = "#080808";
+          selection-background = "#3c4048";
+          selection-foreground = "#ffffff";
         };
         settings = {
           theme = "cyberdream";
