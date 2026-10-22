@@ -27,7 +27,8 @@
 
         signing = lib.mkIf signing {
           key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
-          signByDefault = true;
+          # Only lazygit signs
+          signByDefault = false;
           format = "ssh";
         };
 
@@ -108,6 +109,21 @@
 
       programs.lazygit = {
         enable = true;
+        package = lib.mkIf signing (
+          pkgs.symlinkJoin {
+            name = "lazygit-signed";
+            paths = [ pkgs.lazygit ];
+            nativeBuildInputs = [ pkgs.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/lazygit \
+                --set GIT_CONFIG_COUNT 2 \
+                --set GIT_CONFIG_KEY_0 commit.gpgSign \
+                --set GIT_CONFIG_VALUE_0 true \
+                --set GIT_CONFIG_KEY_1 tag.gpgSign \
+                --set GIT_CONFIG_VALUE_1 true
+            '';
+          }
+        );
         settings = {
           overrideGpg = true;
           gui.border = "single";

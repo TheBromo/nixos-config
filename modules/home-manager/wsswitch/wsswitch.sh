@@ -5,9 +5,25 @@ usage() {
 # Rex's bundled CLI, so this also works in terminals other than Rex.
 rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
 
+worktree_root="$HOME/Development/Worktrees"
+
+# Projects, then every agent worktree as <repo>/<name>.
 list_projects() {
-  @find@ "$HOME/Development" -mindepth 1 -maxdepth 1 -type d
+  @find@ "$HOME/Development" -mindepth 1 -maxdepth 1 -type d ! -path "$worktree_root"
+  if [[ -d "$worktree_root" ]]; then
+    @find@ "$worktree_root" -mindepth 2 -maxdepth 2 -type d
+  fi
   printf '%s\n' "$HOME/.config/nvim"
+}
+
+# Rex sessions don't report a directory, so the label identifies the project.
+# Worktrees keep their repo in the label: names like "main" repeat.
+session_label() {
+  if [[ $1 == "$worktree_root"/*/* ]]; then
+    printf '%s\n' "${1#"$worktree_root"/}"
+  else
+    printf '%s\n' "${1##*/}"
+  fi
 }
 
 # Prints the ID of the project's session, creating it with a shell tab first.
@@ -21,8 +37,7 @@ open_session() {
     return 1
   fi
   selected=$(@realpath@ "$1")
-  # Rex sessions don't report a directory, so the label identifies the project.
-  label=${selected##*/}
+  label=$(session_label "$selected")
 
   session_id=$(
     "$rex_bin" ls --json \
@@ -52,4 +67,4 @@ session_id=$(open_session "$selected")
 # settings under Rex Server. Rex's own key actions can't run fzf: the app
 # handles no keys while one runs.
 "$rex_bin" "do" session.select session_id="$session_id" \
-  || printf "Session '%s' is ready; select it in Rex.\n" "${selected##*/}" >&2
+  || printf "Session '%s' is ready; select it in Rex.\n" "$(session_label "$selected")" >&2
