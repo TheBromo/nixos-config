@@ -7,9 +7,9 @@ description: Edit repository-owned custom coding skills, even while working in a
 
 ## Find the source
 
-The source repository is `/Users/manuel/Development/nixos-config`. On another machine, try `$HOME/Development/nixos-config`. Verify that the chosen checkout contains `modules/home-manager/custom-coding-skills/default.nix` exporting `flake.lib.customCodingSkills`. If neither checkout exists, ask for its location.
+The source repository is `/Users/manuel/Development/nixos-config`. On another machine, try `$HOME/Development/nixos-config`. Verify that the chosen checkout contains `modules/home-manager/skills/default.nix` exporting `flake.lib.agentSkills`. If neither checkout exists, ask for its location.
 
-Skills live under `modules/home-manager/custom-coding-skills/skills/<skill-name>/`. Edit this source even when the active working directory belongs to another project. Use absolute file paths and `git -C <repository>` or commands with an explicit working directory.
+Skills live under `modules/home-manager/skills/local/<skill-name>/`. Edit this source even when the active working directory belongs to another project. Use absolute file paths and `git -C <repository>` or commands with an explicit working directory.
 
 Installed copies under `~/.codex/skills`, `~/.claude/skills`, and the OpenCode configuration are deployment outputs. Editing those copies loses changes on the next Home Manager activation. Paths under `/nix/store` are immutable build outputs.
 
@@ -23,8 +23,8 @@ Installed copies under `~/.codex/skills`, `~/.claude/skills`, and the OpenCode c
 For example, “add this pattern to the Python skill, add example.py, and mention it in the skill” means updating these source files:
 
 ```text
-modules/home-manager/custom-coding-skills/skills/python/SKILL.md
-modules/home-manager/custom-coding-skills/skills/python/example.py
+modules/home-manager/skills/local/python/SKILL.md
+modules/home-manager/skills/local/python/example.py
 ```
 
 Add a contextual link such as `See [example.py](example.py) when implementing <pattern>.` under the relevant rule.

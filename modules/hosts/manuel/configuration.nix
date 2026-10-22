@@ -25,7 +25,6 @@
         self.homeModules.dvd
         self.homeModules.nvimConfig
         (self.lib.ghosttyModule { isDarwin = false; })
-        self.homeModules.fluentui-emoji
         self.homeModules.TX-02
         self.homeModules.claude
         self.homeModules.codex

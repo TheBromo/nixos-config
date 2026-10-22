@@ -141,17 +141,7 @@
           installCodexSkills = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             mkdir -p "$HOME/.codex/skills"
             rm -rf "$HOME/.codex/skills/cavecrew"
-            cp -rf --no-preserve=mode ${self.lib.mattpocockSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.dotagentsSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.ghStackSkill pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.conventionalGitSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.customCodingSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.reactDoctorSkill pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.frontendDesignSkill pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.codex/skills/"
-            cp -rf --no-preserve=mode ${self.lib.rexSkill pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.agentSkills pkgs}/. "$HOME/.codex/skills/"
           '';
         };
       };

@@ -86,5 +86,11 @@ To add a new AppImage-based package as a home-manager module:
 
 To update an existing AppImage module version, set the hash to `""`, change the version, build, and copy the correct hash from the error output.
 
+## Agent Skills
+
+All agent skills live in `modules/home-manager/skills/`. `flake.lib.agentSkills pkgs` builds them into one directory that the claude, codex and opencode modules copy into their skills dirs.
+- In-repo skills: add a folder under `modules/home-manager/skills/local/<skill-name>/`.
+- Upstream skills: add an entry to `remotes` in `modules/home-manager/skills/default.nix` (`src` plus `skills = { <name> = "<path in src>"; }`).
+
 ## Hints
 - When adding new .nix files you need to `git add` before they are available to nix

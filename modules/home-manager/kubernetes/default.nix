@@ -11,7 +11,6 @@
         pkgs.kubectl-neat
         pkgs.kubectl-example
         pkgs.kind
-        (lib.lowPrio pkgs.minikube)
         pkgs.cilium-cli
         pkgs.kubernetes-helm
       ];

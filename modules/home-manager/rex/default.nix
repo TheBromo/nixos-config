@@ -1,6 +1,3 @@
-# Rex itself comes from the Rex for Mac app, which puts `rex` on PATH inside
-# its terminals. This module manages its config, appearance, and the agent hook that
-# `rex skill setup` would add (the skill is self.lib.rexSkill).
 _: {
   flake.homeModules.rex =
     { lib, pkgs, ... }:
@@ -62,17 +59,7 @@ _: {
             ''
               ${lib.getExe installRexAgentHooks}
             '';
-        # Rex doesn't watch init.lua.
-        reloadRexConfig = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
-          if [[ -x "${rex}" ]]; then
-            "${rex}" --autostart=false config reload >/dev/null || true
-          fi
-        '';
-        # Rex keeps its theme and font in the app's user defaults, not in
-        # init.lua. themes.json is what Rex wrote when it migrated the Ghostty
-        # cyberdream theme. Only these keys are written: targets.darwin.defaults
-        # would `defaults import` and wipe the rest of the domain. Rex reads
-        # them on launch, so restart it after a change.
+
         writeRexAppearance = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           run /usr/bin/defaults write com.superlogical.rex Workspace.customThemes -data \
             "$(${lib.getExe pkgs.jq} -c . ${./themes.json} | /usr/bin/xxd -p | tr -d '\n')"

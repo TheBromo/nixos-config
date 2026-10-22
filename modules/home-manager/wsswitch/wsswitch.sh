@@ -2,7 +2,6 @@ usage() {
   printf 'Usage: wsswitch [DIRECTORY]\n' >&2
 }
 
-# Rex's bundled CLI, so this also works in terminals other than Rex.
 rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
 
 worktree_root="$HOME/Development/Worktrees"

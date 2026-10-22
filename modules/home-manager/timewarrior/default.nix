@@ -63,9 +63,6 @@
         '';
       };
 
-      # SwiftBar resolves symlinks and parses the refresh interval from the
-      # resolved file name, so the store file itself must carry the
-      # "<name>.<interval>.<ext>" pattern.
       swiftbarPluginFile = pkgs.writeScript "timewarrior.30s.sh" ''
         #!${pkgs.runtimeShell}
         exec ${lib.getExe swiftbarPlugin} "$@"
@@ -79,7 +76,6 @@
       (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin {
         home.packages = [ pkgs.swiftbar ];
 
-        # Stable path so SwiftBar's PluginDirectory survives rebuilds.
         xdg.configFile."swiftbar/plugins/timewarrior.30s.sh".source = swiftbarPluginFile;
 
         targets.darwin.defaults."com.ameba.SwiftBar" = {
