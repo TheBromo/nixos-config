@@ -5,6 +5,55 @@ _: {
       # The app's bundled CLI: activation runs without the app's PATH.
       rex = "$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex";
       darkThemeId = (builtins.head (lib.importJSON ./themes.json)).id;
+
+      # Every setting Rex's settings UI writes to com.superlogical.rex.
+      # Machine-local state (window frames, updater, client label, sync
+      # records, cached socket route, focus and activity history) stays out.
+      settings = {
+        "Workspace.darkThemeID" = darkThemeId;
+        "Workspace.lightThemeID" = "merino-light";
+        "Workspace.interfaceStyle" = "useTheme";
+        "Workspace.appIcon" = "default";
+        "Workspace.paneDensity" = "comfortable";
+        "Workspace.inactivePaneFadeMode" = "both";
+        "Workspace.usesPaneGlass" = false;
+        "Workspace.usesStandardInactiveWindowPaneStyles" = true;
+        "Workspace.sidebarPosition" = "right";
+        "Workspace.shellIconTheme" = "themed";
+        "Workspace.tabStyle" = "horizontal";
+        "Workspace.tabIconColorMode" = "always";
+        "Workspace.tabIconTintMode" = "off";
+        "Workspace.tabIconCount" = 2;
+        "Workspace.terminalFontName" = "JetBrains Mono";
+        "Workspace.terminalFontPointSize" = 13.0;
+        "Workspace.terminalFallbackFontNames" = [ "TX-02" ];
+        "Workspace.terminalCellHeightPercent" = 0.0;
+        "Workspace.terminalCursorStyle" = "bar";
+        "Workspace.terminalCursorStyleForced" = false;
+        "Workspace.terminalFontSmoothing" = false;
+        "Workspace.terminalImproveTextContrast" = true;
+        "Workspace.terminalUseThemePalette" = false;
+        "Workspace.terminalUsesDisplayP3" = true;
+        "rex.client.remoteControl" = true;
+        "rex.server.automatic-restart-enabled" = true;
+        "rex.server.block-plugin-reload-enabled" = false;
+        "rex.server.run-mode" = "bundled";
+        "rex.server.tailnet-enabled" = true;
+        "rex.server.web-client-origin-patterns" = [ "https://rex.superlogical.com" ];
+      };
+
+      defaultsArgs =
+        value:
+        if builtins.isBool value then
+          "-bool ${lib.boolToString value}"
+        else if builtins.isInt value then
+          "-int ${toString value}"
+        else if builtins.isFloat value then
+          "-float ${toString value}"
+        else if builtins.isList value then
+          "-array ${lib.escapeShellArgs value}"
+        else
+          "-string ${lib.escapeShellArg value}";
       sessionStartHook = agent: {
         hooks = [
           {
@@ -63,12 +112,11 @@ _: {
         writeRexAppearance = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
           run /usr/bin/defaults write com.superlogical.rex Workspace.customThemes -data \
             "$(${lib.getExe pkgs.jq} -c . ${./themes.json} | /usr/bin/xxd -p | tr -d '\n')"
-          run /usr/bin/defaults write com.superlogical.rex Workspace.darkThemeID \
-            ${lib.escapeShellArg darkThemeId}
-          run /usr/bin/defaults write com.superlogical.rex Workspace.terminalFontName "JetBrains Mono"
-          run /usr/bin/defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 13
-          run /usr/bin/defaults write com.superlogical.rex Workspace.terminalFallbackFontNames \
-            -array "Fluent Emoji Color" TX-02
+          ${lib.concatStrings (
+            lib.mapAttrsToList (key: value: ''
+              run /usr/bin/defaults write com.superlogical.rex ${lib.escapeShellArg key} ${defaultsArgs value}
+            '') settings
+          )}
         '';
       };
     };
