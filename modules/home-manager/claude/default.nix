@@ -31,6 +31,8 @@
         hasCompletedOnboarding = true;
 
         env = {
+          # The Nix wrapper defaults to system-only, which misses public CAs on macOS.
+          CLAUDE_CODE_CERT_STORE = "bundled,system";
           CLAUDE_CODE_ENABLE_TELEMETRY = "1";
           BASH_DEFAULT_TIMEOUT_MS = "300000";
         };

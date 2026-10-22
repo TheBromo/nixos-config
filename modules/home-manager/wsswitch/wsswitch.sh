@@ -4,6 +4,11 @@ usage() {
 
 rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
 
+# Ignore inherited remote server routing: this picker is machine-local.
+rex_local() {
+  "$rex_bin" --server "unix://$HOME/Library/Application%20Support/rex/server.sock" "$@"
+}
+
 worktree_root="$HOME/Development/Worktrees"
 
 # Projects, then every agent worktree as <repo>/<name>.
@@ -39,14 +44,14 @@ open_session() {
   label=$(session_label "$selected")
 
   session_id=$(
-    "$rex_bin" ls --json \
+    rex_local ls --json \
       | @jq@ -r --arg label "$label" \
         '[.sessions[] | select(.label == $label) | .session_id][0] // ""'
   )
 
   if [[ -z "$session_id" ]]; then
     session_id=$(
-      "$rex_bin" new "$label" --cwd "$selected" --window shell --json \
+      rex_local new "$label" --cwd "$selected" --window shell --json \
         | @jq@ -er '.session_id'
     )
   fi
@@ -55,6 +60,16 @@ open_session() {
 }
 
 (( $# <= 1 )) || { usage; exit 2; }
+# Remote apps can attach to the local server too. Only target a Unix-socket
+# app connection, preferring the newest if an app reconnect left duplicates.
+client_id=$(
+  rex_local client ls --json \
+    | @jq@ -er '[.clients[] | select(
+        .info.kind == "app" and .principal.transport == "unix"
+        and .connection_state == "connected"
+      )] | max_by(.connected_at) | .client_id // empty'
+) || { printf 'Error: no local Rex app is connected.\n' >&2; exit 1; }
+
 if (( $# == 1 )); then
   selected=$1
 else
@@ -65,5 +80,5 @@ session_id=$(open_session "$selected")
 # The app only takes actions from the CLI with Remote Control on, in Rex's
 # settings under Rex Server. Rex's own key actions can't run fzf: the app
 # handles no keys while one runs.
-"$rex_bin" "do" session.select session_id="$session_id" \
+rex_local --client "$client_id" "do" session.select session_id="$session_id" \
   || printf "Session '%s' is ready; select it in Rex.\n" "$(session_label "$selected")" >&2

@@ -25,6 +25,15 @@
         enable = true;
         lfs.enable = true;
 
+        # The fsmonitor daemon puts a socket in .git, which `nix flake archive
+        # path:...` (run by nil) rejects as an unsupported file type.
+        includes = [
+          {
+            condition = "gitdir:**/nixos-config/";
+            contents.core.fsmonitor = false;
+          }
+        ];
+
         signing = lib.mkIf signing {
           key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBDohImxI6S0ieD8jmleD3IUj8ZrKFaAVbLBhGab7luu";
           # Only lazygit signs

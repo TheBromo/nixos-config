@@ -24,7 +24,8 @@
       programs.npm = {
         enable = true;
         package = null;
-        settings.prefix = "\${HOME}/.local";
+        # Let nvm select the prefix; Home Manager defaults to a fixed prefix.
+        settings = { };
       };
 
       programs.bash.initExtra = nvmInit;
