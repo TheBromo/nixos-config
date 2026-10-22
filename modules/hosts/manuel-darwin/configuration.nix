@@ -28,6 +28,7 @@
         self.homeModules.opencode
         self.homeModules.pi
         self.homeModules.rex
+        self.homeModules.t3code
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd
