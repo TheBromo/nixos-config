@@ -176,8 +176,9 @@ in
         ++ lib.concatMap (r: builtins.attrNames r.skills) (builtins.attrValues (remotes pkgs));
       duplicates = lib.unique (lib.filter (n: lib.count (m: m == n) names > 1) names);
     in
-    assert lib.assertMsg (duplicates == [ ])
-      "agentSkills: skill names defined twice: ${toString duplicates}";
+    assert lib.assertMsg (
+      duplicates == [ ]
+    ) "agentSkills: skill names defined twice: ${toString duplicates}";
     pkgs.runCommand "agent-skills" { } ''
       mkdir -p $out
       cp -r --no-preserve=mode ${./local}/. $out/

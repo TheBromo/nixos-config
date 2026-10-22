@@ -8,7 +8,7 @@
       imports = [
         (self.lib.gitModule { signing = false; })
         self.homeModules.nonRedistributable
-        self.homeModules.nixSettings
+        (self.lib.nixSettingsModule { })
         self.homeModules.devtools
         self.homeModules.console
         self.homeModules.kubernetes

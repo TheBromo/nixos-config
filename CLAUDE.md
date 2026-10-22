@@ -10,7 +10,25 @@ make home        # Switch home-manager for "manuel" (Linux)
 make zhaw        # Switch home-manager for "zhaw" (Linux)
 make hexagon     # Switch home-manager for "hexagon" (Linux, --impure)
 make darwin      # Switch home-manager for "manuel-darwin" (macOS)
+make nix-conf    # Install the binary caches into /etc/nix/nix.custom.conf (sudo)
 ```
+
+`make nix-conf` is needed once per machine (and again after a Determinate Nix
+reinstall, which rewrites `nix.custom.conf`; the target diffs first and no-ops
+when already current). The daemon ignores the substituters home-manager writes
+to `~/.config/nix/nix.conf` unless the user is listed in `trusted-users`
+("warning: ignoring untrusted substituter"). Installing them as root under
+`/etc/nix/nix.custom.conf` — which Determinate Nix `!include`s from its own
+unmodifiable `/etc/nix/nix.conf` — makes them trusted without granting the user
+account root-equivalent rights.
+
+Caches are declared once as the `caches` list in
+`modules/home-manager/nix-settings/default.nix`. `self.lib.nixSettingsModule`
+takes `trustedUser` (default `true`): on a host covered by `nix.custom.conf`
+pass `trustedUser = false` so no user-level `nix.conf` is written at all —
+otherwise an untrusted client warns about the restricted `trusted-public-keys`
+setting on every command. `manuel-darwin` passes `false`; `manuel` uses the
+default.
 
 ## Testing with Nix
 

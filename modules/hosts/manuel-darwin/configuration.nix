@@ -8,7 +8,9 @@
       imports = [
         (self.lib.gitModule { })
         self.homeModules.nonRedistributable
-        self.homeModules.nixSettings
+        # Determinate Nix, user not in trusted-users: the caches live in
+        # /etc/nix/nix.custom.conf via `make nix-conf` instead.
+        (self.lib.nixSettingsModule { trustedUser = false; })
         self.homeModules.darwinTools
         self.homeModules.devtools
         self.homeModules.console
