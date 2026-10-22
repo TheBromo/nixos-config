@@ -23,7 +23,6 @@
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd
-        self.homeModules.wsswitch
         self.homeModules.nvimConfig
         (self.lib.ghosttyModule { isDarwin = false; })
         self.homeModules.fluentui-emoji
@@ -31,7 +30,7 @@
         self.homeModules.claude
         self.homeModules.codex
         self.homeModules.opencode
-        self.homeModules.herdr
+        self.homeModules.pi
       ];
 
       home = {

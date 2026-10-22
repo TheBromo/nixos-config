@@ -10,6 +10,22 @@
     let
       llmAgents = self.lib.llmAgents pkgs;
 
+      worktreeCreate = pkgs.writeShellApplication {
+        name = "claude-worktree-create";
+        runtimeInputs = [
+          pkgs.coreutils
+          pkgs.git
+          pkgs.jq
+        ];
+        text =
+          builtins.replaceStrings
+            [ "@worktree_root@" ]
+            [
+              "${config.home.homeDirectory}/Development/Worktrees"
+            ]
+            (builtins.readFile ./worktree-create.sh);
+      };
+
       settings = {
         hasCompletedProjectOnboarding = true;
         hasCompletedOnboarding = true;
@@ -25,6 +41,17 @@
         };
 
         model = "opus[1m]";
+
+        hooks.WorktreeCreate = [
+          {
+            hooks = [
+              {
+                type = "command";
+                command = lib.getExe worktreeCreate;
+              }
+            ];
+          }
+        ];
 
         enabledPlugins = {
           "code-review@claude-code-plugins" = true;
@@ -110,6 +137,10 @@
             "--isolated"
           ];
         };
+        mcpServers.superlogical = {
+          type = "http";
+          url = "https://www.superlogical.com/rex/community-mcp";
+        };
       };
 
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -138,6 +169,7 @@
         cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.claude/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.claude/skills/"
+        cp -rf --no-preserve=mode ${self.lib.rexSkill pkgs}/. "$HOME/.claude/skills/"
       '';
     };
 }

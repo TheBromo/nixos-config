@@ -39,6 +39,9 @@
           };
         };
 
+        # Must be absolute.
+        desktop.git-worktree-root = "${config.home.homeDirectory}/Development/Worktrees";
+
         projects = {
           "/home/strenge/Development".trust_level = "trusted";
           "/home/strenge/.config/nvim".trust_level = "trusted";
@@ -50,8 +53,6 @@
         hooks.state = {
           "/home/strenge/.codex/hooks.json:session_start:0:0".trusted_hash =
             "sha256:bcf9397a6a66095da2fd157b8bf4949f51db7169f205a9b854c1fa9e27efcf92";
-          "/Users/manuel/.codex/hooks.json:session_start:0:0".trusted_hash =
-            "sha256:eddb0845a0762a0214ac8b2039f6636d3ced0654966a4586511e031cf1278509";
         };
 
         mcp_servers.swiss_caselaw = {
@@ -150,6 +151,7 @@
             cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "$HOME/.codex/skills/"
             cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "$HOME/.codex/skills/"
+            cp -rf --no-preserve=mode ${self.lib.rexSkill pkgs}/. "$HOME/.codex/skills/"
           '';
         };
       };

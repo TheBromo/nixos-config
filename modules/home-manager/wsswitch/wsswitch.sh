@@ -1,81 +1,55 @@
-if (( $# > 1 )); then
-  printf 'Usage: wsswitch [directory]\n' >&2
-  exit 2
-fi
+usage() {
+  printf 'Usage: wsswitch [DIRECTORY]\n' >&2
+}
 
+# Rex's bundled CLI, so this also works in terminals other than Rex.
+rex_bin="$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+
+list_projects() {
+  @find@ "$HOME/Development" -mindepth 1 -maxdepth 1 -type d
+  printf '%s\n' "$HOME/.config/nvim"
+}
+
+# Prints the ID of the project's session, creating it with a shell tab first.
+open_session() {
+  local selected
+  local label
+  local session_id
+
+  if [[ ! -d "$1" ]]; then
+    printf "Error: '%s' is not a valid directory.\n" "$1" >&2
+    return 1
+  fi
+  selected=$(@realpath@ "$1")
+  # Rex sessions don't report a directory, so the label identifies the project.
+  label=${selected##*/}
+
+  session_id=$(
+    "$rex_bin" ls --json \
+      | @jq@ -r --arg label "$label" \
+        '[.sessions[] | select(.label == $label) | .session_id][0] // ""'
+  )
+
+  if [[ -z "$session_id" ]]; then
+    session_id=$(
+      "$rex_bin" new "$label" --cwd "$selected" --window shell --json \
+        | @jq@ -er '.session_id'
+    )
+  fi
+
+  printf '%s\n' "$session_id"
+}
+
+(( $# <= 1 )) || { usage; exit 2; }
 if (( $# == 1 )); then
   selected=$1
 else
-  selected=$(
-    {
-      @find@ "$HOME/Development/" -mindepth 1 -maxdepth 1 -type d
-      printf '%s\n' "$HOME/.config/nvim/"
-    } | @fzf@
-  ) || exit 0
+  selected=$(list_projects | @fzf@) || exit 0
 fi
-
-if [[ -z "$selected" ]]; then
-  exit 0
-fi
-
-if [[ ! -d "$selected" ]]; then
-  printf "Error: '%s' is not a valid directory.\n" "$selected" >&2
-  exit 1
-fi
-
-attach_if_outside_herdr() {
-  if [[ -z "${HERDR_PANE_ID:-}" ]]; then
-    exec @herdr@
-  fi
-}
-
-start_herdr_server() {
-  @nohup@ \
-    @env@ -u HERDR_STARTUP_CWD \
-    @herdr@ server >/dev/null 2>&1 &
-  local server_pid=$!
-
-  for (( attempt = 0; attempt < 150; attempt++ )); do
-    if snapshot=$(@herdr@ api snapshot 2>/dev/null); then
-      return 0
-    fi
-    if ! kill -0 "$server_pid" 2>/dev/null; then
-      wait "$server_pid" || true
-      printf 'Error: failed to start the Herdr server.\n' >&2
-      return 1
-    fi
-    @sleep@ 0.1
-  done
-
-  printf 'Error: timed out waiting for the Herdr server.\n' >&2
-  return 1
-}
-
-selected=$(@realpath@ "$selected")
-if ! snapshot=$(@herdr@ api snapshot 2>&1); then
-  error_code=$(
-    @jq@ -r '.error.code // ""' <<<"$snapshot" 2>/dev/null || true
-  )
-  if [[ "$error_code" != server_not_running ]] || [[ -n "${HERDR_PANE_ID:-}" ]]; then
-    printf '%s\n' "$snapshot" >&2
-    exit 1
-  fi
-  start_herdr_server
-fi
-workspace_id=$(
-  @jq@ -r --arg cwd "$selected" \
-    '[.result.snapshot.panes[] | select(.cwd == $cwd) | .workspace_id][0] // ""' \
-    <<<"$snapshot"
-)
-
-if [[ -n "$workspace_id" ]]; then
-  @herdr@ workspace focus "$workspace_id" >/dev/null
-  attach_if_outside_herdr
-  exit 0
-fi
-
-workspace=$(@herdr@ workspace create --cwd "$selected" --focus)
-workspace_id=$(@jq@ -er '.result.workspace.workspace_id' <<<"$workspace")
-shell_tab_id=$(@jq@ -er '.result.tab.tab_id' <<<"$workspace")
-@bootstrap_workspace@ "$selected" "$workspace_id" "$shell_tab_id"
-attach_if_outside_herdr
+[[ -n "$selected" ]] || exit 0
+session_id=$(open_session "$selected")
+# The app only takes actions from the CLI with Remote Control on, in Rex's
+# settings under Rex Server. Rex's own key actions can't run fzf: the app
+# handles no keys while one runs.
+"$rex_bin" "do" session.select session_id="$session_id" \
+  || printf "Session '%s' is ready; select it in Rex.\n" "${selected##*/}" >&2

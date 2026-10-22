@@ -24,7 +24,8 @@
         self.homeModules.claude
         self.homeModules.codex
         self.homeModules.opencode
-        self.homeModules.herdr
+        self.homeModules.pi
+        self.homeModules.rex
         self.homeModules.info
         self.homeModules.dvt
         self.homeModules.dvd

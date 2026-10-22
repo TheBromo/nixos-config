@@ -24,6 +24,7 @@
           provider.amazon-bedrock.options.region = "us-east-1";
 
           permission = "allow";
+          worktree.directory = "${config.home.homeDirectory}/Development/Worktrees";
           autoupdate = false;
 
           mcp = {
@@ -65,6 +66,7 @@
         cp -rf --no-preserve=mode ${self.lib.vercelSkills pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.securityAuditSkill pkgs}/. "${configDir}/skills/"
         cp -rf --no-preserve=mode ${self.lib.cavemanSkills pkgs}/. "${configDir}/skills/"
+        cp -rf --no-preserve=mode ${self.lib.rexSkill pkgs}/. "${configDir}/skills/"
       '';
     };
 }

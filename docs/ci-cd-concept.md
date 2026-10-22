@@ -16,7 +16,7 @@ These shape the design and are worth keeping in mind before changing anything.
 | `modules/home-manager/TX-02/default.nix` uses `src = "${self}/secrets/TX-02.tar.xz"`. The content under `secrets/**` is git-crypt encrypted because its licence forbids publication and this repository is public. | CI never gets the key. The font is behind `custom.tx02.enable` (default `true`), and CI builds the `ci-<host>` variant with it set to `false`. Evaluation is unaffected — it never reads the file content — so the encrypted tree still evaluates fine. |
 | Own derivations that upstream caches cannot provide: `packages.tree-sitter-cli` (Rust build with a custom `src`), the `TX-02` font, and the AppImage modules (`helium`, `t3code`, `headlamp`). | These are the parts that are actually *our* code and worth building on every PR — they are small compared to the full closure. |
 | Only `tree-sitter-cli` is exposed as a flake package. The AppImage derivations are defined inside module `let` bindings, and no current host imports `helium`, `t3code`, `headlamp`, or `slack`. | To build them in CI, they must first be exposed as `perSystem.packages.*` (the module then consumes `self.packages.<system>.<name>`, exactly like `nvim-config` already does with `tree-sitter-cli`). Without that refactor, nothing verifies their hashes — and the unused AppImage modules are never built at all. `TX-02` stays out of CI on purpose, see the row above. |
-| Inputs `neovim-nightly-overlay`, `ghostty`, and `herdr` build from source unless their upstream binary caches are configured. | Add the `nix-community` and `ghostty` substituters to the CI Nix config, otherwise a full build compiles Zig and Rust from scratch. |
+| Inputs `neovim-nightly-overlay` and `ghostty` build from source unless their upstream binary caches are configured. | Add the `nix-community` and `ghostty` substituters to the CI Nix config, otherwise a full build compiles Neovim and Zig from scratch. |
 | The repository is public and git-crypt protected. | A guard job verifies that everything under `secrets/**` is still encrypted in the commit. No workflow ever decrypts, and no workflow holds the key. |
 | `makefile` still has `zhaw` and `hexagon` targets, but `modules/hosts/` only contains `manuel` and `manuel-darwin`. `CLAUDE.md` documents four hosts. | The host list must come from one place. Deriving the CI matrix from `nix eval .#homeConfigurations --apply builtins.attrNames` keeps CI correct automatically and makes the stale targets visible. |
 
@@ -103,7 +103,7 @@ nix eval --json .#homeConfigurations --apply \
 Steps per matrix entry, `fail-fast: false` so one broken host does not hide the other:
 
 1. Free disk space — `jlumbroso/free-disk-space` on Linux, pruning the Android SDK, extra Xcode versions and simulator caches on macOS. Required because of the 8.6 GiB closure.
-2. Install Nix with the extra substituters `thebromo`, `nix-community` and `ghostty`, so Neovim nightly, Ghostty and herdr are downloaded instead of compiled.
+2. Install Nix with the extra substituters `thebromo`, `nix-community` and `ghostty`, so Neovim nightly and Ghostty are downloaded instead of compiled.
 3. `nix build .#packages.<system>.ci-<host> --no-link --print-out-paths --print-build-logs`.
 4. Verify: `nix path-info -r` over the result must not match `-claude-code-[0-9]`, `-TX-02$` or `-1password-cli-[0-9]`.
 5. Push exactly that closure: `nix run --inputs-from . nixpkgs#cachix -- push thebromo "$out"`, with `CACHIX_AUTH_TOKEN` in the environment.
