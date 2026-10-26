@@ -86,6 +86,9 @@
           merge = {
             conflictstyle = "zdiff3";
           };
+          worktree = {
+            defaultPath = "~/Development/Worktrees/";
+          };
 
           gpg = lib.mkIf signing {
             ssh = {
