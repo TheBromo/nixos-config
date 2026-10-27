@@ -7,8 +7,6 @@ _: {
       ...
     }:
     let
-      # The app's bundled CLI: activation runs without the app's PATH.
-      rex = "$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex";
       branchLabelScript = pkgs.replaceVars ./branch-label.lua { git = lib.getExe pkgs.git; };
       darkThemeId = (builtins.head (lib.importJSON ./themes.json)).id;
 

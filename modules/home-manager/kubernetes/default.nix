@@ -1,7 +1,7 @@
 { ... }:
 {
   flake.homeModules.kubernetes =
-    { lib, pkgs, ... }:
+    { pkgs, ... }:
     {
 
       home.packages = [
