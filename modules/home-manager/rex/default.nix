@@ -1,9 +1,15 @@
 _: {
   flake.homeModules.rex =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       # The app's bundled CLI: activation runs without the app's PATH.
       rex = "$HOME/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex";
+      branchLabelScript = pkgs.replaceVars ./branch-label.lua { git = lib.getExe pkgs.git; };
       darkThemeId = (builtins.head (lib.importJSON ./themes.json)).id;
 
       # Every setting Rex's settings UI writes to com.superlogical.rex.
@@ -34,6 +40,8 @@ _: {
         "Workspace.terminalImproveTextContrast" = true;
         "Workspace.terminalUseThemePalette" = false;
         "Workspace.terminalUsesDisplayP3" = true;
+        # branch-label.lua names sessions after the branch or folder instead.
+        "rex.agents.names-sessions" = false;
         "rex.client.remoteControl" = true;
         "rex.server.automatic-restart-enabled" = true;
         "rex.server.block-plugin-reload-enabled" = false;
@@ -97,6 +105,24 @@ _: {
     in
     {
       xdg.configFile."rex/init.lua".source = ./init.lua;
+
+      launchd.agents.rex-branch-label = {
+        enable = true;
+        config = {
+          ProgramArguments = [
+            "${config.home.homeDirectory}/Library/Application Support/com.superlogical.rex/RexServer/Versions/Current/Rex Server.app/Contents/MacOS/rex"
+            "do"
+            "--autostart=false"
+            "${branchLabelScript}"
+            "--all"
+          ];
+          RunAtLoad = true;
+          # Restarts the script when the Rex server is not up yet or restarts.
+          KeepAlive = true;
+          ThrottleInterval = 30;
+          ProcessType = "Background";
+        };
+      };
 
       home.activation = {
         installRexAgentHooks =

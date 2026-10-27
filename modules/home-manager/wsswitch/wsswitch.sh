@@ -10,6 +10,7 @@ rex_local() {
 }
 
 worktree_root="$HOME/Development/Worktrees"
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/wsswitch"
 
 # Projects, then every agent worktree as <repo>/<name>.
 list_projects() {
@@ -34,6 +35,8 @@ session_label() {
 open_session() {
   local selected
   local label
+  local id_file
+  local saved_id
   local session_id
 
   if [[ ! -d "$1" ]]; then
@@ -42,11 +45,18 @@ open_session() {
   fi
   selected=$(@realpath@ "$1")
   label=$(session_label "$selected")
+  # The Rex branch-label script relabels sessions, so remember the session ID
+  # per project and match the label only as a fallback.
+  id_file="$state_dir/${label//\//%}"
+  saved_id=""
+  [[ -r "$id_file" ]] && read -r saved_id < "$id_file"
 
   session_id=$(
     rex_local ls --json \
-      | @jq@ -r --arg label "$label" \
-        '[.sessions[] | select(.label == $label) | .session_id][0] // ""'
+      | @jq@ -r --arg label "$label" --arg id "$saved_id" \
+        '[.sessions[] | select(.session_id == $id)]
+         + [.sessions[] | select(.label == $label)]
+         | .[0].session_id // ""'
   )
 
   if [[ -z "$session_id" ]]; then
@@ -56,6 +66,8 @@ open_session() {
     )
   fi
 
+  mkdir -p "$state_dir"
+  printf '%s\n' "$session_id" > "$id_file"
   printf '%s\n' "$session_id"
 }
 
