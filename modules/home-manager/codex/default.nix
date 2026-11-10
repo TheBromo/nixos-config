@@ -8,6 +8,7 @@
       ...
     }:
     let
+      llmAgents = self.lib.llmAgents pkgs;
       baseSettings = {
         model = "gpt-6.1-sol";
         model_reasoning_effort = "medium";
@@ -131,9 +132,9 @@
     in
     {
       home = {
-        # nixpkgs codex lists aarch64-darwin in meta.platforms; the former
-        # isLinux gate was about the native darwin installer, not the platform.
-        packages = [ pkgs.codex ];
+        # From llm-agents (prebuilt in cache.numtide.com) rather than nixpkgs,
+        # whose from-source build fails on darwin in aws-lc-sys.
+        packages = [ llmAgents.codex ];
         activation = {
           installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             ${lib.getExe installCodexConfig}

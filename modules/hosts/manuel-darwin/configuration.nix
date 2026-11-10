@@ -25,6 +25,7 @@
         self.homeModules.tmux
         self.homeModules.claude
         self.homeModules.codex
+        self.homeModules.antigravity
         self.homeModules.opencode
         self.homeModules.pi
         self.homeModules.rex

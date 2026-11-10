@@ -44,7 +44,6 @@
         pkgs.yaml-language-server
 
         # documentation and configuration
-        pkgs.marksman
         pkgs.taplo
 
         # neovim
