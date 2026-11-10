@@ -1,35 +1,47 @@
 ---
 name: chipmind-debug
-description: Debug the local ChipMind application with the chrome-devtools MCP, including browser session initialization, UI reproduction, console and network inspection, and verification after a fix. Use when investigating ChipMind UI issues or Unauthorized responses in the isolated MCP browser.
+description: Diagnose and fix Chipmind application bugs, including backend failures, UI reproduction, console and network inspection, and verification after a fix.
 ---
 
-Debug the local application with the `chrome-devtools` MCP:
+# Chipmind debugging
 
-1. Use `list_pages` to find the application tab, or `new_page` to open `http://127.0.0.1:3001`. Pass its `pageId` to subsequent calls.
-2. If the page shows **Unauthorized** and `/api/*` requests return **403**, initialize this browser’s session. The MCP browser has separate storage from the user’s browser. Run this with `evaluate_script`:
+Use `diagnosing-bugs` for the reproduction and fix loop. Read the checkout's
+`docs/backend-debugging.md` for backend attach debugging and the relevant architecture,
+router, service, and test documentation for the failing behavior.
 
-```js
-async () => {
-  const response = await fetch('/_generate_bootstrap_token');
-  if (!response.ok) throw new Error(`Bootstrap failed: ${response.status}`);
-  const { bootstrap_token } = await response.json();
-  location.replace(
-    '/_bootstrap_session?bt=' + encodeURIComponent(bootstrap_token)
-  );
-}
-```
+Use `chipmind-run` when an instance must be started or restarted; keep its exact
+origin and instance-specific state, runtime prefix, and process ownership throughout.
+For Chrome debugger browser initialization, Unauthorized pages, or session-token 403
+responses, delegate `chipmind-chrome-setup` to a dedicated subagent. That skill owns
+credential acquisition and browser authentication; continue with its authenticated
+browser context and sanitized readiness result. Keep raw setup work out of the parent
+context. Follow the host's browser selection rules.
 
-3. Let the redirect finish, then use `navigate_page` to open the desired conversation. The bootstrap endpoint exchanges the one-time token, stores `chipmind_session_token` in localStorage, and redirects into the application. Frontend requests automatically attach `X-Session-Token`.
-4. Inspect the UI with `take_snapshot`, reproduce the issue with `click` or keyboard tools, and inspect `list_console_messages` and `list_network_requests`. Use `evaluate_script` to examine DOM elements, IDs, and application state.
+## Delegate bounded work
 
-For manual API requests inside `evaluate_script`, supply:
+Delegate one-off tasks with a clear completion criterion whenever the child has the
+required tools and access. Give it the checkout, origin, target conversation, scope,
+and expected output. The parent owns diagnosis, integration, and final verification.
 
-```js
-headers: {
-  'X-Session-Token': localStorage.getItem('chipmind_session_token')
-}
-```
+| Task | Child's output |
+| --- | --- |
+| Browser setup via `chipmind-chrome-setup` | Sanitized readiness result defined by that skill |
+| Trace a failing request through backend handlers | Route-to-service call path with file/line evidence and relevant tests |
+| Capture one UI reproduction | Exact steps, expected/actual result, redacted console/network evidence |
+| Run a focused regression check | Command, exit status, relevant result, artifact paths if any |
 
-Never print tokens or include them in logs, reports, or committed files. Use the same origin throughout: `localhost` and `127.0.0.1` have separate storage.
+Serialize tasks that navigate the same browser tab, mutate the same files, or control
+the same server. While a child owns session setup or UI reproduction, keep the parent
+off that browser context. Parallelize independent source inspection instead. If child
+tools or shared browser access are unavailable, perform non-credential tasks directly
+and report that limitation. Credential setup follows `chipmind-chrome-setup`'s stricter
+subagent requirement. A child completes its assignment itself without further delegation.
 
-After a fix, reload the page, repeat the interaction, and verify both the rendered result and fresh console messages.
+## Reproduce and verify
+
+Navigate to the desired conversation, inspect with `take_snapshot`, and reproduce the
+reported interaction. Use fresh console and network evidence to identify the failing
+request or UI state; use `evaluate_script` for focused DOM/state inspection.
+
+After a fix, reload, repeat the original interaction, and verify its rendered result
+and fresh console/network evidence alongside the focused regression check.
