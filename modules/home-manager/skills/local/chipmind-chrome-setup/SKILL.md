@@ -8,6 +8,8 @@ description: Set up an authenticated Chipmind Chrome debugger browser context th
 Follow the host's browser selection rules; use this Chrome workflow when chrome-devtools
 is available and permitted. Use `chipmind-run` when an instance must be started or
 restarted; preserve its exact origin and instance-specific paths and ownership.
+When starting an instance for browser testing, follow `chipmind-run`'s local process
+runtime workflow unless the task explicitly requires Docker.
 Read the checkout's `docs/auth.md` to distinguish session-token authentication from SSO.
 
 The parent invokes this skill by assigning its setup workflow to a dedicated subagent.

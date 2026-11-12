@@ -11,6 +11,8 @@ router, service, and test documentation for the failing behavior.
 
 Use `chipmind-run` when an instance must be started or restarted; keep its exact
 origin and instance-specific state, runtime prefix, and process ownership throughout.
+Use its local process runtime workflow for development and testing, including child
+reproductions. Select Docker only for an explicitly requested container investigation.
 For Chrome debugger browser initialization, Unauthorized pages, or session-token 403
 responses, delegate `chipmind-chrome-setup` to a dedicated subagent. That skill owns
 credential acquisition and browser authentication; continue with its authenticated

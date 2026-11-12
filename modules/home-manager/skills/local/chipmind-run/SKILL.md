@@ -55,10 +55,17 @@ reconfigure the bundled Keycloak service. It is not a substitute for this isolat
 
 ## Choose runtime and launch
 
-- For UI/API work without EDA requirements, use Docker sandboxes with `EDA_PROVIDER=none`,
-  or the process runtime (`RUNTIME=local`) if the task and host tools support it. A running
-  UI alone does not establish that tool execution or a real conversation works.
-- For Docker sandboxes, set a unique `SANDBOX_CONTAINER_NAME_PREFIX` for each instance.
+- Use the local process runtime (`RUNTIME=local`) for development and testing. Pass it
+  explicitly to Make and the backend, including delegated launches and builds: Make
+  does not read `.env`, and isolated runs may disable Python dotenv loading. The
+  checkout's `.envrc` supplies the shell default when loaded by direnv. Verify that
+  the selected build/run path skips sandbox image builds. Container images and build
+  cache can exhaust Docker's disk even while the host has space available.
+- Local sandboxes execute tools on the host. If a required host tool is missing,
+  report the prerequisite rather than switching runtimes. A running UI alone does
+  not establish that tool execution or a real conversation works.
+- Use Docker when the task explicitly requires container behavior or deployment.
+  For Docker sandboxes, set a unique `SANDBOX_CONTAINER_NAME_PREFIX` for each instance.
   The default prefix shares container discovery/reaping across app servers. Check explicit
   sandbox injector settings too: they may bypass the environment fallback. Build/reuse
   the sandbox image matching the checkout and avoid concurrent writes to a shared image tag.
@@ -77,10 +84,9 @@ Use a durable managed terminal/process session and retain its handle. A `make ru
 shape after paths and ports have been selected is:
 
 ```sh
-env STATE_DIR="$instance_dir/state" CACHE_DIR="$instance_dir/cache" \
+env RUNTIME=local STATE_DIR="$instance_dir/state" CACHE_DIR="$instance_dir/cache" \
   OPENHANDS_CONFIG_FILE="$instance_dir/config.toml" \
-  SANDBOX_CONTAINER_NAME_PREFIX="chipmind-$instance_id-" \
-  make run USE_VITE=1 EDA_PROVIDER=none \
+  make run RUNTIME=local USE_VITE=1 EDA_PROVIDER=none \
   CONFIG_FILE="$instance_dir/config.toml" \
   BACKEND_HOST=127.0.0.1 BACKEND_PORT="$backend_port" \
   BACKEND_DEV_PORT="$frontend_port" \
@@ -88,8 +94,8 @@ env STATE_DIR="$instance_dir/state" CACHE_DIR="$instance_dir/cache" \
   BOOTSTRAP_TOKEN_FILE="$instance_dir/bootstrap-token"
 ```
 
-This example requires Docker and intentionally omits EDA; select the runtime the task
-needs. `make run` auto-opens and bootstraps a browser. For an isolated debugger browser,
+This example uses host processes and starts no EDA container; EDA tools come from the
+host PATH. `make run` auto-opens and bootstraps a browser. For an isolated debugger browser,
 delegate `chipmind-chrome-setup` to arrange authentication in that exact context. If using separate
 `start-backend` / `start-frontend` sessions instead, pass matching overrides to both and
 retain both process handles. The standalone backend writes the private bootstrap file.

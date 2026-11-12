@@ -6,6 +6,17 @@
 { ... }:
 let
   remotes = pkgs: {
+    fframes = {
+      src = pkgs.fetchFromGitHub {
+        owner = "dmtrKovalenko";
+        repo = "fframes";
+        rev = "e8f01b97f61eee3a06c144445682f506f1530ca1";
+        hash = "sha256-dWBrCmUd5ZvUn0GSLLRzJI9AWziOxnM5V7+NR6KQXtg=";
+      };
+      skills.fframes-video = "skills/fframes-video";
+      license = "LICENSE.txt";
+    };
+
     mattpocock = {
       src = pkgs.fetchFromGitHub {
         owner = "mattpocock";

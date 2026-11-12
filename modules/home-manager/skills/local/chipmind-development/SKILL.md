@@ -9,6 +9,10 @@ Use the active Chipmind checkout's docs and code as the source of truth. The roo
 `skills/` and `subagents/` directories describe Chipmind's product agents, not the
 coding agent developing the application.
 
+For development and testing, use the local process runtime. Follow `chipmind-run`
+for runtime selection and isolated launch commands; use Docker only when the task
+explicitly calls for container behavior or deployment.
+
 | Task | Skill and repository context |
 | --- | --- |
 | Start, reuse, or stop an app instance | `chipmind-run`; inspect the checkout's Makefile and `scripts/run_app.sh` |

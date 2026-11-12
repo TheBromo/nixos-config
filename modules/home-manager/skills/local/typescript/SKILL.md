@@ -59,3 +59,52 @@ types beside the code that builds them, and import them with `import type`.
 
 Point importers and tests at the folder path and remove the old file. Move code
 unchanged, so the split stays a pure reorganization.
+
+## Functions
+
+Keep nesting shallow. Lift a nested loop, closure or conditional into a small
+named function with early returns, so the top-level function reads as a list
+of steps.
+
+Give a function a name only when the name says more than its body. A wrapper
+that calls one function and returns a field is not worth a name; inline it at
+its call sites:
+
+BAD
+
+> ❌
+> ```ts
+> function build(root: FillTask): Container {
+>   depthFirstPreOrder(root, fill);
+>   return root.target;
+> }
+>
+> const copied = build({ source, target });
+> ```
+
+GOOD
+
+> ✅
+> ```ts
+> const root: FillTask = { source, target };
+> depthFirstPreOrder(root, fill);
+> const copied = root.target;
+> ```
+
+## Traversals
+
+Write no recursive functions. That covers direct self-calls, mutual recursion
+and recursion through a callback or a returned closure. Walk trees and graphs
+with a loop over an explicit stack or queue, and convert recursion you find in
+code you are changing. Keep the visit order of the recursive version: a
+stack-based pre-order pushes children in reverse so the leftmost comes out
+first.
+
+Call a traversal or search by its well-known name, in the function name and in
+its comment: `depthFirstPreOrder`, `depthFirstPostOrder`, `breadthFirst`,
+`topologicalOrder`, `dijkstra`, `aStar`. Rename vague names such as `walk`,
+`visit`, `run` or `search` when you touch them.
+
+Keep one copy of each traversal helper. When a module already has one under
+another name, rename it there and update its callers instead of adding a
+second helper beside it.
