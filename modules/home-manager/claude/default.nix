@@ -106,8 +106,9 @@
       # Runs claude against Amazon Bedrock instead of the subscription, using
       # the ambient AWS credentials (AWS_PROFILE from the console module).
       # Environment-only, so it shares ~/.claude with the regular claude.
-      claudeBedrock = pkgs.writeShellApplication {
-        name = "claude-bedrock";
+      claudeApi = pkgs.writeShellApplication {
+        # <harness>_api: the API-billed variant (codex has codex_api).
+        name = "claude_api";
         text = ''
           export CLAUDE_CODE_USE_BEDROCK=1
           export AWS_REGION="''${AWS_REGION:-us-east-1}"
@@ -157,7 +158,7 @@
         };
       };
 
-      home.packages = lib.mkIf (config.programs.claude-code.package != null) [ claudeBedrock ];
+      home.packages = lib.mkIf (config.programs.claude-code.package != null) [ claudeApi ];
 
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ${lib.getExe installClaudeSettings}

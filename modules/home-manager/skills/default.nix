@@ -135,6 +135,18 @@ let
       };
     };
 
+    modern-web-guidance = {
+      src = pkgs.fetchFromGitHub {
+        owner = "GoogleChrome";
+        repo = "modern-web-guidance";
+        rev = "4dd968349e54ca45a05dd5c818fb035c9054b022";
+        hash = "sha256-bqsUEI1yaGy1sd8DBJzG5cOv4Yv0RSYac6e9egqYFJU=";
+      };
+      skills.modern-web-guidance = "skills/modern-web-guidance";
+      # The skill dir has no license of its own; ship the repo's with it.
+      license = "LICENSE";
+    };
+
     cloudflare-security-audit = {
       src = pkgs.fetchFromGitHub {
         owner = "cloudflare";

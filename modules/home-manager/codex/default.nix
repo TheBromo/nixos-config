@@ -9,8 +9,24 @@
     }:
     let
       llmAgents = self.lib.llmAgents pkgs;
+      # Kept out of the repo and the store; created by hand (see azure below).
+      azureKeyFile = "${config.xdg.configHome}/azure-openai/api-key";
       baseSettings = {
         model = "gpt-6.1-sol";
+        # Azure OpenAI (OpenAI v1-compatible), used by the codex_api wrapper;
+        # plain codex keeps the ChatGPT login.
+        # Deployments: gpt-6-luna, gpt-6.1-terra, gpt-6.1-sol, gpt-6-astra.
+        model_providers.azure = {
+          name = "Azure OpenAI";
+          base_url = "https://res-gpt61.services.ai.azure.com/openai/v1";
+          wire_api = "responses";
+          # A command, not env_key, so codex launched from GUI apps (T3)
+          # finds the key without a login shell's environment.
+          auth = {
+            command = lib.getExe' pkgs.coreutils "cat";
+            args = [ azureKeyFile ];
+          };
+        };
         model_reasoning_effort = "medium";
         approval_policy = "never";
         sandbox_mode = "danger-full-access";
@@ -103,6 +119,14 @@
       settings = baseSettings // {
         mcp_servers = sharedMcpServers // baseSettings.mcp_servers;
       };
+      # <harness>_api: runs codex against Azure OpenAI instead of the
+      # subscription (claude has claude_api). Shares ~/.codex with codex.
+      codexApi = pkgs.writeShellApplication {
+        name = "codex_api";
+        text = ''
+          exec ${lib.getExe llmAgents.codex} -c model_provider='"azure"' "$@"
+        '';
+      };
       configFile = (pkgs.formats.toml { }).generate "codex-config.toml" settings;
       installCodexConfig = pkgs.writeShellApplication {
         name = "install-codex-config";
@@ -134,7 +158,10 @@
       home = {
         # From llm-agents (prebuilt in cache.numtide.com) rather than nixpkgs,
         # whose from-source build fails on darwin in aws-lc-sys.
-        packages = [ llmAgents.codex ];
+        packages = [
+          llmAgents.codex
+          codexApi
+        ];
         activation = {
           installCodexConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
             ${lib.getExe installCodexConfig}

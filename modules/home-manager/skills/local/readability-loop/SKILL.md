@@ -65,10 +65,14 @@ above 50 lines, nesting deeper than 3, more than 5 parameters.
 
 ## 2. Start Sol
 
-Use the same route as `sol-loop` §2: `orchestrator_capabilities`, the latest
-Sol, and `delegate_task` with `role: "review"` and `mode: "async"`, using a
-fresh `clientRequestId` each round. If no route runs Sol, report the blocker
-and do not substitute a model. Do not edit scoped files while the review
+Use the same route as `sol-loop` §2: always the API harness `codex_api`
+(Codex on Azure OpenAI), never the subscription `codex`. In T3, call
+`orchestrator_capabilities`, pick the latest Sol on the `codex_api` provider
+instance, and use `delegate_task` with `role: "review"` and `mode: "async"`,
+using a fresh `clientRequestId` each round. Outside T3, run
+`codex_api exec -s read-only -m <sol model> "<brief>"` and continue with
+`codex_api exec resume <id> "<prompt>"`. If no route reaches Sol through
+`codex_api`, report the blocker and do not substitute a model or harness. Do not edit scoped files while the review
 runs. Wait for the notice and do not poll.
 
 Round 1 brief:
