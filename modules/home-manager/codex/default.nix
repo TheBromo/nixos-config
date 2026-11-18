@@ -13,8 +13,8 @@
       azureKeyFile = "${config.xdg.configHome}/azure-openai/api-key";
       baseSettings = {
         model = "gpt-6.1-sol";
-        # Azure OpenAI (OpenAI v1-compatible), used by the codex_api wrapper;
-        # plain codex keeps the ChatGPT login.
+        # Azure OpenAI (OpenAI v1-compatible), selected by the api profile
+        # that codex_api uses; plain codex keeps the ChatGPT login.
         # Deployments: gpt-6-luna, gpt-6.1-terra, gpt-6.1-sol, gpt-6-astra.
         model_providers.azure = {
           name = "Azure OpenAI";
@@ -119,12 +119,30 @@
       settings = baseSettings // {
         mcp_servers = sharedMcpServers // baseSettings.mcp_servers;
       };
+      # Profile layered over config.toml by `codex --profile api` (profiles
+      # v2: $CODEX_HOME/<name>.config.toml). Besides the provider it changes
+      # the look, so an API-billed session can't pass for a subscription one:
+      # a warmer syntax theme and the profile name in the status line.
+      apiProfile = {
+        model_provider = "azure";
+        tui = {
+          theme = "gruvbox-dark";
+          status_line = [
+            "profile"
+            "model-with-reasoning"
+            "context-remaining"
+            "current-dir"
+          ];
+          status_line_use_colors = true;
+        };
+      };
+      apiProfileFile = (pkgs.formats.toml { }).generate "codex-api.config.toml" apiProfile;
       # <harness>_api: runs codex against Azure OpenAI instead of the
       # subscription (claude has claude_api). Shares ~/.codex with codex.
       codexApi = pkgs.writeShellApplication {
         name = "codex_api";
         text = ''
-          exec ${lib.getExe llmAgents.codex} -c model_provider='"azure"' "$@"
+          exec ${lib.getExe llmAgents.codex} --profile api "$@"
         '';
       };
       configFile = (pkgs.formats.toml { }).generate "codex-config.toml" settings;
@@ -151,6 +169,9 @@
           chmod 600 "$temporary_file"
           mv -f "$temporary_file" "$config_path"
           trap - EXIT
+
+          # Copied, not linked: codex may write UI choices into the active profile.
+          ${lib.getExe' pkgs.coreutils "install"} -m 600 ${lib.escapeShellArg apiProfileFile} "$config_dir/api.config.toml"
         '';
       };
     in

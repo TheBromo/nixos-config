@@ -103,16 +103,54 @@
         '';
       };
 
+      # Red-orange look for claude_api, so an API-billed session can't pass
+      # for a subscription one. Overrides the mascot/spinner and prompt border
+      # of the dark-ansi theme the regular claude uses.
+      apiThemeSlug = "claude-api";
+      apiTheme = {
+        name = "Claude API (Bedrock)";
+        base = "dark-ansi";
+        overrides = {
+          claude = "rgb(235,64,40)";
+          claudeShimmer = "rgb(255,120,95)";
+          clawd_body = "rgb(235,64,40)";
+          promptBorder = "rgb(205,70,45)";
+          promptBorderShimmer = "rgb(245,120,95)";
+        };
+      };
+
+      apiStatusLine = pkgs.writeShellApplication {
+        name = "claude-api-statusline";
+        runtimeInputs = [ pkgs.jq ];
+        text = ''
+          model=$(jq -r '.model.display_name // empty')
+          printf '\033[1;38;2;235;64;40m⚡ API · Bedrock\033[0m'
+          if [[ -n "$model" ]]; then
+            printf ' \033[2m%s\033[0m' "$model"
+          fi
+        '';
+      };
+
+      # Layered on top of settings.json for claude_api only.
+      apiSettingsFile = (pkgs.formats.json { }).generate "claude-api-settings.json" {
+        theme = "custom:${apiThemeSlug}";
+        statusLine = {
+          type = "command";
+          command = lib.getExe apiStatusLine;
+        };
+      };
+
       # Runs claude against Amazon Bedrock instead of the subscription, using
       # the ambient AWS credentials (AWS_PROFILE from the console module).
-      # Environment-only, so it shares ~/.claude with the regular claude.
+      # Environment and --settings only, so it shares ~/.claude with the
+      # regular claude.
       claudeApi = pkgs.writeShellApplication {
         # <harness>_api: the API-billed variant (codex has codex_api).
         name = "claude_api";
         text = ''
           export CLAUDE_CODE_USE_BEDROCK=1
           export AWS_REGION="''${AWS_REGION:-us-east-1}"
-          exec ${lib.getExe config.programs.claude-code.finalPackage} "$@"
+          exec ${lib.getExe config.programs.claude-code.finalPackage} --settings ${apiSettingsFile} "$@"
         '';
       };
 
@@ -159,6 +197,10 @@
       };
 
       home.packages = lib.mkIf (config.programs.claude-code.package != null) [ claudeApi ];
+
+      # Custom themes are read from ~/.claude/themes/<slug>.json.
+      home.file.".claude/themes/${apiThemeSlug}.json".source =
+        (pkgs.formats.json { }).generate "${apiThemeSlug}-theme.json" apiTheme;
 
       home.activation.installClaudeSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         ${lib.getExe installClaudeSettings}
