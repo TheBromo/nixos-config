@@ -107,6 +107,8 @@ Honor the user's existing access choice; if none is specified, default to `DOMAI
 - `ANYONE`: any Google account;
 - `ANYONE_ANONYMOUS`: anyone with the link.
 
+With `DOMAIN` access, hand out the URL that names the domain: `https://script.google.com/a/<domain>/macros/s/<id>/exec`. This is the default form the scripts print (`webAppUrl` in `gas-lib.mjs`), and the one to give the user in reports. The plain `/macros/s/<id>/exec` URL opens with the browser's default Google account; when that account belongs to another domain, Google answers "Sorry, unable to open the file at present" instead of offering the right account. The domain comes from `GAS_DOMAIN`, else from the deploying user's address (`clasp --json show-authorized-user`); set `GAS_DOMAIN` in CI or when the deploying account is outside the audience's domain.
+
 Keep `"executeAs": "USER_DEPLOYING"`. The template is shared by branches, but versioned deployments retain their deployed configuration; changing the source manifest alone does not update existing URLs. Verify the intended access on each updated deployment.
 
 ### 5. Steps only the user can do
@@ -126,7 +128,7 @@ These are interactive or tied to their account, so the user does them, not you:
    3. `clasp --json create-version "<branch> @<sha>"`;
    4. it finds the deployment described `branch:<branch>`;
    5. if one exists, `clasp --json update-deployment <id> --versionNumber N --description branch:<branch>`; if not, `clasp --json create-deployment …`;
-   6. it prints `https://script.google.com/macros/s/<id>/exec`.
+   6. it prints the URL: `https://script.google.com/a/<domain>/macros/s/<id>/exec` with `DOMAIN` access, else `https://script.google.com/macros/s/<id>/exec`.
 4. The first `main` deploy writes `deployments.json` with the production ID. **Commit it.**
 5. Deploy `main` once more and check the URL is unchanged (version 1 → 2). That proves the update path.
 

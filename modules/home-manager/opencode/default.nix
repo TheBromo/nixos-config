@@ -24,7 +24,7 @@
           provider.amazon-bedrock.options.region = "us-east-1";
 
           permission = "allow";
-          worktree.directory = "${config.home.homeDirectory}/Development/Worktrees";
+          worktree.directory = config.worktrees.directory;
           autoupdate = false;
 
           mcp = {

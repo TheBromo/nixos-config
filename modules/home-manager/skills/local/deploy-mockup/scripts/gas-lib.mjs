@@ -16,7 +16,35 @@ export const PRODUCTION_BRANCH = process.env.GAS_PRODUCTION_BRANCH || 'main';
 /** Deployment descriptions are the lookup key: recoverable from Apps Script itself. */
 export const describeBranch = (branch) => `branch:${branch}`;
 export const branchOf = (description) => (description?.startsWith('branch:') ? description.slice('branch:'.length) : null);
-export const webAppUrl = (deploymentId) => `https://script.google.com/macros/s/${deploymentId}/exec`;
+
+/**
+ * The URL to hand out. With `DOMAIN` access it names the Workspace domain (`/a/<domain>/`): the plain URL opens with
+ * the browser's default Google account and answers "unable to open the file" when that is an account of another
+ * domain, while this form asks for an account of the right one.
+ */
+export function webAppUrl(deploymentId) {
+  const domain = workspaceDomain();
+  return `https://script.google.com/${domain ? `a/${domain}/` : ''}macros/s/${deploymentId}/exec`;
+}
+
+let domainLookup;
+/** The Workspace domain of a `DOMAIN` web app: `GAS_DOMAIN`, else the deploying user's; null for other access settings. */
+export function workspaceDomain() {
+  if (domainLookup === undefined) domainLookup = findWorkspaceDomain();
+  return domainLookup;
+}
+function findWorkspaceDomain() {
+  const manifest = join(ROOT, 'gas', 'appsscript.json');
+  if (!existsSync(manifest) || JSON.parse(readFileSync(manifest, 'utf8')).webapp?.access !== 'DOMAIN') return null;
+  if (process.env.GAS_DOMAIN) return process.env.GAS_DOMAIN;
+  try {
+    // The deploying user belongs to the domain the web app is shared with.
+    const email = clasp(['show-authorized-user']).email ?? '';
+    return email.includes('@') ? email.slice(email.lastIndexOf('@') + 1) : null;
+  } catch {
+    return null; // not signed in: the plain URL still works for a single signed-in account
+  }
+}
 
 export function fail(message) {
   console.error(`\n✖ ${message}`);

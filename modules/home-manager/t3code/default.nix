@@ -50,7 +50,7 @@
         storageCleanup = {
           worktreeOnMerge = true;
         };
-        worktreesDirectory = "~/Development/Worktrees";
+        worktreesDirectory = config.worktrees.directory;
       };
 
       clientSettings = {

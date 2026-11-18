@@ -21,7 +21,7 @@
           builtins.replaceStrings
             [ "@worktree_root@" ]
             [
-              "${config.home.homeDirectory}/Development/Worktrees"
+              config.worktrees.directory
             ]
             (builtins.readFile ./worktree-create.sh);
       };

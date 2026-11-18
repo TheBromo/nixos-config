@@ -1,6 +1,11 @@
 _: {
   flake.homeModules.wsswitch =
-    { lib, pkgs, ... }:
+    {
+      config,
+      lib,
+      pkgs,
+      ...
+    }:
     let
       renderShellScript =
         path: substitutions:
@@ -15,6 +20,8 @@ _: {
           "@fzf@" = lib.getExe pkgs.fzf;
           "@jq@" = lib.getExe pkgs.jq;
           "@realpath@" = lib.getExe' pkgs.coreutils "realpath";
+          "@worktree_root@" = lib.escapeShellArg config.worktrees.directory;
+          "@legacy_worktree_root@" = lib.escapeShellArg "${config.home.homeDirectory}/Development/Worktrees";
         };
       };
     in

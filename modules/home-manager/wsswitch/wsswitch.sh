@@ -9,14 +9,19 @@ rex_local() {
   "$rex_bin" --server "unix://$HOME/Library/Application%20Support/rex/server.sock" "$@"
 }
 
-worktree_root="$HOME/Development/Worktrees"
+worktree_root=@worktree_root@
+# Existing worktrees keep their paths while their sessions finish.
+legacy_worktree_root=@legacy_worktree_root@
 state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/wsswitch"
 
 # Projects, then every agent worktree as <repo>/<name>.
 list_projects() {
-  @find@ "$HOME/Development" -mindepth 1 -maxdepth 1 -type d ! -path "$worktree_root"
+  @find@ "$HOME/Development" -mindepth 1 -maxdepth 1 -type d ! -path "$worktree_root" ! -path "$legacy_worktree_root"
   if [[ -d "$worktree_root" ]]; then
     @find@ "$worktree_root" -mindepth 2 -maxdepth 2 -type d
+  fi
+  if [[ "$worktree_root" != "$legacy_worktree_root" && -d "$legacy_worktree_root" ]]; then
+    @find@ "$legacy_worktree_root" -mindepth 2 -maxdepth 2 -type d
   fi
   printf '%s\n' "$HOME/.config/nvim"
 }
@@ -26,6 +31,8 @@ list_projects() {
 session_label() {
   if [[ $1 == "$worktree_root"/*/* ]]; then
     printf '%s\n' "${1#"$worktree_root"/}"
+  elif [[ $1 == "$legacy_worktree_root"/*/* ]]; then
+    printf '%s\n' "${1#"$legacy_worktree_root"/}"
   else
     printf '%s\n' "${1##*/}"
   fi

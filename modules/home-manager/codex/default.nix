@@ -57,7 +57,7 @@
         };
 
         # Must be absolute.
-        desktop.git-worktree-root = "${config.home.homeDirectory}/Development/Worktrees";
+        desktop.git-worktree-root = config.worktrees.directory;
 
         projects = {
           "/home/strenge/Development".trust_level = "trusted";

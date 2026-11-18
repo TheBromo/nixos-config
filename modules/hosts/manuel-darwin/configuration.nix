@@ -1,7 +1,12 @@
 { self, ... }:
 {
   flake.homeModules.manuelDarwinConfiguration =
-    { pkgs, lib, ... }:
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
     {
       nixpkgs.config.allowUnfree = true;
 
@@ -57,5 +62,27 @@
       };
 
       programs.home-manager.enable = true;
+
+      worktrees.directory = "/Volumes/Development/Worktrees";
+
+      # Use the installer-managed Determinate client for this user's profiles.
+      launchd.agents.nix-gc = {
+        enable = true;
+        config = {
+          ProgramArguments = [
+            "/nix/var/nix/profiles/default/bin/nix-collect-garbage"
+            "--delete-older-than"
+            "14d"
+          ];
+          StartCalendarInterval = [
+            {
+              Hour = 3;
+              Minute = 15;
+            }
+          ];
+          StandardOutPath = "${config.home.homeDirectory}/Library/Logs/nix-gc.log";
+          StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/nix-gc.log";
+        };
+      };
     };
 }
