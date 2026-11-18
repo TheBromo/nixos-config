@@ -142,6 +142,11 @@
       codexApi = pkgs.writeShellApplication {
         name = "codex_api";
         text = ''
+          # --profile is rejected by non-runtime subcommands (app-server,
+          # which T3 runs), so those get the provider override instead.
+          if [[ "''${1:-}" == app-server ]]; then
+            exec ${lib.getExe llmAgents.codex} -c model_provider='"azure"' "$@"
+          fi
           exec ${lib.getExe llmAgents.codex} --profile api "$@"
         '';
       };
