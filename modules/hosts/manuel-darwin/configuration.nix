@@ -63,7 +63,7 @@
 
       programs.home-manager.enable = true;
 
-      worktrees.directory = "/Volumes/Development/Worktrees";
+      worktrees.directory = lib.mkDefault "/Volumes/Development/Worktrees";
 
       # Use the installer-managed Determinate client for this user's profiles.
       launchd.agents.nix-gc = {

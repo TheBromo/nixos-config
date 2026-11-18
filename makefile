@@ -15,7 +15,11 @@ zhaw:
 hexagon:
 	nix run nixpkgs#home-manager -- switch --impure --flake .#hexagon 2>&1 | nom
 darwin:
-	nix run nixpkgs#home-manager -- switch --flake .#manuel-darwin 2>&1 | nom
+	config=manuel-darwin; \
+	if [ "$$(scutil --get LocalHostName)" = Manuels-MacBook-Pro ]; then \
+		config=manuel-darwin-macbook-pro; \
+	fi; \
+	nix run nixpkgs#home-manager -- switch --flake ".#$$config" 2>&1 | nom
 
 # Install the binary caches into /etc/nix/nix.custom.conf, where they are
 # root-owned and therefore trusted by the daemon. Needed because this user is
