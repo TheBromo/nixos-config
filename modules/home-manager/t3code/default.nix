@@ -33,7 +33,49 @@
             }
           ];
         };
+        enableDeviceSupport = true;
+        fallbackModelSelection = {
+          instanceId = "claudeAgent";
+          model = "claude-opus-5-5";
+        };
+        fastWorktreeCheckout = true;
+        idleCompaction = "onReturn";
         projectSettingsFolded = true;
+        providerInstances = {
+          antigravity = {
+            driver = "antigravity";
+            displayName = "Antigravity";
+            accentColor = "#2563eb";
+            enabled = false;
+          };
+          opencode = {
+            driver = "opencode";
+            displayName = "OpenCode";
+            enabled = false;
+          };
+          pi = {
+            driver = "pi";
+            displayName = "Pi";
+            enabled = false;
+          };
+          claudeAgent_bedrock = {
+            driver = "claudeAgent";
+            displayName = "Claude Api";
+            accentColor = "#c82626";
+            enabled = true;
+            config.binaryPath = "claude_api";
+          };
+          codex_api = {
+            driver = "codex";
+            displayName = "Codex Api";
+            accentColor = "#c82626";
+            enabled = true;
+            config = {
+              binaryPath = "codex_api";
+              setupMode = "existing";
+            };
+          };
+        };
         sourceControlWriterModelSelection = {
           instanceId = "codex";
           model = "gpt-6-luna";
@@ -48,13 +90,18 @@
           mode = "conventional_commits";
         };
         storageCleanup = {
+          worktreeAfterDays = 7;
           worktreeOnMerge = true;
+          worktreeSettledAfterDays = 4;
         };
         worktreesDirectory = config.worktrees.directory;
+        worktreeSubmodules = "none";
       };
 
       clientSettings = {
         appearanceContrast = 100;
+        boringSidebarEnabled = false;
+        boringSidebarMultilineRows = false;
         browserAutoShowFloatingPreview = true;
         browserCustomSearchUrl = "";
         browserDefaultAppearance = "system";
@@ -69,17 +116,16 @@
         browserRecordingShowMousePresses = false;
         browserSearchEngine = "duckduckgo";
         chatWidth = "comfortable";
-        composerCollapseOnScroll = true;
         composerRichTextEnabled = true;
         confirmQuit = "hold";
         confirmThreadArchive = false;
         confirmThreadDelete = true;
         confirmThreadUnpin = false;
-        contextWindowMeterEnabled = false;
         diffColorScheme = "red-green";
         diffFilesCollapsed = true;
         diffIgnoreWhitespace = true;
         diffLayout = "split";
+        effortDisplay = "label";
         environmentIdentificationMode = "artwork";
         followUpBehavior = "queue";
         fontFamilyCode = "";
@@ -93,23 +139,23 @@
         fontSmoothing = true;
         glassOpacity = 80;
         inAppNotificationsEnabled = false;
-        legacySidebarEnabled = false;
+        language = "en";
         loadBalancingEnabled = false;
         mathRenderingEnabled = false;
         notificationMode = "notifications";
         onboardingCompletedAt = "2026-09-10T13:09:10.785Z";
         panelAnimationDurationMs = 0;
         persistComposerContextStrip = false;
-        planModeEnabled = false;
         proactivePanelsEnabled = false;
         pullRequestLinksOpenInApp = true;
+        screenReaderAnnouncements = "status";
+        screenReaderWindowTitle = false;
         sendShortcut = "enter";
         showSkillsInSlashMenu = true;
         sidebarProjectGroupingMode = "repository";
         sidebarProjectSortOrder = "updated_at";
-        sidebarThreadPreviewCount = 6;
         sidebarThreadSortOrder = "updated_at";
-        sidebarWorkingShelfEnabled = false;
+        sidebarWorkingShelfEnabled = true;
         snapShotAnimations = true;
         snapShotEnabled = false;
         snapShotFlash = true;
@@ -119,7 +165,22 @@
           kind = "both-shift-keys";
         };
         snapShotSound = "soft-pop";
+        speechCorrectionWord = "";
+        speechCustomWords = [ ];
+        speechLanguage = "auto";
+        speechPostProcessingPrompt = {
+          mode = "default";
+          customInstructions = "";
+        };
+        speechRemoveFillerWords = true;
+        speechSilenceFiltering = true;
+        speechStreaming = true;
+        speechTranslateToEnglish = false;
+        threadDetailsUsageEnabled = false;
         timestampFormat = "locale";
+        toolCallVisibility = "showAll";
+        voiceMicrophone = "";
+        voiceShortcutMode = "auto";
         wordWrap = true;
       };
 

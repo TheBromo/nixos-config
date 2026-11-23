@@ -28,7 +28,7 @@ _: {
         "Workspace.tabIconColorMode" = "always";
         "Workspace.tabIconTintMode" = "off";
         "Workspace.tabIconCount" = 2;
-        "Workspace.terminalFontName" = "JetBrains Mono";
+        "Workspace.terminalFontName" = "TX-02";
         "Workspace.terminalFontPointSize" = 13.0;
         "Workspace.terminalFallbackFontNames" = [ "TX-02" ];
         "Workspace.terminalCellHeightPercent" = 0.0;
